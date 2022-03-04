@@ -338,12 +338,10 @@ describe('delivery: expo', () => {
   })
 
   it('doesn’t attempt to send when not connected', done => {
-    class MockNetworkStatus {
-      isConnected = false
-      watch () {}
-    }
-
-    NetworkStatusMock.mockImplementation(MockNetworkStatus as any)
+    NetworkStatusMock.mockImplementation(() => ({
+      isConnected: false,
+      watch: (fn: (isConnected: boolean) => void) => {}
+    } as any))
 
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
