@@ -10,20 +10,19 @@ Thanks for stopping by! This document should cover most topics surrounding contr
 * [Testing](#testing)
 
 ## Reporting issues
-Are you having trouble getting started? Please [contact us directly](mailto:support@bugsnag.com?subject=%5BGitHub%5D%20bugsnag-js%20-%20having%20trouble%20getting%20started%20with%20Bugsnag) for assistance with integrating Bugsnag into your application.
-If you have spotted a problem with this module, feel free to open a [new issue](https://github.com/bugsnag/bugsnag-js/issues/new?template=Bug_report.md). Here are a few things to check before doing so:
+Are you having trouble getting started? Please [contact us directly](mailto:support@bugsnag.com?subject=%5BGitHub%5D%20bugsnag-expo%20-%20having%20trouble%20getting%20started%20with%20Bugsnag) for assistance with integrating Bugsnag into your application.
+If you have spotted a problem with this module, feel free to open a [new issue](https://github.com/bugsnag/bugsnag-expo/issues/new?template=Bug_report.md). Here are a few things to check before doing so:
 
 * Are you using the latest version of Bugsnag? If not, does updating to the latest version fix your issue?
-* Has somebody else [already reported](https://github.com/bugsnag/bugsnag-js/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen) your issue? Feel free to add additional context to or check-in on an existing issue that matches your own.
-* Is your issue caused by this module? Only things related to `@bugsnag/js` (including `@bugsnag/plugin-*` plugins to support various frameworks) should be reported here. For anything else, please [contact us directly](mailto:support@bugsnag.com) and we'd be happy to help you out.
+* Has somebody else [already reported](https://github.com/bugsnag/bugsnag-expo/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen) your issue? Feel free to add additional context to or check-in on an existing issue that matches your own.
+* Is your issue caused by this module? Only things related to `@bugsnag/expo` (including `@bugsnag/plugin-*` plugins to support various frameworks) should be reported here. For anything else, please [contact us directly](mailto:support@bugsnag.com) and we'd be happy to help you out.
 
 ### Fixing issues
 
 If you've identified a fix to a new or existing issue, we welcome contributions!
 Here are some helpful suggestions on contributing that help us merge your PR quickly and smoothly:
 
-* [Fork](https://help.github.com/articles/fork-a-repo) the
-  [library on GitHub](https://github.com/bugsnag/bugsnag-js)
+* [Fork](https://help.github.com/articles/fork-a-repo) the [library on GitHub](https://github.com/bugsnag/bugsnag-expo)
 * Build and test your changes. We have automated tests for many scenarios but its also helpful to use `npm pack` to build the module locally and install it in a real app.
 * Commit and push until you are happy with your contribution
 * [Make a pull request](https://help.github.com/articles/using-pull-requests)
@@ -33,7 +32,7 @@ Here are some helpful suggestions on contributing that help us merge your PR qui
 
 Unfortunately we’re unable to accept PRs that add features or refactor the library at this time.
 However, we’re very eager and welcome to hearing feedback about the library so please contact us directly to discuss your idea, or open a
-[feature request](https://github.com/bugsnag/bugsnag-js/issues/new?template=Feature_request.md) to help us improve the library.
+[feature request](https://github.com/bugsnag/bugsnag-expo/issues/new?template=Feature_request.md) to help us improve the library.
 
 Here’s a bit about our process designing and building the Bugsnag libraries:
 
@@ -76,13 +75,12 @@ Once the release PR has been approved:
 
 - merge the PR into master
 
-You are now ready to make the release. Releases are done using Docker and Docker compose. You do not need to have the release branch checked out on your local machine to make a release – the container pulls a fresh clone of the repo down from GitHub. Prerequisites:
+You are now ready to make the release. Releases are done using Docker and Docker compose. You do not need to have the release branch checked out on your local machine to make a release – the container pulls a fresh clone of the repo down from GitHub. Prerequisites:
 
 - You will need to clone the repository and have Docker running on your local machine.
 - Ensure you are logged in to npm and that you have access to publish to the following on npm
   - any packages in the `@bugsnag` namespace
   - the `bugsnag-expo-cli` package
-- Ensure you have an AWS key pair with access to our S3 bucket and cloudfront distribution. Export these in your environment as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` (if you're going to publish to the CDN)
 - Ensure your `.gitconfig` file in your home directory is configured to contain your name and email address
 - Generate a [personal access token](https://github.com/settings/tokens/new) on GitHub and store it somewhere secure
 
@@ -95,8 +93,6 @@ Then make the release:
 ```
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
-AWS_ACCESS_KEY_ID=xxx \
-AWS_SECRET_ACCESS_KEY=xxx \
 RELEASE_BRANCH=master \
 VERSION=patch \
   docker-compose run release
@@ -110,7 +106,7 @@ Browser bundles are automatically uploaded to the CDN if they have changed.
 
 Finally:
 
-- create a release on GitHub https://github.com/bugsnag/bugsnag-js/releases/new
+- create a release on GitHub https://github.com/bugsnag/bugsnag-expo/releases/new
 - use the tag vX.Y.Z as the name of the release
 - copy the release notes from `CHANGELOG.md`
 - publish the release
@@ -140,13 +136,11 @@ For example:
 ```
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
-AWS_ACCESS_KEY_ID=xxx \
-AWS_SECRET_ACCESS_KEY=xxx \
 RELEASE_BRANCH=master \
 VERSION=preminor \
   docker-compose run release
 ```
 
-Prereleases will automatically be published to npm with the dist tag `next` and browser bundles are automatically uploaded to the CDN.
+Prereleases will automatically be published to npm with the dist tag `next`.
 
 The dist tag ensures that prereleases are not installed by unsuspecting users who do not specify a version – npm automatically adds the `latest` tag to a published module unless one is specified.
