@@ -1,12 +1,12 @@
-# Testing the Bugsnag JS notifier
+# Testing the Bugsnag Expo notifier
 
 ## Initial setup
 
 Clone and navigate to this repo:
 
 ```sh
-git clone git@github.com:bugsnag/bugsnag-js.git
-cd bugsnag-js
+git clone git@github.com:bugsnag/bugsnag-expo.git
+cd bugsnag-expo
 ```
 
 Install top level dependencies:
@@ -21,26 +21,12 @@ Bootstrap all of the individual packages:
 npm run bootstrap
 ```
 
-Build each of the standalone packages:
-
-```sh
-npm run build
-```
-
 ## Unit tests
 
 Runs the unit tests for each package.
 
 ```sh
 npm run test:unit
-```
-
-## Type tests
-
-This tests the validity of .d.ts files by attempting to compile a TypeScript program that uses Bugsnag.
-
-```sh
-npm run test:types
 ```
 
 ## Linting
@@ -61,7 +47,7 @@ Maze runner's CLI and the test fixtures are containerised so you'll need Docker 
 
 __Note: only Bugsnag employees can run the end-to-end tests.__ We have dedicated test infrastructure and private BrowserStack credentials which can't be shared outside of the organisation.
 
-#### Authenticating with the private container registry
+### Authenticating with the private container registry
 
 You'll need to set the credentials for the aws profile in order to access the private docker registry:
 
@@ -77,9 +63,27 @@ npm run test:test-container-registry-login
 
 __Your session will periodically expire__, so you'll need to run this command to re-authenticate when that happens.
 
-For further details, see the `TESTING.md` for individual platforms:
-- [Browser](./test/browser/TESTING.md)
-- [Expo](./test/expo/TESTING.md)
-- [Node](./test/node/TESTING.md)
-- [React Native](./test/react-native/TESTING.md)
-- [React Native CLI](./test/react-native-cli/TESTING.md)
+### Running the tests
+
+The Expo tests drive real, remote mobile devices using BrowserStack. As a Bugsnag employee you can access the necessary credentials in our shared password manager.
+
+They also require access to the Expo ecosystem in order to publish, then build, the installable app packages. As above, these credentials can also be found in the shared password manager.
+
+The following environment variables need to be set:
+
+- `DEVICE_TYPE`: the mobile operating system you want to test on – one of ANDROID_5_0, ANDROID_6_0, ANDROID_7_1, ANDROID_8_1, ANDROID_9_0, IOS_10, IOS_11, IOS_12
+- `BROWSER_STACK_USERNAME`
+- `BROWSER_STACK_ACCESS_KEY`
+- `EXPO_USERNAME`
+- `EXPO_PASSWORD`
+
+To run against an android device:
+
+```sh
+DEVICE_TYPE=ANDROID_9_0 \
+EXPO_USERNAME=xxx \
+EXPO_PASSWORD=xxx \
+  npm run test:expo:android
+```
+
+Running tests against an iOS device locally is not currently supported.
