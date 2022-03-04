@@ -7,8 +7,8 @@ labels: ''
 assignees: ''
 
 ---
-Please checkout our [documentation](https://docs.bugsnag.com/platforms/javascript/) for guides, references and tutorials.
+Please checkout our [documentation](https://docs.bugsnag.com/platforms/react-native/expo/) for guides, references and tutorials.
 
 If you have questions about your integration please contact us at [support@bugsnag.com](mailto:support@bugsnag.com).
 
-Alternatively, view additional options at [support.md](../SUPPORT.md).
+Alternatively, view additional options at [support.md](../support.md).
