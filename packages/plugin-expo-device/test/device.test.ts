@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import Client, { EventDeliveryPayload } from '@bugsnag/core/client'
+const Client = require('@bugsnag/core/client')
 
 describe('plugin: expo device', () => {
   beforeEach(() => {
@@ -241,24 +240,24 @@ describe('plugin: expo device', () => {
     const EXPO_VERSION = '2.10.4'
 
     class Dimensions {
-      _listeners: { change: Array<(payload: { screen: { width: number, height: number}, window: {} }) => void> } = { change: [] }
-      _width!: number;
-      _height!: number;
+      _listeners = { change: [] }
+      _width
+      _height
 
       constructor (w = 768, h = 1024) {
         this._set(w, h)
       }
 
-      addEventListener (event: 'change', cb: () => void) {
+      addEventListener (event, cb) {
         this._listeners[event].push(cb)
       }
 
-      get (type: string) {
+      get (type) {
         expect(type).toBe('screen')
         return { width: this._width, height: this._height }
       }
 
-      _set (w: number, h: number) {
+      _set (w, h) {
         this._width = w
         this._height = h
         this._listeners.change.forEach(handler => handler({
@@ -290,7 +289,7 @@ describe('plugin: expo device', () => {
     const plugin = require('..')
 
     const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
-    const events: EventDeliveryPayload[] = []
+    const events = []
     c._setDelivery(client => ({
       sendEvent: (payload) => {
         const r = JSON.parse(JSON.stringify(payload))

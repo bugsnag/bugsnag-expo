@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-import Client, { EventDeliveryPayload } from '@bugsnag/core/client'
+const Client = require('@bugsnag/core/client')
 
 jest.mock('react-native', () => ({
   AppState: {
@@ -127,7 +126,7 @@ describe('plugin: expo app', () => {
 
     const listener = AppState.addEventListener.mock.calls[0][1]
 
-    const events: EventDeliveryPayload[] = []
+    const events = []
     c._setDelivery(client => ({
       sendEvent: (payload) => {
         const r = JSON.parse(JSON.stringify(payload))

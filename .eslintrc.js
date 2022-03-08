@@ -49,14 +49,14 @@ module.exports = {
   overrides: [
     // linting for js files
     {
-      files: ['**/*.js'],
+      files: ['*.js'],
       extends: [
         'standard'
       ]
     },
     // linting for ts files
     {
-      files: ['**/*.ts'],
+      files: ['*.ts'],
       extends: 'standard-with-typescript',
       // We can't use rules which requires parserServices as there is no tsconfig that represents the whole monorepo (yet).
       // 'parserOptions': {
@@ -68,16 +68,14 @@ module.exports = {
     },
     // Linting for tests
     {
-      files: [
-        '**/*.test.ts?(x)'
-      ],
+      files: ['*.test.js', '*.test.jsx'],
       env: {
         jest: true,
         browser: true,
       },
       plugins: ['eslint-plugin-jest'],
       extends: [
-        'standard-with-typescript',
+        'standard',
         'plugin:jest/recommended'
       ],
       rules: {

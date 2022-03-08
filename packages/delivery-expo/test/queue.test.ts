@@ -1,5 +1,5 @@
-import Queue from '../queue'
-import FileSystem from 'expo-file-system'
+const Queue = require('../queue')
+const FileSystem = require('expo-file-system')
 
 jest.mock('expo-file-system', () => ({
   cacheDirectory: 'file://var/data/foo.bar.app/',
@@ -67,7 +67,7 @@ describe('delivery: expo -> queue', () => {
     })
 
     it('removes a file if it’s not valid json', async (done) => {
-      let files: string[] = []
+      let files = []
       FileSystem.readAsStringAsync = (path) => Promise.resolve('{ not valid json')
       FileSystem.readDirectoryAsync = () => Promise.resolve(files)
       FileSystem.deleteAsync = async (id) => {
@@ -87,7 +87,7 @@ describe('delivery: expo -> queue', () => {
     it('ensures the directory exists first', async (done) => {
       FileSystem.getInfoAsync = (path) => {
         expect(path).toBe('file://var/data/foo.bar.app/bugsnag/stuff')
-        return Promise.resolve({ exists: true, isDirectory: true } as any)
+        return Promise.resolve({ exists: true, isDirectory: true })
       }
 
       const q = new Queue('stuff', err => expect(err).toBe(null))
@@ -98,7 +98,7 @@ describe('delivery: expo -> queue', () => {
     it('creates the directory if it does not exist', async (done) => {
       FileSystem.getInfoAsync = (path) => {
         expect(path).toBe('file://var/data/foo.bar.app/bugsnag/stuff')
-        return Promise.resolve({ exists: false } as any)
+        return Promise.resolve({ exists: false })
       }
       FileSystem.makeDirectoryAsync = (path) => {
         expect(path).toBe('file://var/data/foo.bar.app/bugsnag/stuff')
@@ -111,7 +111,7 @@ describe('delivery: expo -> queue', () => {
     })
 
     it('calls the onerror callback if there is an error', async (done) => {
-      FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true } as any)
+      FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true })
       FileSystem.readDirectoryAsync = () => {
         return Promise.reject(new Error('beep'))
       }
@@ -122,7 +122,7 @@ describe('delivery: expo -> queue', () => {
     })
 
     it('should purge items that are over the limit', async (done) => {
-      FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true } as any)
+      FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true })
       FileSystem.readDirectoryAsync = () => {
         const files = Array(70).fill(1).map(() => Queue.generateFilename('stuff'))
         return Promise.resolve(files)
@@ -160,7 +160,7 @@ describe('delivery: expo -> queue', () => {
       const exists = false
       const isDirectory = false
       let makeCount = 0
-      FileSystem.getInfoAsync = async () => ({ exists, isDirectory } as any)
+      FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
       FileSystem.makeDirectoryAsync = () => new Promise((resolve, reject) => {
         makeCount++
         setTimeout(() => resolve(), 20)
@@ -189,7 +189,7 @@ describe('delivery: expo -> queue', () => {
     it('should tolerate errors when the directory was succesfully created', async (done) => {
       let exists = false
       let isDirectory = false
-      FileSystem.getInfoAsync = async () => ({ exists, isDirectory } as any)
+      FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
       FileSystem.makeDirectoryAsync = () => new Promise((resolve, reject) => {
         setTimeout(() => {
           exists = true
@@ -206,7 +206,7 @@ describe('delivery: expo -> queue', () => {
     it('should rethrow errors when the directory was not succesfully created', async (done) => {
       const exists = false
       const isDirectory = false
-      FileSystem.getInfoAsync = async () => ({ exists, isDirectory } as any)
+      FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
       FileSystem.makeDirectoryAsync = () => new Promise((resolve, reject) => {
         setTimeout(() => {
           reject(new Error('fleerp'))
@@ -231,7 +231,7 @@ describe('delivery: expo -> queue', () => {
     it('should reject all pending promises', async (done) => {
       const exists = false
       const isDirectory = false
-      FileSystem.getInfoAsync = async () => ({ exists, isDirectory } as any)
+      FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
       FileSystem.makeDirectoryAsync = () => new Promise((resolve, reject) => {
         setTimeout(() => {
           reject(new Error('fleerp'))

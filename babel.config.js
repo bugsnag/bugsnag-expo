@@ -5,11 +5,6 @@ module.exports = api => {
   const plugins = []
   const overrides = []
 
-  if (api && api.env('test')) {
-    presets.push('@babel/preset-typescript')
-    presets.push('babel-preset-expo')
-  }
-
   if (api && !api.env('test')) {
     api.cache(false)
   }

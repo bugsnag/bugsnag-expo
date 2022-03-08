@@ -1,8 +1,8 @@
-import { v4 as uuidv4 } from 'uuid'
+const { v4: uuidv4 } = require('uuid')
 
 const exec = require('child_process').execSync
 
-export const prepareFixture = async (fixture: string) => {
+const prepareFixture = async fixture => {
   const tmp = `${__dirname}/../.tmp${uuidv4()}`
 
   const target = `${tmp}/${fixture}`
@@ -13,3 +13,5 @@ export const prepareFixture = async (fixture: string) => {
   // give the target path and a clean up function to the caller
   return { target, clean: () => exec(`rm -r ${tmp}`) }
 }
+
+module.exports = { prepareFixture }

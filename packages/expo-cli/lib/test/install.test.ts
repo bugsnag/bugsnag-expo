@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable jest/no-try-expect */
-import { prepareFixture } from './lib/prepare-fixture'
-import { EventEmitter } from 'events'
-import { Readable } from 'stream'
+const { prepareFixture } = require('./lib/prepare-fixture')
+const { EventEmitter } = require('events')
+const { Readable } = require('stream')
 
 describe('expo-cli: install', () => {
   beforeEach(() => {
@@ -12,7 +11,7 @@ describe('expo-cli: install', () => {
   it('should work on a fresh project (npm)', async () => {
     const { target: projectRoot, clean } = await prepareFixture('blank-00')
 
-    const spawn = (cmd: string, args: string[], opts: {}) => {
+    const spawn = (cmd, args, opts) => {
       expect(cmd).toBe('npm')
       expect(args).toEqual(['install', '@bugsnag/expo@latest'])
       expect(opts).toEqual({ cwd: projectRoot })
@@ -46,7 +45,7 @@ describe('expo-cli: install', () => {
   it('should work on a fresh project (yarn)', async () => {
     const { target: projectRoot, clean } = await prepareFixture('blank-00')
 
-    const spawn = (cmd: string, args: string[], opts: {}) => {
+    const spawn = (cmd, args, opts) => {
       expect(cmd).toBe('yarn')
       expect(args).toEqual(['add', '@bugsnag/expo@6.3.1'])
       expect(opts).toEqual({ cwd: projectRoot })
@@ -80,7 +79,7 @@ describe('expo-cli: install', () => {
   it('should add stderr/stdout output onto error if there is one (non-zero exit code)', async () => {
     const { target: projectRoot, clean } = await prepareFixture('blank-00')
 
-    const spawn = (cmd: string, args: string[], opts: {}) => {
+    const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
       // @ts-ignore
       proc.stdout = new Readable({
@@ -117,7 +116,7 @@ describe('expo-cli: install', () => {
   it('should throw an error if the command does', async () => {
     const { target: projectRoot, clean } = await prepareFixture('blank-00')
 
-    const spawn = (cmd: string, args: string[], opts: {}) => {
+    const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
       // @ts-ignore
       proc.stdout = new Readable({
@@ -152,7 +151,7 @@ describe('expo-cli: install', () => {
   it('should throw an error if the packageManager option is missing', async () => {
     const { target: projectRoot, clean } = await prepareFixture('blank-00')
 
-    const spawn = (cmd: string, args: string[], opts: {}) => {}
+    const spawn = (cmd, args, opts) => {}
 
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
