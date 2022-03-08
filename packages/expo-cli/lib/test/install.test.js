@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-try-expect */
-const { prepareFixture } = require('./lib/prepare-fixture')
+const withFixture = require('./lib/with-fixture')
 const { EventEmitter } = require('events')
 const { Readable } = require('stream')
 
@@ -9,76 +9,72 @@ describe('expo-cli: install', () => {
   })
 
   it('should work on a fresh project (npm)', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
+    await withFixture('blank-00', async (projectRoot) => {
+      const spawn = (cmd, args, opts) => {
+        expect(cmd).toBe('npm')
+        expect(args).toEqual(['install', '@bugsnag/expo@latest'])
+        expect(opts).toEqual({ cwd: projectRoot })
+        const proc = new EventEmitter()
+        // @ts-ignore
+        proc.stdout = new Readable({
+          read () {
+            this.push('some data on stdout')
+            this.push(null)
+          }
+        })
+        // @ts-ignore
+        proc.stderr = new Readable({
+          read () {
+            this.push('some data on stderr')
+            this.push(null)
+          }
+        })
+        setTimeout(() => proc.emit('close', 0), 10)
+        return proc
+      }
 
-    const spawn = (cmd, args, opts) => {
-      expect(cmd).toBe('npm')
-      expect(args).toEqual(['install', '@bugsnag/expo@latest'])
-      expect(opts).toEqual({ cwd: projectRoot })
-      const proc = new EventEmitter()
-      // @ts-ignore
-      proc.stdout = new Readable({
-        read () {
-          this.push('some data on stdout')
-          this.push(null)
-        }
-      })
-      // @ts-ignore
-      proc.stderr = new Readable({
-        read () {
-          this.push('some data on stderr')
-          this.push(null)
-        }
-      })
-      setTimeout(() => proc.emit('close', 0), 10)
-      return proc
-    }
+      jest.doMock('child_process', () => ({ spawn }))
+      const install = require('../install')
 
-    jest.doMock('child_process', () => ({ spawn }))
-    const install = require('../install')
-
-    const msg = await install('npm', 'latest', projectRoot)
-    expect(msg).toBe(undefined)
-    await clean()
+      const msg = await install('npm', 'latest', projectRoot)
+      expect(msg).toBe(undefined)
+    })
   })
 
   it('should work on a fresh project (yarn)', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
+    await withFixture('blank-00', async (projectRoot) => {
+      const spawn = (cmd, args, opts) => {
+        expect(cmd).toBe('yarn')
+        expect(args).toEqual(['add', '@bugsnag/expo@6.3.1'])
+        expect(opts).toEqual({ cwd: projectRoot })
+        const proc = new EventEmitter()
+        // @ts-ignore
+        proc.stdout = new Readable({
+          read () {
+            this.push('some data on stdout')
+            this.push(null)
+          }
+        })
+        // @ts-ignore
+        proc.stderr = new Readable({
+          read () {
+            this.push('some data on stderr')
+            this.push(null)
+          }
+        })
+        setTimeout(() => proc.emit('close', 0), 10)
+        return proc
+      }
 
-    const spawn = (cmd, args, opts) => {
-      expect(cmd).toBe('yarn')
-      expect(args).toEqual(['add', '@bugsnag/expo@6.3.1'])
-      expect(opts).toEqual({ cwd: projectRoot })
-      const proc = new EventEmitter()
-      // @ts-ignore
-      proc.stdout = new Readable({
-        read () {
-          this.push('some data on stdout')
-          this.push(null)
-        }
-      })
-      // @ts-ignore
-      proc.stderr = new Readable({
-        read () {
-          this.push('some data on stderr')
-          this.push(null)
-        }
-      })
-      setTimeout(() => proc.emit('close', 0), 10)
-      return proc
-    }
+      jest.doMock('child_process', () => ({ spawn }))
+      const install = require('../install')
 
-    jest.doMock('child_process', () => ({ spawn }))
-    const install = require('../install')
-
-    const msg = await install('yarn', '6.3.1', projectRoot)
-    expect(msg).toBe(undefined)
-    await clean()
+      const msg = await install('yarn', '6.3.1', projectRoot)
+      expect(msg).toBe(undefined)
+    })
   })
 
   it('should add stderr/stdout output onto error if there is one (non-zero exit code)', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
-
     const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
       // @ts-ignore
@@ -102,20 +98,19 @@ describe('expo-cli: install', () => {
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
 
-    try {
-      await install('yarn', 'latest', projectRoot)
-      expect('should not be here').toBe(false)
-    } catch (e) {
-      expect(e.message).toMatch(/Command exited with non-zero exit code/)
-      expect(e.message).toMatch(/some data on stdout/)
-      expect(e.message).toMatch(/some data on stderr/)
-      await clean()
-    }
+    await withFixture('blank-00', async (projectRoot) => {
+      try {
+        await install('yarn', 'latest', projectRoot)
+        expect('should not be here').toBe(false)
+      } catch (e) {
+        expect(e.message).toMatch(/Command exited with non-zero exit code/)
+        expect(e.message).toMatch(/some data on stdout/)
+        expect(e.message).toMatch(/some data on stderr/)
+      }
+    })
   })
 
   it('should throw an error if the command does', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
-
     const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
       // @ts-ignore
@@ -139,29 +134,29 @@ describe('expo-cli: install', () => {
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
 
-    try {
-      await install('yarn', 'latest', projectRoot)
-      expect('should not be here').toBe(false)
-    } catch (e) {
-      expect(e.message).toMatch(/floop/)
-      await clean()
-    }
+    await withFixture('blank-00', async (projectRoot) => {
+      try {
+        await install('yarn', 'latest', projectRoot)
+        expect('should not be here').toBe(false)
+      } catch (e) {
+        expect(e.message).toMatch(/floop/)
+      }
+    })
   })
 
   it('should throw an error if the packageManager option is missing', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
-
     const spawn = (cmd, args, opts) => {}
 
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
 
-    try {
-      await install(undefined, 'latest', projectRoot)
-      expect('should not be here').toBe(false)
-    } catch (e) {
-      expect(e.message).toMatch(/Don’t know what command to use for /)
-      await clean()
-    }
+    await withFixture('blank-00', async (projectRoot) => {
+      try {
+        await install(undefined, 'latest', projectRoot)
+        expect('should not be here').toBe(false)
+      } catch (e) {
+        expect(e.message).toMatch(/Don’t know what command to use for /)
+      }
+    })
   })
 })
