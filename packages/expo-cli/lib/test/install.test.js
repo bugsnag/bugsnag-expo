@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-try-expect */
 const withFixture = require('./lib/with-fixture')
 const { EventEmitter } = require('events')
 const { Readable } = require('stream')
@@ -99,14 +98,14 @@ describe('expo-cli: install', () => {
     const install = require('../install')
 
     await withFixture('blank-00', async (projectRoot) => {
-      try {
-        await install('yarn', 'latest', projectRoot)
-        expect('should not be here').toBe(false)
-      } catch (e) {
-        expect(e.message).toMatch(/Command exited with non-zero exit code/)
-        expect(e.message).toMatch(/some data on stdout/)
-        expect(e.message).toMatch(/some data on stderr/)
-      }
+      const expected = `Command exited with non-zero exit code (1) "yarn add @bugsnag/expo@latest"
+stdout:
+some data on stdout
+
+stderr:
+some data on stderr`
+
+      await expect(install('yarn', 'latest', projectRoot)).rejects.toThrow(expected)
     })
   })
 
@@ -135,12 +134,7 @@ describe('expo-cli: install', () => {
     const install = require('../install')
 
     await withFixture('blank-00', async (projectRoot) => {
-      try {
-        await install('yarn', 'latest', projectRoot)
-        expect('should not be here').toBe(false)
-      } catch (e) {
-        expect(e.message).toMatch(/floop/)
-      }
+      await expect(install('yarn', 'latest', projectRoot)).rejects.toThrow(/floop/)
     })
   })
 
@@ -151,12 +145,7 @@ describe('expo-cli: install', () => {
     const install = require('../install')
 
     await withFixture('blank-00', async (projectRoot) => {
-      try {
-        await install(undefined, 'latest', projectRoot)
-        expect('should not be here').toBe(false)
-      } catch (e) {
-        expect(e.message).toMatch(/Don’t know what command to use for /)
-      }
+      await expect(install(undefined, 'latest', projectRoot)).rejects.toThrow(/Don’t know what command to use for /)
     })
   })
 })

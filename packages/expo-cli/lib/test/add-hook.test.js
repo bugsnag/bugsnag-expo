@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-try-expect */
 const withFixture = require('./lib/with-fixture')
 const addHook = require('../add-hook')
 const { readFile } = require('fs/promises')
@@ -30,32 +29,17 @@ describe('expo-cli: add-hook', () => {
 
   it('should provide a reasonable error when there is no app.json', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      try {
-        await addHook(projectRoot)
-        expect('should not be here').toBe(false)
-      } catch (e) {
-        expect(e.message).toMatch(/^Couldn’t find app\.json in/)
-      }
+      await expect(addHook(projectRoot)).rejects.toThrow(/^Couldn’t find app\.json in/)
     })
   })
 
   it('should provide a reasonable error when app.json is not valid JSON', async () => {
     await withFixture('malformed-json-00', async (projectRoot) => {
-      try {
-        await addHook(projectRoot)
-        expect('should not be here').toBe(false)
-      } catch (e) {
-        expect(e.message).toMatch(/it wasn’t valid JSON/)
-      }
+      await expect(addHook(projectRoot)).rejects.toThrow(/it wasn’t valid JSON/)
     })
   })
 
   it('doesn’t swallow any other errors', async () => {
-    try {
-      await addHook(/* projectRoot is required */)
-      expect('should not be here').toBe(false)
-    } catch (e) {
-      expect(e.message).toMatch(/The "path" argument must be of type string/)
-    }
+    await expect(addHook()).rejects.toThrow(/The "path" argument must be of type string/)
   })
 })

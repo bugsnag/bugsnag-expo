@@ -203,7 +203,7 @@ describe('delivery: expo -> queue', () => {
       done()
     })
 
-    it('should rethrow errors when the directory was not succesfully created', async (done) => {
+    it('should rethrow errors when the directory was not succesfully created', async () => {
       const exists = false
       const isDirectory = false
       FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
@@ -214,18 +214,8 @@ describe('delivery: expo -> queue', () => {
       })
 
       const q = new Queue('stuff')
-      let didErr = false
-      try {
-        await q.init()
-      } catch (e) {
-        // eslint-disable-next-line jest/no-try-expect
-        expect(e).toBeTruthy()
-        // eslint-disable-next-line jest/no-try-expect
-        expect(e.message).toBe('fleerp')
-        didErr = true
-      }
-      expect(didErr).toBe(true)
-      done()
+
+      await expect(q.init()).rejects.toThrow('fleerp')
     })
 
     it('should reject all pending promises', async (done) => {
