@@ -240,11 +240,8 @@ describe('plugin: expo device', () => {
     const EXPO_VERSION = '2.10.4'
 
     class Dimensions {
-      _listeners = { change: [] }
-      _width
-      _height
-
       constructor (w = 768, h = 1024) {
+        this._listeners = { change: [] }
         this._set(w, h)
       }
 
