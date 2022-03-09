@@ -1,7 +1,7 @@
 const { resolve, join } = require('path')
 const { readdirSync } = require('fs')
 
-const pkgs = resolve(__dirname, '../../../../../packages')
+const pkgs = resolve(__dirname, '../../../../packages')
 
 const watchFolders = [ __dirname, join(__dirname, 'node_modules') ]
   .concat(
