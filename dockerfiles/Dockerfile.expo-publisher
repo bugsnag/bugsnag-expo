@@ -19,10 +19,10 @@ RUN rm -rf node_modules
 
 WORKDIR /app
 
-COPY test/expo/features test/expo/features
-COPY test/expo/scripts test/expo/scripts
+COPY test/features test/features
+COPY test/scripts test/scripts
 
-WORKDIR /app/test/expo/features/fixtures/test-app
+WORKDIR /app/test/features/fixtures/test-app
 RUN yarn install
 
 CMD node_modules/.bin/expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD && node_modules/.bin/expo publish --release-channel $EXPO_RELEASE_CHANNEL

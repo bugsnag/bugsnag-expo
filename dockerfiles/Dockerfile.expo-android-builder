@@ -6,7 +6,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 
 RUN apt-get update && apt-get install -y nodejs make g++ yarn rsync jq
 
-WORKDIR /app/test/expo/features/fixtures/test-app
+WORKDIR /app/test/features/fixtures/test-app
 
 RUN mkdir -p /app/test/expo/features/fixures/build
 
@@ -15,7 +15,7 @@ RUN yarn add bunyan rsync turtle-cli@0.24
 
 RUN node_modules/.bin/turtle setup:android
 
-COPY test/expo/features/fixtures/test-app .
+COPY test/features/fixtures/test-app .
 
 ENV GRADLE_OPTS="-Dorg.gradle.daemon=false"
 
@@ -24,6 +24,6 @@ CMD EXPO_ANDROID_KEYSTORE_PASSWORD=password \
     node_modules/.bin/turtle build:android \
     --keystore-path fakekeys.jks \
     --keystore-alias password \
-    --output /app/test/expo/features/fixtures/build/output.apk \
+    --output /app/test/features/fixtures/build/output.apk \
     --release-channel $EXPO_RELEASE_CHANNEL \
     --type apk
