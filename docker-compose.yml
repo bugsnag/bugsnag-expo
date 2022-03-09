@@ -32,7 +32,7 @@ services:
         aliases:
           - maze-runner
     volumes:
-      - ./build:/app/test/expo/build
+      - ./build:/app/test/build
 
   expo-publisher:
     build:
@@ -61,7 +61,7 @@ services:
         aliases:
           - maze-runner
     volumes:
-      - ./build:/app/test/expo/features/fixtures/build
+      - ./build:/app/test/features/fixtures/build
 
   android-builder-base:
     build:

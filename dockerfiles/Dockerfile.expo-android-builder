@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y nodejs make g++ yarn rsync jq
 
 WORKDIR /app/test/features/fixtures/test-app
 
-RUN mkdir -p /app/test/expo/features/fixures/build
+RUN mkdir -p /app/test/features/fixures/build
 
 RUN yarn global add gulp-cli node-gyp
 RUN yarn add bunyan rsync turtle-cli@0.24

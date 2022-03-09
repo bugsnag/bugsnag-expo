@@ -102,7 +102,7 @@ steps:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.ipa
     commands:
-      - test/expo/scripts/build-ios.sh
+      - test/scripts/build-ios.sh
 
   - label: ':runner: expo Android 9'
     # TODO: Pending PLAT-7743
