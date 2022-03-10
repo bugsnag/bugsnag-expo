@@ -8,7 +8,7 @@ jest.mock('@react-native-community/netinfo', () => ({
 
 const NetInfo = _NetInfo as jest.Mocked<typeof _NetInfo>
 
-describe('plugin: react native connectivity breadcrumbs', () => {
+describe('plugin: expo connectivity breadcrumbs', () => {
   beforeEach(() => {
     NetInfo.addEventListener.mockClear()
   })

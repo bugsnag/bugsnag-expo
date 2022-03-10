@@ -33,7 +33,7 @@ module.exports = {
       'expo-cli',
       'plugin-expo-app',
       'plugin-expo-device',
-      'plugin-react-native-connectivity-breadcrumbs'
+      'plugin-expo-connectivity-breadcrumbs'
     ])
   ]
 }

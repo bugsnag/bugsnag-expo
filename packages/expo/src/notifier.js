@@ -30,7 +30,7 @@ const internalPlugins = [
   require('@bugsnag/plugin-console-breadcrumbs'),
   require('@bugsnag/plugin-network-breadcrumbs')([NET_INFO_REACHABILITY_URL, Constants.manifest.logUrl]),
   require('@bugsnag/plugin-react-native-app-state-breadcrumbs'),
-  require('@bugsnag/plugin-react-native-connectivity-breadcrumbs'),
+  require('@bugsnag/plugin-expo-connectivity-breadcrumbs'),
   require('@bugsnag/plugin-react-native-orientation-breadcrumbs'),
   require('@bugsnag/plugin-browser-session'),
   new BugsnagPluginReact(React)
