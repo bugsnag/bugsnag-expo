@@ -17,6 +17,8 @@ RUN node_modules/.bin/turtle setup:android
 
 COPY test/features/fixtures/test-app .
 
+RUN yarn install
+
 ENV GRADLE_OPTS="-Dorg.gradle.daemon=false"
 
 CMD EXPO_ANDROID_KEYSTORE_PASSWORD=password \

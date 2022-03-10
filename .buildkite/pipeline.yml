@@ -54,12 +54,8 @@ steps:
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
 
   - label:  ':docker: Build expo APK builder'
-    # TODO: Pending PLAT-7743
-    skip: Pending PLAT-7743
     key: "expo-android-builder"
     timeout_in_minutes: 40
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     plugins:
       - docker-compose#v3.9.0:
           build: expo-android-builder
@@ -73,8 +69,6 @@ steps:
             - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-latest
 
   - label:  ':docker: Build expo APK'
-    # TODO: Pending PLAT-7743
-    skip: Pending PLAT-7743
     key: "build-expo-apk"
     depends_on:
       - "publish-expo-app"
@@ -105,8 +99,6 @@ steps:
       - test/scripts/build-ios.sh
 
   - label: ':runner: expo Android 9'
-    # TODO: Pending PLAT-7743
-    skip: Pending PLAT-7743
     depends_on:
       - "build-expo-apk"
       - "expo-maze-runner-image"
