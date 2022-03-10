@@ -4,7 +4,7 @@ Automatically detect JavaScript errors in Expo. Get cross-platform error detecti
 
 ---
 
-This is a monorepo (managed with [Lerna](https://lerna.js.org/) containing Expo client [`@bugsnag/expo`](/packages/expo), along with plugins for internal functionality. See [packages](/packages) for a full list of contents.
+This is a monorepo (managed with [Lerna](https://lerna.js.org/) containing our Expo client [`@bugsnag/expo`](./packages/expo), our Expo helper CLI [`bugsnag-expo-cli `](./packages/expo-cli) and dependent plugins. See [packages](./packages) for a full list of contents.
 
 ## Getting started
 
