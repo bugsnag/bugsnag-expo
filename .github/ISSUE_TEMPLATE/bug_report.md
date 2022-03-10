@@ -20,15 +20,7 @@ A clear and concise description of what the bug is.
 
 ### Environment
 * Bugsnag version:
-* Browser framework version (if any):
-    * Vue:
-    * React:
-    * Angular:
-* Server framework version (if any):
-    * Koa:
-    * Express:
-    * Restify:
-* Browser version (e.g. chrome, safari):
+* Expo SDK version (e.g. SDK 44):
 * Device (e.g. iphonex):
 
 <!--
