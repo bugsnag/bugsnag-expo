@@ -1,42 +1,44 @@
-const { prepareFixture } = require('./lib/prepare-fixture')
+const withFixture = require('./lib/with-fixture')
 const insert = require('../insert')
-const { promisify } = require('util')
-const { readFile } = require('fs')
+const { readFile } = require('fs/promises')
 
 describe('expo-cli: insert', () => {
   it('should work on a fresh project', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('blank-00')
-    const msg = await insert(projectRoot)
-    expect(msg).toBe(undefined)
-    const appJs = await promisify(readFile)(`${projectRoot}/App.js`, 'utf8')
-    expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
-    await clean()
+    await withFixture('blank-00', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/App.js`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
+    })
   })
 
   it('shouldn’t insert if @bugsnag/expo is already imported (import)', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('already-configured-00')
-    const appJsBefore = await promisify(readFile)(`${projectRoot}/app.json`, 'utf8')
-    const msg = await insert(projectRoot)
-    expect(msg).toMatch(/already/)
-    const appJsAfter = await promisify(readFile)(`${projectRoot}/app.json`, 'utf8')
-    expect(appJsAfter).toBe(appJsBefore)
-    await clean()
+    await withFixture('already-configured-00', async (projectRoot) => {
+      const appJsBefore = await readFile(`${projectRoot}/app.json`, 'utf8')
+      const msg = await insert(projectRoot)
+      expect(msg).toMatch(/already/)
+
+      const appJsAfter = await readFile(`${projectRoot}/app.json`, 'utf8')
+      expect(appJsAfter).toBe(appJsBefore)
+    })
   })
 
   it('shouldn’t insert if @bugsnag/expo is already imported (require)', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('already-configured-00')
-    const appJsBefore = await promisify(readFile)(`${projectRoot}/app.json`, 'utf8')
-    const msg = await insert(projectRoot)
-    expect(msg).toMatch(/already/)
-    const appJsAfter = await promisify(readFile)(`${projectRoot}/app.json`, 'utf8')
-    expect(appJsAfter).toBe(appJsBefore)
-    await clean()
+    await withFixture('already-configured-00', async (projectRoot) => {
+      const appJsBefore = await readFile(`${projectRoot}/app.json`, 'utf8')
+      const msg = await insert(projectRoot)
+      expect(msg).toMatch(/already/)
+
+      const appJsAfter = await readFile(`${projectRoot}/app.json`, 'utf8')
+      expect(appJsAfter).toBe(appJsBefore)
+    })
   })
 
   it('should provide a reasonable error when there is no App.js', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('empty-00')
-    await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js in/)
-    await clean()
+    await withFixture('empty-00', async (projectRoot) => {
+      await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js in/)
+    })
   })
 
   it('doesn’t swallow any other errors', async () => {
@@ -44,20 +46,22 @@ describe('expo-cli: insert', () => {
   })
 
   it('inserts correct code for pre v7 versions of Bugsnag', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('already-installed-00')
-    const msg = await insert(projectRoot)
-    expect(msg).toBe(undefined)
-    const appJs = await promisify(readFile)(`${projectRoot}/App.js`, 'utf8')
-    expect(appJs).toMatch(/^import bugsnag from '@bugsnag\/expo';\sconst bugsnagClient = bugsnag\(\);\s/)
-    await clean()
+    await withFixture('already-installed-00', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/App.js`, 'utf8')
+      expect(appJs).toMatch(/^import bugsnag from '@bugsnag\/expo';\sconst bugsnagClient = bugsnag\(\);\s/)
+    })
   })
 
   it('inserts correct code for post v7.0.0 versions of Bugsnag', async () => {
-    const { target: projectRoot, clean } = await prepareFixture('already-installed-01')
-    const msg = await insert(projectRoot)
-    expect(msg).toBe(undefined)
-    const appJs = await promisify(readFile)(`${projectRoot}/App.js`, 'utf8')
-    expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag\.start\(\);\s/)
-    await clean()
+    await withFixture('already-installed-01', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/App.js`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag\.start\(\);\s/)
+    })
   })
 })
