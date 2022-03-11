@@ -4,12 +4,10 @@ import { bugsnagClient } from './bugsnag'
 
 export default class ManualBreadcrumbs extends Component {
   manualBreadcrumb = () => {
-    while (bugsnagClient._breadcrumbs.length > 0) {
-      bugsnagClient._breadcrumbs.pop()
-    }
-    bugsnagClient.leaveBreadcrumb("manualBreadcrumb", {
-      reason: "testing"
-    })
+    bugsnagClient._breadcrumbs = []
+
+    bugsnagClient.leaveBreadcrumb("manualBreadcrumb", { reason: "testing" })
+
     bugsnagClient.notify(new Error("ManualBreadcrumbError"))
   }
 
@@ -19,6 +17,11 @@ export default class ManualBreadcrumbs extends Component {
         <Button accessibilityLabel="manualBreadcrumbButton"
           title="manualBreadcrumb"
           onPress={this.manualBreadcrumb}
+        />
+
+        <Button
+          title="this button somehow makes the test run, but otherwise doesn't do anything"
+          onPress={() => {}}
         />
       </View>
     )
