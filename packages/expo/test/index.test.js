@@ -1,6 +1,4 @@
-import BugsnagExpoStatic, { Client, NotifiableError, OnErrorCallback, Event } from '..'
-import { Breadcrumb, Session } from '../types/bugsnag'
-import delivery from '@bugsnag/delivery-expo'
+const delivery = require('@bugsnag/delivery-expo')
 
 jest.mock('expo-constants', () => ({
   default: {
@@ -85,17 +83,6 @@ jest.doMock('../../plugin-expo-device/node_modules/expo-device', () => ({
   modelName: 'Pixel 4'
 }))
 
-declare global {
-  namespace NodeJS { // eslint-disable-line
-    interface Global {
-      ErrorUtils: {
-        setGlobalHandler: (fn: Function) => void
-        getGlobalHandler: () => Function
-      }
-    }
-  }
-}
-
 global.ErrorUtils = {
   setGlobalHandler: jest.fn(),
   getGlobalHandler: jest.fn()
@@ -104,7 +91,7 @@ global.ErrorUtils = {
 const API_KEY = '030bab153e7c2349be364d23b5ae93b5'
 
 describe('expo notifier', () => {
-  let Bugsnag: typeof BugsnagExpoStatic
+  let Bugsnag
   let _delivery
 
   beforeAll(() => {
@@ -112,10 +99,10 @@ describe('expo notifier', () => {
   })
 
   beforeEach(() => {
-    (delivery as jest.MockedFunction<typeof delivery>).mockImplementation(() => {
+    delivery.mockImplementation(() => {
       _delivery = {
-        sendSession: jest.fn((p, cb?: () => void) => { cb?.() }),
-        sendEvent: jest.fn((p, cb?: () => void) => { cb?.() })
+        sendSession: jest.fn((p, cb) => { cb && cb() }),
+        sendEvent: jest.fn((p, cb) => { cb && cb() })
       }
       return _delivery
     })
@@ -137,11 +124,7 @@ describe('expo notifier', () => {
   })
 
   it('notifies handled errors', (done) => {
-    // Explicitly reference the public types to ensure they are exported correctly
-    const error: NotifiableError = new Error('123')
-    const onError: OnErrorCallback = (event: Event) => {}
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const client: Client = Bugsnag.start({
+    Bugsnag.start({
       apiKey: API_KEY,
       appVersion: '1.2.3',
       appType: 'worker',
@@ -153,12 +136,8 @@ describe('expo notifier', () => {
       onError: [
         event => true
       ],
-      onBreadcrumb: (b: Breadcrumb) => {
-        return false
-      },
-      onSession: (s: Session) => {
-        return true
-      },
+      onBreadcrumb: () => false,
+      onSession: () => true,
       endpoints: { notify: 'https://notify.bugsnag.com', sessions: 'https://sessions.bugsnag.com' },
       autoTrackSessions: true,
       enabledReleaseStages: ['production'],
@@ -171,12 +150,17 @@ describe('expo notifier', () => {
       redactedKeys: ['foo', /bar/]
     })
 
-    Bugsnag.notify(error, onError, () => {
+    const onError = jest.fn()
+
+    Bugsnag.notify(new Error('123'), onError, () => {
+      expect(onError).toHaveBeenCalled()
+
       expect(_delivery.sendSession).toHaveBeenCalledWith(expect.objectContaining({
         app: expect.objectContaining({ releaseStage: 'production', version: '1.2.3', type: 'worker' }),
         device: expect.objectContaining({ manufacturer: 'Google', model: 'Pixel 4', modelNumber: undefined, osName: 'android', totalMemory: undefined }),
         sessions: expect.arrayContaining([expect.objectContaining({ id: expect.any(String), startedAt: expect.any(Date) })])
       }))
+
       expect(_delivery.sendEvent).toHaveBeenCalledWith(expect.objectContaining({
         apiKey: '030bab153e7c2349be364d23b5ae93b5',
         events: expect.arrayContaining([

@@ -1,12 +1,9 @@
-import fetch from 'node-fetch'
-import http from 'http'
-import delivery from '../'
-import { EventDeliveryPayload } from '@bugsnag/core/client'
-import { Client } from '@bugsnag/core'
-import { AddressInfo } from 'net'
-import UndeliveredPayloadQueue from '../queue'
-import NetworkStatus from '../network-status'
-import RedeliveryLoop from '../redelivery'
+const fetch = require('node-fetch')
+const http = require('http')
+const delivery = require('../')
+const UndeliveredPayloadQueue = require('../queue')
+const NetworkStatus = require('../network-status')
+const RedeliveryLoop = require('../redelivery')
 
 const noopLogger = {
   debug: () => {},
@@ -49,12 +46,8 @@ jest.mock('../queue')
 jest.mock('../redelivery')
 jest.mock('../network-status')
 
-const UndeliveredPayloadQueueMock = UndeliveredPayloadQueue as jest.MockedClass<typeof UndeliveredPayloadQueue>
-const NetworkStatusMock = NetworkStatus as jest.MockedClass<typeof NetworkStatus>
-const RedeliveryLoopMock = RedeliveryLoop as jest.MockedClass<typeof RedeliveryLoop>
-
 const mockServer = (statusCode = 200) => {
-  const requests: Array<{ url?: string, method?: string, headers: http.IncomingHttpHeaders, body?: string }> = []
+  const requests = []
   return {
     requests,
     server: http.createServer((req, res) => {
@@ -75,36 +68,38 @@ const mockServer = (statusCode = 200) => {
 }
 
 describe('delivery: expo', () => {
-  let enqueueSpy: jest.Mock
+  let enqueueSpy
 
   beforeEach(() => {
     enqueueSpy = jest.fn().mockResolvedValue(true)
 
-    UndeliveredPayloadQueueMock.mockImplementation(() => ({
+    UndeliveredPayloadQueue.mockImplementation(() => ({
       init: () => Promise.resolve(true),
       enqueue: enqueueSpy
-    } as any))
+    }))
 
-    NetworkStatusMock.mockImplementation(() => ({
+    NetworkStatus.mockImplementation(() => ({
       isConnected: true,
-      watch: (fn: (isConnected: boolean) => void) => { fn(true) }
-    } as any))
+      watch: fn => { fn(true) }
+    }))
   })
 
   it('sends events successfully', done => {
     const { requests, server } = mockServer()
-    server.listen((err: any) => {
+    server.listen(err => {
       expect(err).toBeUndefined()
 
       const payload = {
         events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-      } as unknown as EventDeliveryPayload
+      }
+
       const config = {
         apiKey: 'aaaaaaaa',
-        endpoints: { notify: `http://0.0.0.0:${(server.address() as AddressInfo).port}/notify/` },
+        endpoints: { notify: `http://0.0.0.0:${server.address().port}/notify/` },
         redactedKeys: []
       }
-      delivery({ _config: config, _logger: noopLogger } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+      delivery({ _config: config, _logger: noopLogger }, fetch).sendEvent(payload, (err) => {
         expect(err).toBe(null)
         expect(requests.length).toBe(1)
         expect(requests[0].method).toBe('POST')
@@ -124,18 +119,20 @@ describe('delivery: expo', () => {
 
   it('sends sessions successfully', done => {
     const { requests, server } = mockServer(202)
-    server.listen((err: any) => {
+    server.listen(err => {
       expect(err).toBeUndefined()
 
       const payload = {
         events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-      } as unknown as EventDeliveryPayload
+      }
+
       const config = {
         apiKey: 'aaaaaaaa',
-        endpoints: { notify: 'blah', sessions: `http://0.0.0.0:${(server.address() as AddressInfo).port}/sessions/` },
+        endpoints: { notify: 'blah', sessions: `http://0.0.0.0:${server.address().port}/sessions/` },
         redactedKeys: []
       }
-      delivery({ _config: config, _logger: noopLogger } as unknown as Client, fetch).sendSession(payload, (err) => {
+
+      delivery({ _config: config, _logger: noopLogger }, fetch).sendSession(payload, (err) => {
         expect(err).toBe(null)
         expect(requests.length).toBe(1)
         expect(requests[0].method).toBe('POST')
@@ -156,18 +153,21 @@ describe('delivery: expo', () => {
   it('handles errors gracefully (ECONNREFUSED)', done => {
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-    } as unknown as EventDeliveryPayload
+    }
+
     const config = {
       apiKey: 'aaaaaaaa',
       endpoints: { notify: 'http://0.0.0.0:9999/notify/' },
       redactedKeys: []
     }
+
     let didLog = false
     const log = () => { didLog = true }
-    delivery({ _config: config, _logger: { error: log, info: () => {} } } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+    delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendEvent(payload, (err) => {
       expect(didLog).toBe(true)
       expect(err).toBeTruthy()
-      expect((err as any).code).toBe('ECONNREFUSED')
+      expect(err.code).toBe('ECONNREFUSED')
       expect(enqueueSpy).toHaveBeenCalled()
       done()
     })
@@ -175,20 +175,23 @@ describe('delivery: expo', () => {
 
   it('handles errors gracefully (400)', done => {
     const { requests, server } = mockServer(400)
-    server.listen((err: any) => {
+    server.listen(err => {
       expect(err).toBeUndefined()
 
       const payload = {
         events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-      } as unknown as EventDeliveryPayload
+      }
+
       const config = {
         apiKey: 'aaaaaaaa',
-        endpoints: { notify: `http://0.0.0.0:${(server.address() as AddressInfo).port}/notify/` },
+        endpoints: { notify: `http://0.0.0.0:${server.address().port}/notify/` },
         redactedKeys: []
       }
+
       let didLog = false
       const log = () => { didLog = true }
-      delivery({ _config: config, _logger: { error: log, info: () => {} } } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+      delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendEvent(payload, (err) => {
         expect(didLog).toBe(true)
         expect(enqueueSpy).not.toHaveBeenCalled()
         expect(err).toBeTruthy()
@@ -202,18 +205,21 @@ describe('delivery: expo', () => {
   it('handles errors gracefully for sessions (ECONNREFUSED)', done => {
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-    } as unknown as EventDeliveryPayload
+    }
+
     const config = {
       apiKey: 'aaaaaaaa',
       endpoints: { sessions: 'http://0.0.0.0:9999/sessions/' },
       redactedKeys: []
     }
+
     let didLog = false
     const log = () => { didLog = true }
-    delivery({ _config: config, _logger: { error: log, info: () => {} } } as unknown as Client, fetch).sendSession(payload, (err) => {
+
+    delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendSession(payload, (err) => {
       expect(didLog).toBe(true)
       expect(err).toBeTruthy()
-      expect((err as any).code).toBe('ECONNREFUSED')
+      expect(err.code).toBe('ECONNREFUSED')
       expect(enqueueSpy).toHaveBeenCalled()
       done()
     })
@@ -224,22 +230,26 @@ describe('delivery: expo', () => {
       req.connection.destroy()
     })
 
-    server.listen((err: any) => {
+    server.listen(err => {
       expect(err).toBeFalsy()
+
       const payload = {
         events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-      } as unknown as EventDeliveryPayload
+      }
+
       const config = {
         apiKey: 'aaaaaaaa',
-        endpoints: { notify: `http://0.0.0.0:${(server.address() as AddressInfo).port}/notify/` },
+        endpoints: { notify: `http://0.0.0.0:${server.address().port}/notify/` },
         redactedKeys: []
       }
+
       let didLog = false
       const log = () => { didLog = true }
-      delivery({ _config: config, _logger: { error: log, info: () => {} } } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+      delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendEvent(payload, (err) => {
         expect(didLog).toBe(true)
         expect(err).toBeTruthy()
-        expect((err as any).code).toBe('ECONNRESET')
+        expect(err.code).toBe('ECONNRESET')
         expect(enqueueSpy).toHaveBeenCalled()
 
         server.close()
@@ -254,19 +264,23 @@ describe('delivery: expo', () => {
       res.end('NOT OK')
     })
 
-    server.listen((err: any) => {
+    server.listen(err => {
       expect(err).toBeFalsy()
+
       const payload = {
         events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-      } as unknown as EventDeliveryPayload
+      }
+
       const config = {
         apiKey: 'aaaaaaaa',
-        endpoints: { notify: `http://0.0.0.0:${(server.address() as AddressInfo).port}/notify/` },
+        endpoints: { notify: `http://0.0.0.0:${server.address().port}/notify/` },
         redactedKeys: []
       }
+
       let didLog = false
       const log = () => { didLog = true }
-      delivery({ _config: config, _logger: { error: log, info: () => {} } } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+      delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendEvent(payload, (err) => {
         expect(didLog).toBe(true)
         expect(err).toBeTruthy()
         expect(enqueueSpy).toHaveBeenCalled()
@@ -281,13 +295,15 @@ describe('delivery: expo', () => {
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }],
       attemptImmediateDelivery: false
-    } as unknown as EventDeliveryPayload
+    }
+
     const config = {
       apiKey: 'aaaaaaaa',
       endpoints: { notify: 'https://some-address.com' },
       redactedKeys: []
     }
-    delivery({ _config: config, _logger: noopLogger } as unknown as Client, fetch).sendEvent(payload, (err) => {
+
+    delivery({ _config: config, _logger: noopLogger }, fetch).sendEvent(payload, (err) => {
       expect(err).not.toBeTruthy()
       expect(enqueueSpy).toHaveBeenCalled()
       done()
@@ -296,35 +312,33 @@ describe('delivery: expo', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('starts the redelivery loop if there is a connection', done => {
-    RedeliveryLoopMock.mockImplementation(() => ({
-      start: () => {
-        done()
-      }
-    } as any))
+    RedeliveryLoop.mockImplementation(() => ({
+      start: done
+    }))
 
-    delivery({ _logger: noopLogger } as unknown as Client, fetch)
+    delivery({ _logger: noopLogger }, fetch)
   })
 
   it('stops the redelivery loop if there is not a connection', done => {
     const startSpy = jest.fn()
     const stopSpy = jest.fn()
 
-    RedeliveryLoopMock.mockImplementation(() => ({
+    RedeliveryLoop.mockImplementation(() => ({
       start: startSpy,
       stop: stopSpy
-    } as any))
+    }))
 
-    let watcher: (isConnected: boolean) => void
+    let watcher
 
-    NetworkStatusMock.mockImplementation(() => ({
+    NetworkStatus.mockImplementation(() => ({
       isConnected: false,
-      watch: (fn: (isConnected: boolean) => void) => {
+      watch: fn => {
         watcher = fn
         onWatch()
       }
-    } as any))
+    }))
 
-    delivery({ _logger: noopLogger } as unknown as Client, fetch)
+    delivery({ _logger: noopLogger }, fetch)
 
     const onWatch = () => {
       expect(typeof watcher).toBe('function')
@@ -338,21 +352,23 @@ describe('delivery: expo', () => {
   })
 
   it('doesn’t attempt to send when not connected', done => {
-    NetworkStatusMock.mockImplementation(() => ({
+    NetworkStatus.mockImplementation(() => ({
       isConnected: false,
-      watch: (fn: (isConnected: boolean) => void) => {}
-    } as any))
+      watch: () => {}
+    }))
 
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
-    } as unknown as EventDeliveryPayload
+    }
+
     const config = {
       apiKey: 'aaaaaaaa',
       endpoints: { notify: 'http://some-address.com' },
       redactedKeys: []
     }
 
-    const d = delivery({ _config: config, _logger: noopLogger } as unknown as Client, fetch)
+    const d = delivery({ _config: config, _logger: noopLogger }, fetch)
+
     d.sendEvent(payload, (err) => {
       expect(err).not.toBeTruthy()
       expect(enqueueSpy).toHaveBeenCalledTimes(1)

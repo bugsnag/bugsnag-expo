@@ -1,5 +1,5 @@
-import { prepareFixture } from './lib/prepare-fixture'
-import detectInstalled from '../detect-installed'
+const { prepareFixture } = require('./lib/prepare-fixture')
+const detectInstalled = require('../detect-installed')
 
 describe('expo-cli: detect-installed', () => {
   it('should work on a fresh project', async () => {

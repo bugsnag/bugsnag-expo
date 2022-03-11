@@ -1,8 +1,8 @@
-import Redelivery from '../redelivery'
+const Redelivery = require('../redelivery')
 
 describe('delivery: expo -> redelivery', () => {
   it('should attempt to dequeue (almost) immediately', done => {
-    const send = (url: string, opts: {}, cb: () => void) => {
+    const send = (url, opts, cb) => {
       expect(url).toBe('https://notify.bugsnag.com')
       consumer.stop()
       cb()
@@ -27,7 +27,7 @@ describe('delivery: expo -> redelivery', () => {
   })
 
   it('should clear the timeout if nothing is found on the queue', done => {
-    const send = (url: string, opts: {}, cb: () => void) => {
+    const send = (url, opts, cb) => {
       expect(url).toBe('https://notify.bugsnag.com')
       expect(nCalls).toBe(5)
       consumer.stop()
@@ -62,7 +62,7 @@ describe('delivery: expo -> redelivery', () => {
   })
 
   it('should not remove something from the queue if it fails to send', done => {
-    const send = (url: string, opts: {}, cb: (err?: Error) => void) => {
+    const send = (url, opts, cb) => {
       cb(new Error('derp'))
     }
 
@@ -93,8 +93,8 @@ describe('delivery: expo -> redelivery', () => {
   })
 
   it('removes something from the queue if it fails in a non-retryable way', done => {
-    const send = (url: string, opts: {}, cb: (err?: Error) => void) => {
-      const err: Error & { isRetryable?: boolean } = new Error('derp')
+    const send = (url, opts, cb) => {
+      const err = new Error('derp')
       err.isRetryable = false
       cb(err)
     }
@@ -127,7 +127,7 @@ describe('delivery: expo -> redelivery', () => {
   })
 
   it('removes something from the queue if it reaches the maximum retries', done => {
-    const send = (url: string, opts: {}, cb: (err?: Error) => void) => {
+    const send = (url, opts, cb) => {
       const err = new Error('derp')
       cb(err)
     }

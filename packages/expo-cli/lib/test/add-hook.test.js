@@ -1,8 +1,8 @@
 /* eslint-disable jest/no-try-expect */
-import { prepareFixture } from './lib/prepare-fixture'
-import addHook from '../add-hook'
-import { promisify } from 'util'
-import { readFile } from 'fs'
+const { prepareFixture } = require('./lib/prepare-fixture')
+const addHook = require('../add-hook')
+const { promisify } = require('util')
+const { readFile } = require('fs')
 
 describe('expo-cli: add-hook', () => {
   it('should work on a fresh project', async () => {

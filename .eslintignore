@@ -1,8 +1,6 @@
 dist
-examples
-**/node_modules/**
+node_modules
 scratch
 coverage
-packages/**/features
-packages/**/fixtures
-test
+fixtures
+/examples

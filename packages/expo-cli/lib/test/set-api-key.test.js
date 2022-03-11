@@ -1,8 +1,8 @@
 /* eslint-disable jest/no-try-expect */
-import { prepareFixture } from './lib/prepare-fixture'
-import setApiKey from '../set-api-key'
-import { promisify } from 'util'
-import { readFile } from 'fs'
+const { prepareFixture } = require('./lib/prepare-fixture')
+const setApiKey = require('../set-api-key')
+const { promisify } = require('util')
+const { readFile } = require('fs')
 
 describe('expo-cli: set-api-key', () => {
   it('should work on a fresh project', async () => {

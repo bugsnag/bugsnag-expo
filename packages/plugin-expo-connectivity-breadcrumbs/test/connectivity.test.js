@@ -1,12 +1,10 @@
-import Client from '@bugsnag/core/client'
-import _NetInfo, { NetInfoState } from '@react-native-community/netinfo'
-import plugin from '../'
+const Client = require('@bugsnag/core/client')
+const NetInfo = require('@react-native-community/netinfo')
+const plugin = require('../')
 
 jest.mock('@react-native-community/netinfo', () => ({
   addEventListener: jest.fn()
 }))
-
-const NetInfo = _NetInfo as jest.Mocked<typeof _NetInfo>
 
 describe('plugin: expo connectivity breadcrumbs', () => {
   beforeEach(() => {
@@ -22,13 +20,13 @@ describe('plugin: expo connectivity breadcrumbs', () => {
 
     const _cb = NetInfo.addEventListener.mock.calls[0][0]
 
-    _cb({ type: 'wifi', isConnected: true, isInternetReachable: true } as unknown as NetInfoState)
+    _cb({ type: 'wifi', isConnected: true, isInternetReachable: true })
     expect(client._breadcrumbs.length).toBe(1)
     expect(client._breadcrumbs[0].type).toBe('state')
     expect(client._breadcrumbs[0].message).toBe('Connectivity changed')
     expect(client._breadcrumbs[0].metadata).toEqual({ type: 'wifi', isConnected: true, isInternetReachable: true })
 
-    _cb({ type: 'none', isConnected: false, isInternetReachable: false } as unknown as NetInfoState)
+    _cb({ type: 'none', isConnected: false, isInternetReachable: false })
     expect(client._breadcrumbs.length).toBe(2)
     expect(client._breadcrumbs[1].type).toBe('state')
     expect(client._breadcrumbs[1].message).toBe('Connectivity changed')

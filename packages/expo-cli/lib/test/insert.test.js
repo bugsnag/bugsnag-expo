@@ -1,7 +1,7 @@
-import { prepareFixture } from './lib/prepare-fixture'
-import insert from '../insert'
-import { promisify } from 'util'
-import { readFile } from 'fs'
+const { prepareFixture } = require('./lib/prepare-fixture')
+const insert = require('../insert')
+const { promisify } = require('util')
+const { readFile } = require('fs')
 
 describe('expo-cli: insert', () => {
   it('should work on a fresh project', async () => {
