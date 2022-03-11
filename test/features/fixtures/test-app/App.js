@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Button, Picker } from 'react-native'
+import { StyleSheet, View, Button, Picker, Text } from 'react-native'
 import Handled from './app/handled'
 import Unhandled from './app/unhandled'
 import ErrorBoundary from './app/error_boundary'
@@ -14,7 +14,7 @@ import DeviceFeature from './app/device'
 import Sessions from './app/sessions'
 import NetworkBreadcrumbs from './app/network_breadcrumbs'
 import FeatureFlags from './app/feature_flags'
-import * as ScreenOrientation from 'expo-screen-orientation';
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 const SCENARIOS = [
   'handled',
@@ -36,10 +36,14 @@ const SCENARIOS = [
 export default class App extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
-      scenario: null
+      scenario: null,
+      loaded: false,
     }
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+      .then(() => this.setState({ loaded: true }))
   }
 
   renderScenario() {
@@ -92,7 +96,10 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.child}>
-          { this.renderScenario() }
+          {this.state.loaded
+            ? this.renderScenario()
+            : <Text>Loading...</Text>
+          }
         </View>
       </View>
     )
