@@ -129,6 +129,30 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
+  - label: ':runner: expo iOS 15'
+    depends_on:
+      - "build-expo-ipa"
+      - "expo-maze-runner-image"
+    timeout_in_minutes: 50
+    plugins:
+      artifacts#v1.5.0:
+        download: "build/output.ipa"
+      docker-compose#v3.9.0:
+        pull: expo-maze-runner
+        run: expo-maze-runner
+        use-aliases: true
+        command:
+          - --app=build/output.ipa
+          - --farm=bs
+          - --device=IOS_15
+          - --a11y-locator
+          - --appium-version=1.21.0
+          - --retry=2
+          - --order=random
+    concurrency: 9
+    concurrency_group: 'browserstack-app'
+    concurrency_method: eager
+
   - label: ':runner: expo iOS 12'
     depends_on:
       - "build-expo-ipa"
@@ -147,8 +171,8 @@ steps:
           - --device=IOS_12
           - --a11y-locator
           - --appium-version=1.16.0
-          - --fail-fast
           - --retry=2
+          - --order=random
     concurrency: 9
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
