@@ -98,7 +98,7 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label: ':runner: expo Android 9'
+  - label: ':runner: expo Android 12'
     depends_on:
       - "build-expo-apk"
       - "expo-maze-runner-image"
@@ -113,7 +113,7 @@ steps:
         command:
           - --app=build/output.apk
           - --farm=bs
-          - --device=ANDROID_9_0
+          - --device=ANDROID_12_0
           - --a11y-locator
           - --fail-fast
           - --retry=2
