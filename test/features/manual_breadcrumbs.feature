@@ -4,7 +4,6 @@ Background:
   Given the element "manualBreadcrumbs" is present
   And I click the element "manualBreadcrumbs"
 
-@skip_ios_10 @skip_ios_11 @skip_ios_12
 Scenario: Manual breadcrumbs are enabled when automatic breadcrumbs are disabled
   Given the element "manualBreadcrumbButton" is present
   When I click the element "manualBreadcrumbButton"
