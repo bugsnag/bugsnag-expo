@@ -9,7 +9,7 @@ cd test/features/fixtures/test-app
 
 npm install
 
-./node_modules/.bin/turtle build:ios \
+turtle build:ios \
   -c ./app.json \
   --team-id $APPLE_TEAM_ID \
   --dist-p12-path $EXPO_P12_PATH \
