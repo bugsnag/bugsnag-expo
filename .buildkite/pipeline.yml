@@ -91,7 +91,7 @@ steps:
       - "publish-expo-app"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-6"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.ipa
