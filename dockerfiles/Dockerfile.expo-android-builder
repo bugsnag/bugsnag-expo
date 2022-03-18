@@ -10,7 +10,7 @@ WORKDIR /app/test/features/fixtures/test-app
 
 RUN mkdir -p /app/test/features/fixures/build
 
-RUN npm i -g gulp-cli node-gyp bunyan rsync turtle-cli@0.24
+RUN npm i -g turtle-cli@0.24
 
 RUN turtle setup:android
 
