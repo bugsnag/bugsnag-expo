@@ -10,10 +10,9 @@ WORKDIR /app/test/features/fixtures/test-app
 
 RUN mkdir -p /app/test/features/fixures/build
 
-RUN yarn global add gulp-cli node-gyp
-RUN yarn add bunyan rsync turtle-cli@0.24
+RUN yarn global add turtle-cli@0.24
 
-RUN node_modules/.bin/turtle setup:android
+RUN turtle setup:android
 
 COPY test/features/fixtures/test-app .
 
@@ -23,7 +22,7 @@ ENV GRADLE_OPTS="-Dorg.gradle.daemon=false"
 
 CMD EXPO_ANDROID_KEYSTORE_PASSWORD=password \
     EXPO_ANDROID_KEY_PASSWORD=password \
-    node_modules/.bin/turtle build:android \
+    turtle build:android \
     --keystore-path fakekeys.jks \
     --keystore-alias password \
     --output /app/test/features/fixtures/build/output.apk \
