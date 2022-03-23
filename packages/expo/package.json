@@ -46,11 +46,14 @@
     "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^7.16.0",
     "@bugsnag/plugin-react-native-unhandled-rejection": "^7.16.0",
     "@bugsnag/source-maps": "^2.3.0",
-    "bugsnag-build-reporter": "^1.0.1",
+    "bugsnag-build-reporter": "^1.0.1"
+  },
+  "devDependencies": {
     "expo-constants": "~13.0.0"
   },
   "peerDependencies": {
     "expo": ">=33.0.0",
+    "expo-constants": "~13.0.0",
     "react": "*"
   }
 }

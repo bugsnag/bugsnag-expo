@@ -16,13 +16,12 @@
   ],
   "author": "Bugsnag",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
+    "@bugsnag/core": "^7.16.0",
     "@react-native-community/netinfo": "7.1.3"
   },
-  "devDependencies": {
-    "@bugsnag/core": "^7.16.0"
-  },
   "peerDependencies": {
-    "@bugsnag/core": "^7.0.0"
+    "@bugsnag/core": "^7.0.0",
+    "@react-native-community/netinfo": "7.1.3"
   }
 }
