@@ -1,26 +1,29 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 RUN apk add --update bash git python3 yarn
 
+# we need at least 8.3.0 for NPM's 'overrides' feature
+RUN npm install -g npm@^8.3.0 expo-cli
+
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json lerna.json .eslintignore .eslintrc.js jest.config.js ./
 RUN npm install
 
-COPY lerna.json .eslintignore .eslintrc.js jest.config.js ./
-COPY packages ./packages
-COPY bin ./bin
-RUN npx lerna bootstrap
-RUN npx lerna run build --scope "@bugsnag/expo" --scope "@bugsnag/plugin-react"
-
-RUN rm -rf node_modules
-
-WORKDIR /app
-
+COPY packages packages
+COPY bin bin
 COPY test/features test/features
 COPY test/scripts test/scripts
 
-WORKDIR /app/test/features/fixtures/test-app
-RUN yarn install
+# pack the packages and move them into the test fixture
+RUN npm pack packages/*/
+RUN mv *.tgz test/features/fixtures/test-app
 
-CMD node_modules/.bin/expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD && node_modules/.bin/expo publish --release-channel $EXPO_RELEASE_CHANNEL
+WORKDIR /app/test/features/fixtures/test-app
+
+# install the packed packages and delete them
+RUN npm install *.tgz && rm *.tgz
+
+RUN npm install
+
+CMD npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD && npx expo publish --release-channel $EXPO_RELEASE_CHANNEL
