@@ -11,16 +11,16 @@ const detectInstalled = require('../lib/detect-installed')
 module.exports = async (argv, globalOpts) => {
   const projectRoot = globalOpts['project-root']
   const alreadyInstalled = await detectInstalled(projectRoot)
-  const isWanted = await confirmWanted(alreadyInstalled, projectRoot)
-  if (isWanted) {
+
+  if (await isWanted(alreadyInstalled, projectRoot)) {
     const version = await selectVersion(projectRoot)
-    const tool = await withTool(projectRoot)
-    console.log(blue(`> Installing @bugsnag/expo with ${tool}. This could take a while!`))
-    await install(tool, version, projectRoot)
+
+    console.log(blue('> Installing @bugsnag/expo. This could take a while!'))
+    await install(version, projectRoot)
   }
 }
 
-const confirmWanted = async (alreadyInstalled, root) => {
+const isWanted = async (alreadyInstalled, root) => {
   return (await prompts({
     type: 'confirm',
     name: 'install',
@@ -29,20 +29,6 @@ const confirmWanted = async (alreadyInstalled, root) => {
       : '@bugsnag/expo does not appear to be installed, do you want to install it?',
     initial: !alreadyInstalled
   }, { onCancel })).install
-}
-
-const withTool = async (root) => {
-  const cli = await npmOrYarn(root)
-  return (await prompts({
-    type: 'select',
-    name: 'tool',
-    message: 'Using yarn or npm?',
-    choices: [
-      { title: 'npm', value: 'npm' },
-      { title: 'yarn', value: 'yarn' }
-    ],
-    initial: cli === 'npm' ? 0 : 1
-  }, { onCancel })).tool
 }
 
 const selectVersion = async (dir) => {
@@ -107,14 +93,5 @@ const selectVersion = async (dir) => {
     return version
   } catch (e) {
     throw new Error(`Could not detect Expo version in package.json: ${e.message}`)
-  }
-}
-
-const npmOrYarn = async (dir) => {
-  try {
-    await promisify(readFile)(join(dir, 'yarn.lock'))
-    return 'yarn'
-  } catch (e) {
-    return 'npm'
   }
 }
