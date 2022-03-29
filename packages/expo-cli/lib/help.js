@@ -16,4 +16,6 @@ module.exports = () => console.log(`
   options
     --project-root  set the path to the expo project
                     (defaults to the current working directory)
+    --npm           install packages using npm
+    --yarn          install packages using Yarn
 `)

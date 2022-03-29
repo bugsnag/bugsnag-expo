@@ -17,7 +17,9 @@ const commands = new Map([
 const cliOpts = [
   { name: 'command', defaultOption: true },
   { name: 'help', type: Boolean },
-  { name: 'project-root', defaultValue: process.cwd() }
+  { name: 'project-root', defaultValue: process.cwd() },
+  { name: 'npm', type: Boolean },
+  { name: 'yarn', type: Boolean }
 ]
 
 const parsedArgs = commandLineArgs(cliOpts, { stopAtFirstUnknown: true })

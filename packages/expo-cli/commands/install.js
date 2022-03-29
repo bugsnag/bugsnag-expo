@@ -16,7 +16,13 @@ module.exports = async (argv, globalOpts) => {
     const version = await selectVersion(projectRoot)
 
     console.log(blue('> Installing @bugsnag/expo. This could take a while!'))
-    await install(version, projectRoot)
+
+    const options = {
+      npm: globalOpts.npm,
+      yarn: globalOpts.yarn
+    }
+
+    await install(version, projectRoot, options)
   }
 }
 

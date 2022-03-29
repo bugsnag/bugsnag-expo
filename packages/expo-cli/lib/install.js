@@ -1,5 +1,19 @@
 const { spawn } = require('child_process')
 
+function resolveCommand (version, options) {
+  const command = ['install', resolvePackageName(version)]
+
+  if (options.npm) {
+    command.push('--npm')
+  }
+
+  if (options.yarn) {
+    command.push('--yarn')
+  }
+
+  return command
+}
+
 function resolvePackageName (version) {
   if (version === 'latest') {
     return '@bugsnag/expo'
@@ -8,9 +22,9 @@ function resolvePackageName (version) {
   return `@bugsnag/expo@${version}`
 }
 
-module.exports = (version, projectRoot) => {
+module.exports = (version, projectRoot, options) => {
   return new Promise((resolve, reject) => {
-    const command = ['install', resolvePackageName(version)]
+    const command = resolveCommand(version, options)
     const proc = spawn('expo', command, { cwd: projectRoot })
 
     // buffer output in case of an error
