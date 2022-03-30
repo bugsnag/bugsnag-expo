@@ -3,7 +3,6 @@
   "private": "true",
   "version": "0.0.0",
   "dependencies": {
-    "@bugsnag/expo": "^7.0.1",
     "@react-native-community/netinfo": "*",
     "expo-application": "*",
     "expo-constants": "*",
