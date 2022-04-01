@@ -1,7 +1,7 @@
 const { join } = require('path')
 const { readFile, writeFile } = require('fs')
 const { promisify } = require('util')
-const detectInstalled = require('./detect-installed')
+const { detectInstalledVersion } = require('./detect-installed')
 const semver = require('semver')
 
 const importRe = /from ["']@bugsnag\/expo["']/
@@ -34,7 +34,7 @@ Bugsnag.start();
 }
 
 const getCode = async (projectRoot) => {
-  const manifestRange = await detectInstalled(projectRoot)
+  const manifestRange = await detectInstalledVersion(projectRoot)
   const isPostV7 = !manifestRange || semver.ltr('6.99.99', manifestRange)
   return code[isPostV7 ? 'postV7' : 'preV7']
 }

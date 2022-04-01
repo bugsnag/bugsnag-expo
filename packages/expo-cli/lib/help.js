@@ -7,7 +7,7 @@ module.exports = () => console.log(`
   commands
     init            integrates Bugsnag with an Expo project
                     (this command runs all of the other commands)
-    install         installs @bugsnag/expo
+    install         installs @bugsnag/expo and its dependencies
     insert          inserts @bugsnag/expo into an app
     set-api-key     inserts a provided api key into app.json
     add-hook        configures the Bugsnag postPublish hook in app.json

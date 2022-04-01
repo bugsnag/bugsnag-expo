@@ -11,7 +11,16 @@ describe('expo-cli: install', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/expo'])
+        expect(args).toEqual([
+          'install',
+          '@bugsnag/expo',
+          '@react-native-community/netinfo',
+          'expo-application',
+          'expo-constants',
+          'expo-crypto',
+          'expo-device',
+          'expo-file-system'
+        ])
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -45,7 +54,17 @@ describe('expo-cli: install', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/expo', '--npm'])
+        expect(args).toEqual([
+          'install',
+          '@bugsnag/expo',
+          '@react-native-community/netinfo',
+          'expo-application',
+          'expo-constants',
+          'expo-crypto',
+          'expo-device',
+          'expo-file-system',
+          '--npm'
+        ])
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -79,7 +98,17 @@ describe('expo-cli: install', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/expo', '--yarn'])
+        expect(args).toEqual([
+          'install',
+          '@bugsnag/expo',
+          '@react-native-community/netinfo',
+          'expo-application',
+          'expo-constants',
+          'expo-crypto',
+          'expo-device',
+          'expo-file-system',
+          '--yarn'
+        ])
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -113,7 +142,19 @@ describe('expo-cli: install', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/expo', '--npm', '--yarn'])
+        expect(args).toEqual([
+          'install',
+          '@bugsnag/expo',
+          '@react-native-community/netinfo',
+          'expo-application',
+          'expo-constants',
+          'expo-crypto',
+          'expo-device',
+          'expo-file-system',
+          '--npm',
+          '--yarn'
+        ])
+
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -168,7 +209,7 @@ describe('expo-cli: install', () => {
     const install = require('../install')
 
     await withFixture('blank-00', async (projectRoot) => {
-      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo"
+      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo @react-native-community/netinfo expo-application expo-constants expo-crypto expo-device expo-file-system"
 stdout:
 some data on stdout
 

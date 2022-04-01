@@ -1,7 +1,8 @@
 const { spawn } = require('child_process')
+const { DEPENDENCIES } = require('./utils')
 
 function resolveCommand (version, options) {
-  const command = ['install', resolvePackageName(version)]
+  const command = ['install', resolvePackageName(version)].concat(DEPENDENCIES)
 
   if (options.npm) {
     command.push('--npm')

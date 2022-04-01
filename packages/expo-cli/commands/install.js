@@ -6,13 +6,13 @@ const install = require('../lib/install')
 const { onCancel } = require('../lib/utils')
 const { blue } = require('kleur')
 const semver = require('semver')
-const detectInstalled = require('../lib/detect-installed')
+const { detectInstalledState, InstalledState } = require('../lib/detect-installed')
 
 module.exports = async (argv, globalOpts) => {
   const projectRoot = globalOpts['project-root']
-  const alreadyInstalled = await detectInstalled(projectRoot)
+  const installedState = await detectInstalledState(projectRoot)
 
-  if (await isWanted(alreadyInstalled, projectRoot)) {
+  if (await isWanted(installedState)) {
     const version = await selectVersion(projectRoot)
 
     console.log(blue('> Installing @bugsnag/expo. This could take a while!'))
@@ -26,14 +26,29 @@ module.exports = async (argv, globalOpts) => {
   }
 }
 
-const isWanted = async (alreadyInstalled, root) => {
+const messages = {}
+// bugsnag is not installed and at least one dependency is missing
+messages[InstalledState.NONE] = '@bugsnag/expo does not appear to be installed, do you want to install it and its dependencies?'
+// bugsnag is not installed but all dependencies are
+messages[InstalledState.ALL_DEPENDENCIES] = messages[InstalledState.NONE]
+// bugsnag is installed but at least one dependency is missing
+messages[InstalledState.BUGSNAG_EXPO] = '@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?'
+// bugsnag is installed and so are all its dependencies
+messages[InstalledState.BUGSNAG_EXPO | InstalledState.ALL_DEPENDENCIES] = '@bugsnag/expo already appears to be installed, do you want to install it and its dependencies anyway?'
+
+const isWanted = async installedState => {
+  let initial = true
+
+  // if bugsnag is already installed set the default answer to 'no', otherwise use 'yes'
+  if (installedState & InstalledState.BUGSNAG_EXPO) {
+    initial = false
+  }
+
   return (await prompts({
     type: 'confirm',
     name: 'install',
-    message: alreadyInstalled
-      ? '@bugsnag/expo already appears to be installed, do you want to install it anyway?'
-      : '@bugsnag/expo does not appear to be installed, do you want to install it?',
-    initial: !alreadyInstalled
+    message: messages[installedState],
+    initial
   }, { onCancel })).install
 }
 
