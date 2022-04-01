@@ -23,6 +23,4 @@ https://github.com/expo/expo/blob/master/packages/expo/bundledNativeModules.json
 
 ## Updating the CLI to install a compatible notifier version
 
-When the version of the bundled native modules changes the notifier will be incompatible with previous Expo SDKs. To prevent installing the conflicting versions, we need to update the CLI using the established pattern in [`packages/expo-cli/commands/install.js`](../expo-cli/commands/install.js).
-
-This should also be added to [the manual setup docs](https://docs.bugsnag.com/platforms/react-native/expo/manual-setup/#installation).
+When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to be published. For example, for SDK 44 there is a `@bugsnag/expo` v44. To mark the new SDK as supported, update the CLI's `LATEST_SUPPORTED_EXPO_SDK` in [`packages/expo-cli/lib/version-information.js`](../expo-cli/lib/version-information.js)
