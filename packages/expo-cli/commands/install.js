@@ -7,6 +7,7 @@ const { onCancel } = require('../lib/utils')
 const { blue } = require('kleur')
 const semver = require('semver')
 const { detectInstalledState, InstalledState } = require('../lib/detect-installed')
+const { getBugsnagVersionForExpoVersion } = require('../lib/version-information')
 
 module.exports = async (argv, globalOpts) => {
   const projectRoot = globalOpts['project-root']
@@ -52,67 +53,53 @@ const isWanted = async installedState => {
   }, { onCancel })).install
 }
 
-const selectVersion = async (dir) => {
+async function selectVersion (directory) {
+  let installedExpoVersion
+
   try {
-    const pkg = JSON.parse(await promisify(readFile)(join(dir, 'package.json'), 'utf8'))
-    const expoVersion = pkg.dependencies.expo
-
-    let message = 'If you want the latest version of @bugsnag/expo hit enter, otherwise type the version you want'
-    let defaultVersion = 'latest'
-
-    // help select compatible versions of @bugsnag/expo for older expo releases
-    const isPre33 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '33.0.0'))
-    const isPre36 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '36.0.0'))
-    const isPre37 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '37.0.0'))
-    const isPre38 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '38.0.0'))
-    const isPre39 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '39.0.0'))
-    const isPre40 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '40.0.0'))
-    const isPre42 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '42.0.0'))
-    const isPre43 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '43.0.0'))
-    const isPre44 = (expoVersion && !semver.gte(semver.minVersion(expoVersion), '44.0.0'))
-
-    if (isPre33) {
-      throw new Error('Expo SDK <33 is no longer supported')
-    } else if (isPre36) {
-      message = 'It looks like you’re using a version of Expo SDK <36. The last version of Bugsnag that supported your version of Expo is v6.4.4'
-      defaultVersion = '6.4.4'
-    } else if (isPre37) {
-      message = 'It looks like you’re using a version of Expo SDK <37. The last version of Bugsnag that supported your version of Expo is v6.5.3'
-      defaultVersion = '6.5.3'
-    } else if (isPre38) {
-      message = 'It looks like you’re using a version of Expo SDK <38. The last version of Bugsnag that supported your version of Expo is v7.1.1'
-      defaultVersion = '7.1.1'
-    } else if (isPre39) {
-      message = 'It looks like you’re using a version of Expo SDK <39. The last version of Bugsnag that supported your version of Expo is v7.3.5'
-      defaultVersion = '7.3.5'
-    } else if (isPre40) {
-      message = 'It looks like you’re using a version of Expo SDK <40. The last version of Bugsnag that supported your version of Expo is v7.5.5'
-      defaultVersion = '7.5.5'
-    } else if (isPre42) {
-      message = 'It looks like you’re using a version of Expo SDK <42. The last version of Bugsnag that supported your version of Expo is v7.11.0'
-      defaultVersion = '7.11.0'
-    } else if (isPre43) {
-      message = 'It looks like you’re using a version of Expo SDK <43. The last version of Bugsnag that supported your version of Expo is v7.13.2'
-      defaultVersion = '7.13.2'
-    } else if (isPre44) {
-      message = 'It looks like you’re using a version of Expo SDK <44. The last version of Bugsnag that supported your version of Expo is v7.14.2'
-      defaultVersion = '7.14.2'
-    }
-
-    const { version } = await prompts({
-      type: 'text',
-      name: 'version',
-      message: message,
-      initial: defaultVersion,
-      validate: str => {
-        if (str === 'latest') return true
-        if (semver.valid(str)) return true
-        if (semver.validRange(str)) return true
-        return 'Version must be: a valid semver version/range or "latest"'
-      }
-    }, { onCancel })
-    return version
+    const pkg = JSON.parse(await promisify(readFile)(join(directory, 'package.json'), 'utf8'))
+    installedExpoVersion = pkg.dependencies.expo
   } catch (e) {
     throw new Error(`Could not detect Expo version in package.json: ${e.message}`)
   }
+
+  let versionInformation
+
+  try {
+    versionInformation = getBugsnagVersionForExpoVersion(installedExpoVersion)
+  } catch (e) {
+    throw new Error(`Could not detect @bugsnag/expo version for Expo ${installedExpoVersion}: ${e.message}`)
+  }
+
+  let defaultVersion
+  let message
+
+  if (!versionInformation) {
+    // if we were unable to find a suitable @bugsnag/expo version, then we don't
+    // support this Expo version yet
+    defaultVersion = 'latest'
+    message = `@bugsnag/expo does not yet officially support Expo ${versionInformation.expoSdkVersion}. Do you want to install the most recent available version of @bugsnag/expo instead?`
+  } else if (versionInformation.isLegacy) {
+    defaultVersion = versionInformation.bugsnagVersion
+    message = `It looks like you’re using a version of Expo SDK <${versionInformation.expoSdkVersion}. The last version of Bugsnag that supported your version of Expo is v${versionInformation.bugsnagVersion}`
+  } else {
+    defaultVersion = versionInformation.bugsnagVersion
+    message = `If you want to install @bugsnag/expo ${defaultVersion} hit enter, otherwise type the version you want`
+  }
+
+  const { version } = await prompts({
+    type: 'text',
+    name: 'version',
+    message: message,
+    initial: defaultVersion,
+    validate: str => {
+      if (str === 'latest' || semver.valid(str) || semver.validRange(str)) {
+        return true
+      }
+
+      return 'Version must be: a valid semver version/range or "latest"'
+    }
+  }, { onCancel })
+
+  return version
 }
