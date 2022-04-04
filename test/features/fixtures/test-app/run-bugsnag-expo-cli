@@ -1,0 +1,44 @@
+#!/usr/bin/expect -f
+
+set timeout -1
+set api_key 645470b8c7f62177e1a723e26c9a48d7
+
+# This expect script runs the following commands:
+#   - install
+#   - set-api-key
+#   - add-hook
+#
+# We don't run 'insert' as the fixture app doesn't start Bugsnag in App.js, but
+# uses individual scenario files that may start Bugsnag differently. Similarly,
+# we don't run 'init' as it would run 'insert'
+#
+# TODO: we run 'install' here, but don't actually install the local version of
+#       @bugsnag/expo. Instead we just use the latest version to prove 'install'
+#       works and then re-install with the local version after running this script
+
+# install
+spawn npx bugsnag-expo-cli install
+
+expect "@bugsnag/expo does not appear to be installed, do you want to install it and its dependencies?"
+send -- "y\r"
+
+expect "If you want to install @bugsnag/expo ^44.0.0 hit enter, otherwise type the version you want"
+send -- "latest\r"
+
+expect eof
+
+# set-api-key
+spawn npx bugsnag-expo-cli set-api-key
+
+expect "What is your Bugsnag API key?"
+send "$api_key\r"
+
+expect eof
+
+# add-hook
+spawn npx bugsnag-expo-cli add-hook
+
+expect "Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json)"
+send -- "\r"
+
+expect eof

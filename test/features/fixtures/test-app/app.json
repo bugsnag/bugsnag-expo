@@ -23,11 +23,6 @@
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture"
-    },
-    "extra": {
-      "bugsnag": {
-        "apiKey": "645470b8c7f62177e1a723e26c9a48d7"
-      }
     }
   }
 }
