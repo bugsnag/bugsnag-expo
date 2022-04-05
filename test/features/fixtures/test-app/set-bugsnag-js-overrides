@@ -1,0 +1,77 @@
+#!/usr/bin/env ruby
+
+BRANCH = ARGV[0]
+COMMIT = ARGV[1]
+
+if BRANCH && !COMMIT
+  puts "$BUGSNAG_JS_BRANCH is present but $BUGSNAG_JS_COMMIT is missing!"
+  exit 1
+elsif COMMIT && !BRANCH
+  puts "$BUGSNAG_JS_COMMIT is present but $BUGSNAG_JS_BRANCH is missing!"
+  exit 1
+elsif !COMMIT && !BRANCH
+  puts "Skipping bugsnag-js install as both arguments are missing"
+  exit
+end
+
+require "open3"
+require "tmpdir"
+require "tempfile"
+
+# clone bugsnag-js and run the script to determine its version
+version = Dir.mktmpdir("bugsnag-js") do |directory|
+  Dir.chdir(directory) do
+    system("git clone https://github.com/bugsnag/bugsnag-js.git --branch '#{BRANCH}' --single-branch --depth 100 .", exception: true)
+    system("git checkout '#{COMMIT}'", exception: true)
+
+    env = {
+      "BRANCH_NAME" => BRANCH,
+      "BUILDKITE" => "yes, very much so",
+    }
+
+    Tempfile.create(["get-bugsnag-js-version", ".js"], directory) do |file|
+      file.write("console.log(require('./scripts/common').determineVersion())")
+      file.close # close the file to flush our changes to disk
+
+      output, status = Open3.capture2(env, "node #{file.path}", unsetenv_others: true)
+      output.strip!
+
+      if !status.success? || output.empty?
+        puts "Failed to fetch bugsnag-js version!"
+        exit 1
+      end
+
+      output.split.last
+    end
+  end
+end
+
+puts "Using bugsnag-js version: '#{version}'"
+
+require "json"
+
+# write the version to the 'overrides' field in package.json for each bugsnag-js
+# package used in this repo
+final_json = File.open("package.json") do |file|
+  package_json = JSON.parse(file.read)
+
+  package_json["overrides"].merge!({
+    "@bugsnag/core" => version,
+    "@bugsnag/plugin-browser-session" => version,
+    "@bugsnag/plugin-console-breadcrumbs" => version,
+    "@bugsnag/plugin-network-breadcrumbs" => version,
+    "@bugsnag/plugin-react" => version,
+    "@bugsnag/plugin-react-native-app-state-breadcrumbs" => version,
+    "@bugsnag/plugin-react-native-global-error-handler" => version,
+    "@bugsnag/plugin-react-native-orientation-breadcrumbs" => version,
+    "@bugsnag/plugin-react-native-unhandled-rejection" => version,
+  })
+
+  JSON.pretty_generate(package_json)
+end
+
+puts "Final package.json file: #{final_json}"
+
+File.open("package.json", "w") do |file|
+  file.write(final_json)
+end
