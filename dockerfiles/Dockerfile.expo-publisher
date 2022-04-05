@@ -1,6 +1,6 @@
 FROM node:14-alpine
 
-RUN apk add --update bash git python3 yarn
+RUN apk add --update bash git python3 yarn expect
 
 # we need at least 8.3.0 for NPM's 'overrides' feature
 RUN npm install -g npm@^8.3.0 expo-cli
@@ -21,9 +21,10 @@ RUN mv *.tgz test/features/fixtures/test-app
 
 WORKDIR /app/test/features/fixtures/test-app
 
-# install the packed packages and delete them
-RUN npm install *.tgz && rm *.tgz
+# install the bugsnag-expo-cli and it to setup the fixture
+RUN npm install bugsnag-expo-cli*.tgz && rm bugsnag-expo-cli*.tgz && ./run-bugsnag-expo-cli
 
-RUN npm install
+# install the remaining packages, this also re-installs the correct @bugsnag/expo version
+RUN npm install *.tgz && rm *.tgz
 
 CMD npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD && npx expo publish --release-channel $EXPO_RELEASE_CHANNEL
