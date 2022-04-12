@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v44.0.0 (2022-04-19)
 
 This release marks a change in the version scheme used by `@bugsnag/expo` and a move to its own repo, [`bugsnag-expo`](https://github.com/bugsnag/bugsnag-expo)
 
