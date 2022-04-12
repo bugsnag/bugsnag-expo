@@ -93,7 +93,7 @@ Then make the release:
 ```
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
-RELEASE_BRANCH=master \
+RELEASE_BRANCH=<the branch to publish a new release from> \
 VERSION=patch \
   docker-compose run release
 ```
@@ -136,7 +136,7 @@ For example:
 ```
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
-RELEASE_BRANCH=master \
+RELEASE_BRANCH=<the branch to publish a new release from> \
 VERSION=preminor \
   docker-compose run release
 ```
