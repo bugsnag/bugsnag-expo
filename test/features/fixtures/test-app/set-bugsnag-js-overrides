@@ -61,7 +61,6 @@ final_json = File.open("package.json") do |file|
     "@bugsnag/plugin-console-breadcrumbs" => version,
     "@bugsnag/plugin-network-breadcrumbs" => version,
     "@bugsnag/plugin-react" => version,
-    "@bugsnag/plugin-react-native-app-state-breadcrumbs" => version,
     "@bugsnag/plugin-react-native-global-error-handler" => version,
     "@bugsnag/plugin-react-native-orientation-breadcrumbs" => version,
     "@bugsnag/plugin-react-native-unhandled-rejection" => version,
