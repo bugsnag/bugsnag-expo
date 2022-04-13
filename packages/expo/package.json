@@ -19,7 +19,7 @@
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
   "publishConfig": {
     "access": "public"

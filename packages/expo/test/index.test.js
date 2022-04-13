@@ -177,7 +177,7 @@ describe('expo notifier', () => {
             ])
           })
         ]),
-        notifier: { name: 'Bugsnag Expo', url: 'https://github.com/bugsnag/bugsnag-js', version: expect.any(String) }
+        notifier: { name: 'Bugsnag Expo', url: 'https://github.com/bugsnag/bugsnag-expo', version: expect.any(String) }
       }), expect.any(Function))
       done()
     })
@@ -213,7 +213,7 @@ describe('expo notifier', () => {
             ])
           })
         ]),
-        notifier: { name: 'Bugsnag Expo', url: 'https://github.com/bugsnag/bugsnag-js', version: expect.any(String) }
+        notifier: { name: 'Bugsnag Expo', url: 'https://github.com/bugsnag/bugsnag-expo', version: expect.any(String) }
       }), expect.any(Function))
 
       done()

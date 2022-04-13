@@ -2,11 +2,11 @@
   "name": "@bugsnag/plugin-expo-device",
   "version": "7.16.0",
   "main": "device.js",
-  "description": "@bugsnag/js plugin to attach Expo-specific device info to events",
+  "description": "@bugsnag/expo plugin to attach Expo-specific device info to events",
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
   "publishConfig": {
     "access": "public"
