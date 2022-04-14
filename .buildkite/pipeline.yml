@@ -22,10 +22,12 @@ steps:
           build: expo-publisher
           image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/js
           cache-from:
-            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_BRANCH}-${BUGSNAG_JS_COMMIT}
+            # BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME is BUGSNAG_JS_BRANCH with characters that are illegal in docker cache
+            # names removed
+            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME}-${BUGSNAG_JS_COMMIT}
       - docker-compose#v3.9.0:
           push:
-            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_BRANCH}-${BUGSNAG_JS_COMMIT}
+            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME}-${BUGSNAG_JS_COMMIT}
 
   - label:  ':docker: Publish expo app'
     key: "publish-expo-app"
