@@ -1,0 +1,25 @@
+{
+  "name": "@bugsnag/plugin-expo-app-state-breadcrumbs",
+  "version": "7.16.1",
+  "main": "app-state.js",
+  "description": "@bugsnag/expo plugin to create breadcrumbs when a React Native app enters the foreground/background",
+  "homepage": "https://www.bugsnag.com/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "*.js"
+  ],
+  "author": "Bugsnag",
+  "license": "MIT",
+  "devDependencies": {
+    "@bugsnag/core": "^7.16.1"
+  },
+  "peerDependencies": {
+    "@bugsnag/core": "^7.0.0"
+  }
+}

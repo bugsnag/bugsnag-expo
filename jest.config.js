@@ -33,6 +33,7 @@ module.exports = {
       'expo-cli',
       'plugin-expo-app',
       'plugin-expo-device',
+      'plugin-expo-app-state-breadcrumbs',
       'plugin-expo-connectivity-breadcrumbs'
     ])
   ]
