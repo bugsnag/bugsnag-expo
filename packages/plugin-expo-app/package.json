@@ -2,11 +2,11 @@
   "name": "@bugsnag/plugin-expo-app",
   "version": "7.16.0",
   "main": "app.js",
-  "description": "@bugsnag/js plugin to provide information about an Expo app",
+  "description": "@bugsnag/expo plugin to provide information about an Expo app",
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
   "publishConfig": {
     "access": "public"

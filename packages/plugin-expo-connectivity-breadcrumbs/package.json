@@ -2,11 +2,11 @@
   "name": "@bugsnag/plugin-expo-connectivity-breadcrumbs",
   "version": "7.16.0",
   "main": "connectivity.js",
-  "description": "@bugsnag/js plugin to create breadcrumbs when the network status changes in a React Native app",
+  "description": "@bugsnag/expo plugin to create breadcrumbs when the network status changes in an Expo app",
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
   "publishConfig": {
     "access": "public"

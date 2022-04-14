@@ -2,11 +2,11 @@
   "name": "@bugsnag/delivery-expo",
   "version": "7.16.0",
   "main": "delivery.js",
-  "description": "@bugsnag/js delivery mechanism to send events and sessions from Expo, using the FileSystem API to cache and retry sending failed payloads",
+  "description": "@bugsnag/expo delivery mechanism to send events and sessions from Expo, using the FileSystem API to cache and retry sending failed payloads",
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
   "publishConfig": {
     "access": "public"

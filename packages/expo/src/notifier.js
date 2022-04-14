@@ -1,6 +1,6 @@
 const name = 'Bugsnag Expo'
 const { version } = require('../package.json')
-const url = 'https://github.com/bugsnag/bugsnag-js'
+const url = 'https://github.com/bugsnag/bugsnag-expo'
 
 const React = require('react')
 const Constants = require('expo-constants').default
