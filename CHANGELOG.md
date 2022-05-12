@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v44.0.1 (2022-05-12)
 
 ### Fixes
 
