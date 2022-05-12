@@ -78,7 +78,7 @@ async function selectVersion (directory) {
     // if we were unable to find a suitable @bugsnag/expo version, then we don't
     // support this Expo version yet
     defaultVersion = 'latest'
-    message = `@bugsnag/expo does not yet officially support Expo ${versionInformation.expoSdkVersion}. Do you want to install the most recent available version of @bugsnag/expo instead?`
+    message = `@bugsnag/expo does not yet officially support Expo ${installedExpoVersion}. Do you want to install the most recent available version of @bugsnag/expo instead?`
   } else if (versionInformation.isLegacy) {
     defaultVersion = versionInformation.bugsnagVersion
     message = `It looks like you’re using a version of Expo SDK <${versionInformation.expoSdkVersion}. The last version of Bugsnag that supported your version of Expo is v${versionInformation.bugsnagVersion}`

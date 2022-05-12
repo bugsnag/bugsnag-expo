@@ -1,5 +1,11 @@
 # Changelog
 
+## TBD
+
+### Fixes
+
+- Fixed an issue in the `bugsnag-expo-cli` install script when reporting an unsupported version of expo [#31](https://github.com/bugsnag/bugsnag-expo/pull/31)
+
 ## v44.0.0 (2022-04-19)
 
 This release marks a change in the version scheme used by `@bugsnag/expo` and a move to its own repo, [`bugsnag-expo`](https://github.com/bugsnag/bugsnag-expo)
