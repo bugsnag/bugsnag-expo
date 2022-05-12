@@ -37,11 +37,11 @@
     "@bugsnag/plugin-browser-session": "^7.16.0",
     "@bugsnag/plugin-console-breadcrumbs": "^7.16.0",
     "@bugsnag/plugin-expo-app": "^44.0.0",
+    "@bugsnag/plugin-expo-app-state-breadcrumbs": "^44.0.0",
+    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^44.0.0",
     "@bugsnag/plugin-expo-device": "^44.0.0",
     "@bugsnag/plugin-network-breadcrumbs": "^7.16.0",
     "@bugsnag/plugin-react": "^7.16.0",
-    "@bugsnag/plugin-expo-app-state-breadcrumbs": "^44.0.0",
-    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^44.0.0",
     "@bugsnag/plugin-react-native-global-error-handler": "^7.16.0",
     "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^7.16.0",
     "@bugsnag/plugin-react-native-unhandled-rejection": "^7.16.0",
@@ -49,11 +49,11 @@
     "bugsnag-build-reporter": "^1.0.1"
   },
   "devDependencies": {
-    "expo-constants": "~13.0.0"
+    "expo-constants": "~13.1.1"
   },
   "peerDependencies": {
     "expo": ">=33.0.0",
-    "expo-constants": "~13.0.0",
+    "expo-constants": "~13.1.1",
     "react": "*"
   }
 }
