@@ -35,4 +35,4 @@ RUN echo -e "registry=$REGISTRY_URL\n_auth=$REG_BASIC_CREDENTIAL\nemail=$REG_NPM
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 RUN npm install *.tgz && rm *.tgz
 
-CMD npm run expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD && npm run expo publish --release-channel $EXPO_RELEASE_CHANNEL
+CMD ./node_modules/.bin/expo-cli login -u $EXPO_USERNAME -p $EXPO_PASSWORD && ./node_modules/.bin/expo-cli publish --release-channel $EXPO_RELEASE_CHANNEL
