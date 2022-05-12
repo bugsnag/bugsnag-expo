@@ -1,9 +1,6 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 RUN apk add --update bash git python3 ruby expect
-
-# we need at least 8.3.0 for NPM's 'overrides' feature
-RUN npm install -g npm@^8.3.0 expo-cli
 
 WORKDIR /app
 
