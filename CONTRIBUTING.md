@@ -70,7 +70,7 @@ The following modules are currently used:
 - `@react-native-community/netinfo` (`@bugsnag/delivery-expo`, `@bugsnsag/plugin-expo-connectivity-breadcrumbs`)
 - `expo-application` (`@bugsnag/plugin-expo-app`)
 - `expo-constants` (`@bugsnag/expo`, `@bugsnag/plugin-expo-app`, `@bugsnag/plugin-expo-device`)
-- `expo-crypto` (`@bugsnag/expo`, `@bugsnag/delivery-expo`)
+- `expo-crypto` (`@bugsnag/delivery-expo`)
 - `expo-device` (`@bugsnag/plugin-expo-device`)
 - `expo-file-system` (`@bugsnag/delivery-expo`)
 
