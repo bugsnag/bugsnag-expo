@@ -10,7 +10,7 @@ WORKDIR /app/test/features/fixtures/test-app
 
 RUN mkdir -p /app/test/features/fixures/build
 
-RUN yarn global add turtle-cli@0.24
+RUN yarn global add turtle-cli@0.26
 
 RUN turtle setup:android
 
