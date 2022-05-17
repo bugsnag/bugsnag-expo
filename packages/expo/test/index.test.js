@@ -112,6 +112,16 @@ describe('expo notifier', () => {
     })
   })
 
+  describe('isStarted property', () => {
+    it('returns false when Bugsnag has not been initialised', () => {
+      expect(Bugsnag.isStarted).toBe(false)
+    })
+    it('returns true when Bugsnag has been initialised', () => {
+      Bugsnag.start({ apiKey: API_KEY })
+      expect(Bugsnag.isStarted).toBe(true)
+    })
+  })
+
   it('accepts plugins', () => {
     Bugsnag.start({
       apiKey: API_KEY,

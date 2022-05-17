@@ -1,5 +1,11 @@
 # Changelog
 
+## TBD
+
+### Added
+
+- Added `isStarted` property to expo notifier to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
+
 ## v44.0.1 (2022-05-12)
 
 ### Fixes
