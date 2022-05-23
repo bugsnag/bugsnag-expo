@@ -13,11 +13,14 @@
         "eslint-plugin-node": "^11.0.0",
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-react": "^7.18.3",
-        "eslint-plugin-standard": "^4.0.1"
+        "eslint-plugin-standard": "^4.0.1",
+        "verdaccio": "^5.10.2"
     },
     "scripts": {
         "bootstrap": "lerna bootstrap",
         "test:unit": "jest",
-        "test:lint": "eslint --report-unused-disable-directives --max-warnings=0 ."
+        "test:lint": "eslint --report-unused-disable-directives --max-warnings=0 .",
+        "local-npm:start": "verdaccio --config ./verdaccio-config.yml",
+        "local-npm:publish-all": "lerna publish --yes --force-publish --exact --no-push --no-git-reset --no-git-tag-version --registry 'http://localhost:4873'"
     }
 }
