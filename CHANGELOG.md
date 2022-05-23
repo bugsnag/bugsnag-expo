@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v45.0.0 (2022-05-23)
 
 This release adds support for expo 45
 
