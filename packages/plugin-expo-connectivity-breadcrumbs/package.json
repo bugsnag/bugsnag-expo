@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-connectivity-breadcrumbs",
-  "version": "44.0.0",
+  "version": "45.0.0",
   "main": "connectivity.js",
   "description": "@bugsnag/expo plugin to create breadcrumbs when the network status changes in an Expo app",
   "homepage": "https://www.bugsnag.com/",
