@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-buster
+FROM openjdk:11
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -10,7 +10,7 @@ WORKDIR /app/test/features/fixtures/test-app
 
 RUN mkdir -p /app/test/features/fixures/build
 
-RUN yarn global add turtle-cli@0.26
+RUN yarn global add turtle-cli@0.27
 
 RUN turtle setup:android
 
