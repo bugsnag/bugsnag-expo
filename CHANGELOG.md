@@ -2,8 +2,12 @@
 
 ## TBD
 
+This release adds support for sourcemap uploads when using EAS build
+
 ### Added
 
+- Added new `@bugsnag/plugin-expo-eas-sourcemaps` plugin [#40](https://github.com/bugsnag/bugsnag-expo/pull/40)
+- Updated CLI tool to automate installation of sourcemap plugin [#40](https://github.com/bugsnag/bugsnag-expo/pull/40)
 - Added `Bugsnag.isStarted()` to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
 
 ## v44.0.1 (2022-05-12)
