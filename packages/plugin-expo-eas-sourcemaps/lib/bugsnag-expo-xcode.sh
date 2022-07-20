@@ -4,16 +4,7 @@ set -o errexit
 
 INFO_PLIST=$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH
 APP_VERSION=$(/usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" "$INFO_PLIST")
-BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "print :CFBundleVersion" "$INFO_PLIST")
-
 API_KEY="$BUGSNAG_API_KEY"
-if [ -z "$API_KEY" ]; then
-  API_KEY=$(/usr/libexec/PlistBuddy -c "print :bugsnag:apiKey" "$INFO_PLIST" || echo)
-fi
-if [ -z "$API_KEY" ]; then
-  echo "No Bugsnag API key detected - add your key to your Info.plist or BUGSNAG_API_KEY environment variable"
-  exit 1
-fi
 
 # in RN 0.64+ the JS bundle is in this location
 BUNDLE_FILE="$CONFIGURATION_BUILD_DIR/main.jsbundle"
@@ -24,6 +15,14 @@ fi
 if [ ! -f "$BUNDLE_FILE" ]; then
   echo "Skipping source map upload because app bundle could not be found."
   exit 0
+fi
+
+if [ -z "$API_KEY" ]; then
+  API_KEY=$(/usr/libexec/PlistBuddy -c "print :bugsnag:apiKey" "$INFO_PLIST" || echo)
+fi
+if [ -z "$API_KEY" ]; then
+  echo "No Bugsnag API key detected - add your key to your Info.plist or BUGSNAG_API_KEY environment variable"
+  exit 1
 fi
 
 if [ -z "$SOURCE_MAP" ]; then
