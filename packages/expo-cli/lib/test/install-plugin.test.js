@@ -15,6 +15,12 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
+        proc.stdout = new Readable({
+          read () {}
+        })
+        proc.stderr = new Readable({
+          read () {}
+        })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
       }
@@ -39,6 +45,12 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
+        proc.stdout = new Readable({
+          read () {}
+        })
+        proc.stderr = new Readable({
+          read () {}
+        })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
       }
@@ -63,6 +75,12 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
+        proc.stdout = new Readable({
+          read () {}
+        })
+        proc.stderr = new Readable({
+          read () {}
+        })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
       }
@@ -75,6 +93,8 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     })
   })
 
+  // highly doubt this will ever fail, assuming one of npm or yarn will take precedence over the other
+  // if test begins to fail, might need to consider additonal error messages
   it('should allow forcing install with both NPM and Yarn', async () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
@@ -89,6 +109,12 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
+        proc.stdout = new Readable({
+          read () {}
+        })
+        proc.stderr = new Readable({
+          read () {}
+        })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
       }
@@ -138,6 +164,12 @@ some data on stderr`
   it('should throw an error if the command does', async () => {
     const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
+      proc.stdout = new Readable({
+        read () {}
+      })
+      proc.stderr = new Readable({
+        read () {}
+      })
       setTimeout(() => proc.emit('error', new Error('floop')), 10)
       return proc
     }
