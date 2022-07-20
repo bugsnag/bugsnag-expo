@@ -24,19 +24,11 @@ describe('expo-cli: install', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -68,19 +60,11 @@ describe('expo-cli: install', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -112,19 +96,11 @@ describe('expo-cli: install', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -158,19 +134,11 @@ describe('expo-cli: install', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -187,14 +155,12 @@ describe('expo-cli: install', () => {
   it('should add stderr/stdout output onto error if there is one (non-zero exit code)', async () => {
     const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
-      // @ts-ignore
       proc.stdout = new Readable({
         read () {
           this.push('some data on stdout')
           this.push(null)
         }
       })
-      // @ts-ignore
       proc.stderr = new Readable({
         read () {
           this.push('some data on stderr')
@@ -223,19 +189,11 @@ some data on stderr`
   it('should throw an error if the command does', async () => {
     const spawn = (cmd, args, opts) => {
       const proc = new EventEmitter()
-      // @ts-ignore
       proc.stdout = new Readable({
-        read () {
-          this.push('some data on stdout')
-          this.push(null)
-        }
+        read () {}
       })
-      // @ts-ignore
       proc.stderr = new Readable({
-        read () {
-          this.push('some data on stderr')
-          this.push(null)
-        }
+        read () {}
       })
       setTimeout(() => proc.emit('error', new Error('floop')), 10)
       return proc
