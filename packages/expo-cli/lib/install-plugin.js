@@ -22,8 +22,8 @@ module.exports = (projectRoot, options) => {
     // buffer output in case of an error
     let stdout = ''
     let stderr = ''
-    proc.stdout.on('data', d => { stdout += d })
-    proc.stderr.on('data', d => { stderr += d })
+    proc.stdout && proc.stdout.on('data', d => { stdout += d })
+    proc.stderr && proc.stderr.on('data', d => { stderr += d })
 
     proc.on('error', err => { reject(err) })
 
