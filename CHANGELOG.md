@@ -2,7 +2,7 @@
 
 ## TBD
 
-This release adds support for sourcemap uploads when using EAS build
+This release adds support for sourcemap uploads when using EAS Build
 
 ### Added
 
