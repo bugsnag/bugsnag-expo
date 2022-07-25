@@ -3,9 +3,15 @@
   "version": "45.0.0",
   "description": "Plugin to handle uploading sourcemaps to bugsnag when using the EAS build system",
   "main": "index.js",
-  "directories": {
-    "lib": "lib"
+  "homepage": "https://www.bugsnag.com/",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bugsnag/bugsnag-expo.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": ["lib","*.js"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +19,6 @@
     "@bugsnag/source-maps": "^2.3.1",
     "@expo/config-plugins": "^4.1.5"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Bugsnag",
+  "license": "MIT"
 }
