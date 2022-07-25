@@ -11,7 +11,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["lib","*.js"],
+  "files": [
+    "lib",
+    "src",
+    "*.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
