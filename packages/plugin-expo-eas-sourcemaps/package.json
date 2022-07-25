@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-eas-sourcemaps",
-  "version": "45.1.0-alpha.0",
+  "version": "45.1.0-alpha.1",
   "description": "Plugin to handle uploading sourcemaps to bugsnag when using the EAS build system",
   "main": "index.js",
   "homepage": "https://www.bugsnag.com/",
@@ -11,7 +11,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["lib","*.js"],
+  "files": [
+    "lib",
+    "*.js"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
