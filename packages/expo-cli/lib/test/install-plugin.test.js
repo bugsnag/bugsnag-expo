@@ -2,7 +2,7 @@ const withFixture = require('./lib/with-fixture')
 const { EventEmitter } = require('events')
 const { Readable } = require('stream')
 
-describe('expo-cli: install', () => {
+describe('expo-cli: upload-sourcemaps install plugin', () => {
   beforeEach(() => {
     jest.resetModules()
   })
@@ -11,16 +11,7 @@ describe('expo-cli: install', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual([
-          'install',
-          '@bugsnag/expo',
-          '@react-native-community/netinfo',
-          'expo-application',
-          'expo-constants',
-          'expo-crypto',
-          'expo-device',
-          'expo-file-system'
-        ])
+        expect(args).toEqual(['install', '@bugsnag/plugin-expo-eas-sourcemaps'])
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -35,9 +26,9 @@ describe('expo-cli: install', () => {
       }
 
       jest.doMock('child_process', () => ({ spawn }))
-      const install = require('../install')
+      const installPlugin = require('../install-plugin')
 
-      const msg = await install('latest', projectRoot, { npm: false, yarn: false })
+      const msg = await installPlugin(projectRoot, { npm: false, yarn: false })
       expect(msg).toBe(undefined)
     })
   })
@@ -48,13 +39,7 @@ describe('expo-cli: install', () => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
           'install',
-          '@bugsnag/expo',
-          '@react-native-community/netinfo',
-          'expo-application',
-          'expo-constants',
-          'expo-crypto',
-          'expo-device',
-          'expo-file-system',
+          '@bugsnag/plugin-expo-eas-sourcemaps',
           '--npm'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -71,9 +56,9 @@ describe('expo-cli: install', () => {
       }
 
       jest.doMock('child_process', () => ({ spawn }))
-      const install = require('../install')
+      const installPlugin = require('../install-plugin')
 
-      const msg = await install('latest', projectRoot, { npm: true })
+      const msg = await installPlugin(projectRoot, { npm: true })
       expect(msg).toBe(undefined)
     })
   })
@@ -84,13 +69,7 @@ describe('expo-cli: install', () => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
           'install',
-          '@bugsnag/expo',
-          '@react-native-community/netinfo',
-          'expo-application',
-          'expo-constants',
-          'expo-crypto',
-          'expo-device',
-          'expo-file-system',
+          '@bugsnag/plugin-expo-eas-sourcemaps',
           '--yarn'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -107,26 +86,22 @@ describe('expo-cli: install', () => {
       }
 
       jest.doMock('child_process', () => ({ spawn }))
-      const install = require('../install')
+      const installPlugin = require('../install-plugin')
 
-      const msg = await install('latest', projectRoot, { yarn: true })
+      const msg = await installPlugin(projectRoot, { yarn: true })
       expect(msg).toBe(undefined)
     })
   })
 
+  // highly doubt this will ever fail, assuming one of npm or yarn will take precedence over the other
+  // if test begins to fail, might need to consider additonal error messages
   it('should allow forcing install with both NPM and Yarn', async () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
           'install',
-          '@bugsnag/expo',
-          '@react-native-community/netinfo',
-          'expo-application',
-          'expo-constants',
-          'expo-crypto',
-          'expo-device',
-          'expo-file-system',
+          '@bugsnag/plugin-expo-eas-sourcemaps',
           '--npm',
           '--yarn'
         ])
@@ -145,9 +120,9 @@ describe('expo-cli: install', () => {
       }
 
       jest.doMock('child_process', () => ({ spawn }))
-      const install = require('../install')
+      const installPlugin = require('../install-plugin')
 
-      const msg = await install('latest', projectRoot, { npm: true, yarn: true })
+      const msg = await installPlugin(projectRoot, { npm: true, yarn: true })
       expect(msg).toBe(undefined)
     })
   })
@@ -172,17 +147,17 @@ describe('expo-cli: install', () => {
     }
 
     jest.doMock('child_process', () => ({ spawn }))
-    const install = require('../install')
+    const installPlugin = require('../install-plugin')
 
     await withFixture('blank-00', async (projectRoot) => {
-      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo @react-native-community/netinfo expo-application expo-constants expo-crypto expo-device expo-file-system"
+      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/plugin-expo-eas-sourcemaps"
 stdout:
 some data on stdout
 
 stderr:
 some data on stderr`
 
-      await expect(install('latest', projectRoot, { npm: false })).rejects.toThrow(expected)
+      await expect(installPlugin(projectRoot, { npm: false })).rejects.toThrow(expected)
     })
   })
 
@@ -200,10 +175,10 @@ some data on stderr`
     }
 
     jest.doMock('child_process', () => ({ spawn }))
-    const install = require('../install')
+    const installPlugin = require('../install-plugin')
 
     await withFixture('blank-00', async (projectRoot) => {
-      await expect(install('latest', projectRoot, { yarn: false })).rejects.toThrow(/floop/)
+      await expect(installPlugin(projectRoot, { yarn: false })).rejects.toThrow(/floop/)
     })
   })
 })
