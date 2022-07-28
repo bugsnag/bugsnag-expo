@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v45.1.0 (2022-07-28)
 
 This release adds support for sourcemap uploads when using EAS Build
 
