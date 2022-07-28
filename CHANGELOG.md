@@ -1,5 +1,14 @@
 # Changelog
 
+## v45.1.0 (2022-07-28)
+
+This release adds support for sourcemap uploads when using EAS Build
+
+### Added
+
+- Added new `@bugsnag/plugin-expo-eas-sourcemaps` plugin [#40](https://github.com/bugsnag/bugsnag-expo/pull/40)
+- Updated CLI tool to automate installation of sourcemap plugin [#40](https://github.com/bugsnag/bugsnag-expo/pull/40)
+
 ## v45.0.0 (2022-05-23)
 
 This release adds support for expo 45
