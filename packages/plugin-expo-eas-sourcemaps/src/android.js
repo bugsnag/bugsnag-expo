@@ -52,7 +52,7 @@ function injectDependencies (script) {
             mavenCentral()
         }
         dependencies {
-            classpath 'com.bugsnag:bugsnag-android-gradle-plugin:7.2.1+'
+            classpath 'com.bugsnag:bugsnag-android-gradle-plugin:[7.3.0,)'
         }
     }
 
