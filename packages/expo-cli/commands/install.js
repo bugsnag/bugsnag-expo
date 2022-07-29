@@ -53,7 +53,7 @@ const isWanted = async installedState => {
   }, { onCancel })).install
 }
 
-async function selectVersion (directory) {
+export async function selectVersion (directory) {
   let installedExpoVersion
 
   try {

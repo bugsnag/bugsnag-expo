@@ -1,7 +1,8 @@
 const { spawn } = require('child_process')
+const { selectVersion } = require('../commands/install')
 
-function resolveCommand (options) {
-  const command = ['install', '@bugsnag/plugin-expo-eas-sourcemaps']
+function resolveCommand (version, options) {
+  const command = ['install', resolvePackageName(version)]
 
   if (options.npm) {
     command.push('--npm')
@@ -14,9 +15,18 @@ function resolveCommand (options) {
   return command
 }
 
+function resolvePackageName (version) {
+  if (version === 'latest') {
+    return '@bugsnag/plugin-expo-eas-sourcemaps'
+  }
+
+  return `@bugsnag/plugin-expo-eas-sourcemaps@${version}`
+}
+
 module.exports = (projectRoot, options) => {
   return new Promise((resolve, reject) => {
-    const command = resolveCommand(options)
+    const version = selectVersion(projectRoot)
+    const command = resolveCommand(version, options)
     const proc = spawn('expo', command, { cwd: projectRoot })
 
     // buffer output in case of an error
