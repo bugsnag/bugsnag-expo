@@ -15,19 +15,11 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -36,7 +28,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
       jest.doMock('child_process', () => ({ spawn }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: false, yarn: false })
+      const msg = await installPlugin('latest', projectRoot, { npm: false, yarn: false })
       expect(msg).toBe(undefined)
     })
   })
@@ -53,19 +45,11 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -74,7 +58,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
       jest.doMock('child_process', () => ({ spawn }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: true })
+      const msg = await installPlugin('latest', projectRoot, { npm: true })
       expect(msg).toBe(undefined)
     })
   })
@@ -91,19 +75,11 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -112,7 +88,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
       jest.doMock('child_process', () => ({ spawn }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { yarn: true })
+      const msg = await installPlugin('latest', projectRoot, { yarn: true })
       expect(msg).toBe(undefined)
     })
   })
@@ -131,19 +107,11 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
-        // @ts-ignore
         proc.stdout = new Readable({
-          read () {
-            this.push('some data on stdout')
-            this.push(null)
-          }
+          read () {}
         })
-        // @ts-ignore
         proc.stderr = new Readable({
-          read () {
-            this.push('some data on stderr')
-            this.push(null)
-          }
+          read () {}
         })
         setTimeout(() => proc.emit('close', 0), 10)
         return proc
@@ -152,7 +120,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
       jest.doMock('child_process', () => ({ spawn }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: true, yarn: true })
+      const msg = await installPlugin('latest', projectRoot, { npm: true, yarn: true })
       expect(msg).toBe(undefined)
     })
   })
@@ -189,7 +157,7 @@ some data on stdout
 stderr:
 some data on stderr`
 
-      await expect(installPlugin(projectRoot, { npm: false })).rejects.toThrow(expected)
+      await expect(installPlugin('latest', projectRoot, { npm: false })).rejects.toThrow(expected)
     })
   })
 
@@ -218,7 +186,7 @@ some data on stderr`
     const installPlugin = require('../install-plugin')
 
     await withFixture('blank-00', async (projectRoot) => {
-      await expect(installPlugin(projectRoot, { yarn: false })).rejects.toThrow(/floop/)
+      await expect(installPlugin('latest', projectRoot, { yarn: false })).rejects.toThrow(/floop/)
     })
   })
 })

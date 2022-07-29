@@ -6,6 +6,7 @@ const installPlugin = require('../lib/install-plugin')
 const { promisify } = require('util')
 const { readFile } = require('fs')
 const { join } = require('path')
+const selectVersion = require('../lib/select-version')
 
 // cache dependencies to avoid potentially parsing package.json multiple times
 // we use a map to store 'directoryName -> parsedJson' to support running against
@@ -47,7 +48,8 @@ module.exports = async (argv, globalOpts) => {
         yarn: globalOpts.yarn
       }
 
-      await installPlugin(projectRoot, options)
+      const version = await selectVersion(projectRoot)
+      await installPlugin(version, projectRoot, options)
     }
 
     console.log(blue('> Inserting EAS plugin into app.json'))
