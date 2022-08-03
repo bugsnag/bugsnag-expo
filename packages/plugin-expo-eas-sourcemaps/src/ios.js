@@ -31,7 +31,7 @@ function withIosPlugin (config, onPremConfig) {
     bundleReactNativePhase.shellScript = modifiedScript
 
     // 03. Configure the new build phase
-    const shellScript = 'SOURCE_MAP="$TMPDIR/$(md5 -qs "$CONFIGURATION_BUILD_DIR")-main.jsbundle.map" ../node_modules/@bugsnag/plugin-expo-eas-sourcemaps/lib/bugsnag-expo-xcode.sh'
+    const shellScript = 'SOURCE_MAP="$TMPDIR/$(md5 -qs "$CONFIGURATION_BUILD_DIR")-main.jsbundle.map" $PWD/node_modules/@bugsnag/plugin-expo-eas-sourcemaps/lib/bugsnag-expo-xcode.sh'
 
     xcodeProject.addBuildPhase([], buildPhaseName, 'Upload source maps to Bugsnag', null, {
       shellPath: '/bin/sh',
