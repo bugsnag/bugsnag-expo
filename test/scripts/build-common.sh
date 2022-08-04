@@ -19,6 +19,9 @@ npm install bugsnag-expo-cli*.tgz && ./run-bugsnag-expo-cli
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 npm install *.tgz
 
+# As EAS uses yarn, pre-run the install for the sake of my sanity
+yarn install
+
 echo $EXPO_CREDENTIALS_BASE64 | base64 -d > credentials.json
 
 echo "Common setup complete"
