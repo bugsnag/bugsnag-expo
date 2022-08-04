@@ -4,9 +4,14 @@ set -e
 
 ./test/scripts/build-common.sh
 
-mkdir build
+cd test/features/fixtures/test-app
 
 eas build \
   --local \
   -p ios \
-  --output build/output.ipa
+  --output output.ipa
+
+cd ../../../..
+
+mkdir build
+mv test/features/fixtures/test-app/output.ipa build/output.ipa

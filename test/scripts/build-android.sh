@@ -4,9 +4,14 @@ set -e
 
 ./test/scripts/build-common.sh
 
-mkdir build
+cd test/features/fixtures/test-app
 
 eas build \
   --local \
   -p android \
-  --output build/output.ipa
+  --output output.aab
+
+cd ../../../..
+
+mkdir build
+mv test/features/fixtures/test-app/output.ipa build/output.aab
