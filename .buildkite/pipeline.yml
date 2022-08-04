@@ -10,37 +10,6 @@ steps:
       DEVELOPER_DIR: "/Applications/Xcode13.app"
     command: scripts/license_finder.sh
 
-  - label:  ':docker: Build expo publisher'
-    key: "expo-publisher"
-    timeout_in_minutes: 30
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      BUGSNAG_JS_BRANCH: ${BUGSNAG_JS_BRANCH}
-      BUGSNAG_JS_COMMIT: ${BUGSNAG_JS_COMMIT}
-    plugins:
-      - docker-compose#v3.9.0:
-          build: expo-publisher
-          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/js
-          cache-from:
-            # BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME is BUGSNAG_JS_BRANCH with characters that are illegal in docker cache
-            # names removed
-            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME}-${BUGSNAG_JS_COMMIT}
-      - docker-compose#v3.9.0:
-          push:
-            - expo-publisher:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-publisher-${BRANCH_NAME}-${BUGSNAG_JS_CACHE_SAFE_BRANCH_NAME}-${BUGSNAG_JS_COMMIT}
-
-  - label:  ':docker: Publish expo app'
-    key: "publish-expo-app"
-    depends_on: "expo-publisher"
-    timeout_in_minutes: 20
-    agents:
-      queue: "opensource-highpower"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    plugins:
-      - docker-compose#v3.9.0:
-          run: expo-publisher
-
   - label: ':docker: Build expo maze runner image'
     key: "expo-maze-runner-image"
     timeout_in_minutes: 10
@@ -55,45 +24,22 @@ steps:
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
 
-  - label:  ':docker: Build expo APK builder'
-    key: "expo-android-builder"
-    timeout_in_minutes: 40
-    plugins:
-      - docker-compose#v3.9.0:
-          build: expo-android-builder
-          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/js
-          cache-from:
-            - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-${BRANCH_NAME}
-            - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-latest
-      - docker-compose#v3.9.0:
-          push:
-            - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-${BRANCH_NAME}
-            - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-latest
-
   - label:  ':docker: Build expo APK'
     key: "build-expo-apk"
-    depends_on:
-      - "publish-expo-app"
-      - "expo-android-builder"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-highpower"
+      queue: "ms-arm-12-8"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
-    plugins:
-      - docker-compose#v3.9.0:
-          run: expo-android-builder
-          cache-from:
-            - expo-android-builder:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:expo-android-builder-latest
+    artifact_paths: build/output.aab
+    commands:
+      - test/scripts/build-android.sh
 
   - label: ':docker: Build expo IPA'
     key: "build-expo-ipa"
-    depends_on:
-      - "publish-expo-app"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "ms-arm-12-8"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.ipa
@@ -107,13 +53,13 @@ steps:
     timeout_in_minutes: 50
     plugins:
       artifacts#v1.5.0:
-        download: "build/output.apk"
+        download: "build/output.aab"
       docker-compose#v3.9.0:
         pull: expo-maze-runner
         run: expo-maze-runner
         use-aliases: true
         command:
-          - --app=build/output.apk
+          - --app=build/output.aab
           - --farm=bs
           - --device=ANDROID_12_0
           - --a11y-locator

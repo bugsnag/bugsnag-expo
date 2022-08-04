@@ -15,5 +15,5 @@ npm install
 
 eas build \
   --local \
-  -p ios \
+  -p android \
   --output build/output.ipa
