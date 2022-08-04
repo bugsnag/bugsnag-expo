@@ -10,6 +10,7 @@ eas build \
   --local \
   -p ios \
   --output output.ipa
+  --non-interactive
 
 cd ../../../..
 
