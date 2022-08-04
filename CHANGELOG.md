@@ -1,5 +1,12 @@
 # Changelog
 
+## v45.1.1 (2022-08-04)
+
+### Added
+
+- Added `Bugsnag.isStarted()` to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
+- (plugin-expo-eas-sourcemaps) Add minimum version check to sourcemap plugin [#45](https://github.com/bugsnag/bugsnag-expo/pull/45)
+
 ## v45.1.0 (2022-07-28)
 
 This release adds support for sourcemap uploads when using EAS Build

@@ -60,5 +60,6 @@ function getBugsnagVersionForExpoVersion (installedExpoVersion) {
 }
 
 module.exports = {
-  getBugsnagVersionForExpoVersion
+  getBugsnagVersionForExpoVersion,
+  isEarlierVersionThan
 }

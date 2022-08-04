@@ -1,0 +1,10 @@
+{
+    "name": "install-with-v44",
+    "private": "true",
+    "version": "0.0.0",
+    "dependencies": {
+        "@bugsnag/expo": "^44.0.0",
+        "expo": "^44.0.0"
+    }
+  }
+  
