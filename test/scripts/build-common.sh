@@ -2,7 +2,7 @@
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*
 
 # Install expo requirements
-npm Install
+npm install
 
 # Pack the packages and move them to the test fixture
 npm pack packages/*/
