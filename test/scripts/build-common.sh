@@ -20,3 +20,5 @@ npm install bugsnag-expo-cli*.tgz && rm bugsnag-expo-cli*.tgz && ./run-bugsnag-e
 npm install *.tgz && rm *.tgz
 
 echo $EXPO_CREDENTIALS_BASE64 | base64 -d > credentials.json
+
+echo "Common setup complete"
