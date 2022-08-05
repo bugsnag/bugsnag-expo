@@ -19,13 +19,7 @@ npm install bugsnag-expo-cli*.tgz && ./run-bugsnag-expo-cli
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 npm install *.tgz
 
-# install
-spawn npx bugsnag-expo-cli install
-
-expect "@bugsnag/expo does not appear to be installed, do you want to install it and its dependencies??"
-send "y\r"
-
-expect eof
+./run-bugsnag-expo-cli-install
 
 # As EAS uses yarn, pre-run the install for the sake of my sanity
 yarn install
