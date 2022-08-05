@@ -11,6 +11,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  },
   "files": [
     "lib",
     "src",
