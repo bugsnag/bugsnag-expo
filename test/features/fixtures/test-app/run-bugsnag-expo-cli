@@ -12,14 +12,6 @@ set api_key 645470b8c7f62177e1a723e26c9a48d7
 # uses individual scenario files that may start Bugsnag differently. Similarly,
 # we don't run 'init' as it would run 'insert'
 
-# install
-spawn npx bugsnag-expo-cli install
-
-expect "@bugsnag/expo does not appear to be installed, do you want to install it and its dependencies??"
-send "y\r"
-
-expect eof
-
 # set-api-key
 spawn npx bugsnag-expo-cli set-api-key
 
