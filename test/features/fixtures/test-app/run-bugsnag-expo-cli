@@ -15,7 +15,7 @@ set api_key 645470b8c7f62177e1a723e26c9a48d7
 # install
 spawn npx bugsnag-expo-cli install
 
-expect "@bugsnag/expo already appears to be installed, do you want to install it and its dependencies anyway?"
+expect "@bugsnag/expo does not appear to be installed, do you want to install it and its dependencies??"
 send "y\r"
 
 expect eof
