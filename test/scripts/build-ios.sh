@@ -9,7 +9,7 @@ cd test/features/fixtures/test-app
 eas build \
   --local \
   -p ios \
-  --output output.ipa
+  --output output.ipa \
   --non-interactive
 
 cd ../../../..
