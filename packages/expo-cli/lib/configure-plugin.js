@@ -24,4 +24,28 @@ module.exports = async (projectRoot) => {
     }
     throw e
   }
+
+  try {
+    const sourceMaps = '@bugsnag/source-maps'
+    const packageJsonPath = join(projectRoot, 'package.json')
+    const packageJson = JSON.parse(await promisify(readFile)(packageJsonPath))
+    packageJson.workspaces = packageJson.workspaces || {}
+    packageJson.workspaces.nohoist = packageJson.workspaces.nohoist || []
+    if (!packageJson.workspaces.nohoist.includes(plugin)) {
+      packageJson.workspaces.nohoist.push(plugin)
+    }
+    if (!packageJson.workspaces.nohoist.includes(sourceMaps)) {
+      packageJson.workspaces.nohoist.push(sourceMaps)
+    }
+    await promisify(writeFile)(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
+  } catch (e) {
+    // swallow and rethrow for errors that we can produce better messaging
+    if (e.code === 'ENOENT') {
+      throw new Error(`Couldn’t find package.json in "${projectRoot}".`)
+    }
+    if (e.name === 'SyntaxError') {
+      throw new Error(`Couldn’t parse package.json because it wasn’t valid JSON: "${e.message}"`)
+    }
+    throw e
+  }
 }
