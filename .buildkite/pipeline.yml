@@ -28,7 +28,7 @@ steps:
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-8"
+      queue: "ms-arm-12-7"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.aab
@@ -39,7 +39,7 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-8"
+      queue: "ms-arm-12-7"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.ipa
