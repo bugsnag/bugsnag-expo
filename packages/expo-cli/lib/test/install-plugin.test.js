@@ -11,7 +11,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-00', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/plugin-expo-eas-sourcemaps'])
+        expect(args).toEqual(['install', '@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
         expect(opts).toEqual({ cwd: projectRoot })
 
         const proc = new EventEmitter()
@@ -40,6 +40,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(args).toEqual([
           'install',
           '@bugsnag/plugin-expo-eas-sourcemaps',
+          '@bugsnag/source-maps',
           '--npm'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -70,6 +71,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(args).toEqual([
           'install',
           '@bugsnag/plugin-expo-eas-sourcemaps',
+          '@bugsnag/source-maps',
           '--yarn'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -102,6 +104,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
         expect(args).toEqual([
           'install',
           '@bugsnag/plugin-expo-eas-sourcemaps',
+          '@bugsnag/source-maps',
           '--npm',
           '--yarn'
         ])
@@ -150,7 +153,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     const installPlugin = require('../install-plugin')
 
     await withFixture('blank-00', async (projectRoot) => {
-      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/plugin-expo-eas-sourcemaps"
+      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/plugin-expo-eas-sourcemaps @bugsnag/source-maps"
 stdout:
 some data on stdout
 

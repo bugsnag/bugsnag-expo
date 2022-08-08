@@ -1,7 +1,7 @@
 const { spawn } = require('child_process')
 
 function resolveCommand (options) {
-  const command = ['install', '@bugsnag/plugin-expo-eas-sourcemaps']
+  const command = ['install', '@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps']
 
   if (options.npm) {
     command.push('--npm')
