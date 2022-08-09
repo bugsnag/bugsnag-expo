@@ -14,4 +14,4 @@ eas build \
 cd ../../../..
 
 mkdir build
-mv test/features/fixtures/test-app/output.ipa build/output.aab
+mv test/features/fixtures/test-app/output.aab build/output.aab
