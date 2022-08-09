@@ -17,7 +17,6 @@ Scenario: Device data is included by default
   And the event "device.orientation" matches "landscape|portrait"
   And the event "device.time" is not null
   And the event "device.runtimeVersions.reactNative" matches "\d+\.\d+\.\d"
-  And the event "device.runtimeVersions.expoApp" matches "\d+\.\d+\.\d"
   And the event "device.runtimeVersions.expoSdk" matches "\d+\.\d+\.\d"
   And the event "device.totalMemory" is not null
   And the event "metaData.device.isDevice" is true
@@ -39,7 +38,6 @@ Scenario: Device data can be modified by a callback
   And the event "device.orientation" matches "landscape|portrait"
   And the event "device.time" is not null
   And the event "device.runtimeVersions.reactNative" matches "\d+\.\d+\.\d"
-  And the event "device.runtimeVersions.expoApp" matches "\d+\.\d+\.\d"
   And the event "device.runtimeVersions.expoSdk" matches "\d+\.\d+\.\d"
   And the event "device.totalMemory" is not null
   And the event "metaData.device.isDevice" is true

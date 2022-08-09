@@ -24,6 +24,6 @@ yarn install
 
 ./run-bugsnag-expo-cli-install
 
-echo $EXPO_CREDENTIALS_BASE64 | base64 -d > credentials.json
+cp $EXPO_CREDENTIALS_PATH credentials.json
 
 echo "Common setup complete"
