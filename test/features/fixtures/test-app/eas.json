@@ -5,7 +5,10 @@
   "build": {
     "production": {
       "distribution": "internal",
-      "credentialsSource": "local"
+      "credentialsSource": "local",
+      "android": {
+        "buildType": "apk"
+      }
     }
   },
   "submit": {

@@ -9,9 +9,9 @@ cd test/features/fixtures/test-app
 eas build \
   --local \
   -p android \
-  --output output.aab
+  --output output.apk
 
 cd ../../../..
 
 mkdir build
-mv test/features/fixtures/test-app/output.aab build/output.aab
+mv test/features/fixtures/test-app/output.apk build/output.apk

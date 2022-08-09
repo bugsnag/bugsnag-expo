@@ -31,7 +31,7 @@ steps:
       queue: "ms-arm-12-7"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.aab
+    artifact_paths: build/output.apk
     commands:
       - test/scripts/build-android.sh
 
@@ -53,13 +53,13 @@ steps:
     timeout_in_minutes: 50
     plugins:
       artifacts#v1.5.0:
-        download: "build/output.aab"
+        download: "build/output.apk"
       docker-compose#v3.9.0:
         pull: expo-maze-runner
         run: expo-maze-runner
         use-aliases: true
         command:
-          - --app=build/output.aab
+          - --app=build/output.apk
           - --farm=bs
           - --device=ANDROID_12_0
           - --a11y-locator
