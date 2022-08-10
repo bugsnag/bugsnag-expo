@@ -2,9 +2,11 @@ import withRemoveiOSNotificationEntitlement from "./config-plugins/withRemoveiOS
 
 export default config => {
     return {
-        ...config,
-        plugins: [
-            [withRemoveiOSNotificationEntitlement]
-        ]
+        expo: {
+            ...config,
+            plugins: [
+                [withRemoveiOSNotificationEntitlement]
+            ]
+        }
     }
 }
