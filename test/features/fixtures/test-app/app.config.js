@@ -2,10 +2,12 @@ import withRemoveiOSNotificationEntitlement from "./config-plugins/withRemoveiOS
 
 export default (config) => {
     console.log(config)
-    return {
+    newConfig = {
         ...config,
         plugins: [
             [withRemoveiOSNotificationEntitlement]
         ]
     }
+    console.log(newConfig)
+    return newConfig
 }
