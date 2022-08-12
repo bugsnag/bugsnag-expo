@@ -4,7 +4,7 @@ The following steps will attempt to outline the current build process for the Ex
 
 ## Requirements
 
-The requirements for a machine building the test fixture on CLI can be found within the `platforms-ansible` repository.
+The requirements for a machine building the test fixture on CLI can be found within our private `platforms-ansible` repository.
 
 ## Build process
 
