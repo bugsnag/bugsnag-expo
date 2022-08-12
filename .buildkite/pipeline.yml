@@ -24,22 +24,22 @@ steps:
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
 
-  - label:  ':docker: Build expo APK'
+  - label:  ':android: Build expo APK'
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-7"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.apk
     commands:
       - test/scripts/build-android.sh
 
-  - label: ':docker: Build expo IPA'
+  - label: ':apple: Build expo IPA'
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-7"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.ipa
