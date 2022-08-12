@@ -21,7 +21,7 @@ send "$api_key\r"
 expect eof
 
 # add-hook
-spawn npx bugsnag-expo-cli add-hook
+spawn npx bugsnag-expo-cli upload-sourcemaps
 
 expect "Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json)"
 send -- "\r"
