@@ -18,11 +18,7 @@ function usingWorkspaces (projectRoot) {
     proc.on('error', err => { reject(err) })
 
     proc.on('close', code => {
-      if (code === 0) {
-        resolve(true)
-      }
-
-      resolve(false)
+      resolve(code === 0)
     })
   })
 }
