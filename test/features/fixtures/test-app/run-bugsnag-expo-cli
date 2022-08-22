@@ -19,11 +19,3 @@ expect "What is your Bugsnag API key?"
 send "$api_key\r"
 
 expect eof
-
-# add-hook
-spawn npx bugsnag-expo-cli upload-sourcemaps
-
-expect "Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json)"
-send -- "\r"
-
-expect eof
