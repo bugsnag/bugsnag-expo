@@ -10,6 +10,7 @@ const commands = new Map([
   ['init', require('./commands/init')],
   ['insert', require('./commands/insert')],
   ['install', require('./commands/install')],
+  ['upload-sourcemaps', require('./commands/upload-sourcemaps')],
   ['set-api-key', require('./commands/set-api-key')]
 ])
 
