@@ -22,12 +22,12 @@ All subsequent steps are executed within the test-fixture directory, `test/featu
 
 4. The `bugsnag-expo-cli` package is installed from the tarball, and a script executes the following commands:
     - `bugsnag-expo-cli set-api-key` to set a pre-defined test api key in the app configuration
-    - `bugsnag-expo-cli add-hook` to add source-map upload hooks into the app configuration
 5. The `set-bugsnag-js-overrides` script is invoked with a `bugsnag-js` branch and commit details if present. If required this will update the `bugsnag-js` package present in the test app, and is used for acceptance testing from that repository
 6. Afterwards, to ensure changing the `bugsnag-js` version hasn't modified any `bugsnag-expo` packages we reinstall the `.tgz` packages present in the fixture
 7. As EAS uses `yarn` as part of its initial processing we run `yarn install` independently to ensure a suitable `yarn.lock` file pre-exists, and so we have more control over the process
-8. To ensure peer-dependencies are installed we then invoke the `./run-bugsnag-expo-cli-install` script, which in turn calls the command:
+8. To ensure peer-dependencies are installed we then invoke the `./run-bugsnag-expo-cli-install` script, which in turn calls the commands:
     - `bugsnag-expo-cli install` to install all peer dependencies
+    - `bugsnag-expo-cli upload-sourcemaps` to add source-map upload hooks into the app configuration
 9. Finally, to ensure the apps are signed correctly for use on third-party testing services we copy a pre-written `credentials.json` into the repo, which is referenced in `eas.json`.
     - More information about this file can be found within the `platforms-ansible` repository
 
