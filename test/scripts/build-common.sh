@@ -13,18 +13,14 @@ mv *.tgz test/features/fixtures/test-app
 cd test/features/fixtures/test-app
 
 # Install the bugsnag-expo-cli and run setup
-BUGSNAG_EXPO_CLI=$(ls | grep -e bugsnag-expo-cli*.tgz)
-yarn add file:$BUGSNAG_EXPO_CLI
+npm install bugsnag-expo-cli*.tgz
 ./run-bugsnag-expo-cli
 
 # set bugsnag-js override versions if this build was triggered from the bugsnag-js repo
 ./set-bugsnag-js-overrides $BUGSNAG_JS_BRANCH $BUGSNAG_JS_COMMIT
 
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
-for FILE in *.tgz; do
-    yarn add file:$FILE
-done
-
+npm install *.tgz
 
 # As EAS uses yarn, pre-run the install for the sake of my sanity
 yarn install
