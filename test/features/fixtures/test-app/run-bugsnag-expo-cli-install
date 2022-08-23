@@ -3,7 +3,7 @@
 set timeout -1
 
 # install
-spawn npx bugsnag-expo-cli install
+spawn npx bugsnag-expo-cli install --yarn
 
 expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
 send "y\r"
