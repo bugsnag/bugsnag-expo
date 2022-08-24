@@ -46,8 +46,11 @@ module.exports = {
     client.addOnError(event => {
       event.device = { ...event.device, time: new Date(), orientation, ...device }
       event.addMetadata('device', {
-        isDevice: Device.isDevice,
+        // isDevice: Device.isDevice,
         appOwnership: Constants.appOwnership
+      })
+      event.addMetadata('test', {
+        thisIsATest: 'test'
       })
       addDefaultAppType(event)
       addDefaultUserId(event)
