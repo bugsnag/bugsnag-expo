@@ -2,6 +2,8 @@
 
 # Lets make sure the build folder was cleared out correctly
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*
+# And all previous packages are removed
+git clean -xfdf
 
 # Install expo requirements
 npm install
