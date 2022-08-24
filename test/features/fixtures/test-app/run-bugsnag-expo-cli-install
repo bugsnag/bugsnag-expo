@@ -9,14 +9,3 @@ expect "Do you want to automatically upload source maps to Bugsnag? (this will m
 send -- "\r"
 
 expect eof
-
-# install
-spawn npx bugsnag-expo-cli install
-
-expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
-send "y\r"
-
-expect "If you want to install @bugsnag/expo *"
-send "\r"
-
-expect eof
