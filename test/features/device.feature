@@ -18,7 +18,7 @@ Scenario: Device data is included by default
   And the event "device.time" is not null
   And the event "device.runtimeVersions.reactNative" matches "\d+\.\d+\.\d"
   And the event "device.runtimeVersions.expoSdk" matches "\d+\.\d+\.\d"
-  And the event "device.totalMemory" is not null
+  And the event "device.totalMemory" is null
   And the event "metaData.device.isDevice" is true
   And the error Bugsnag-Integrity header is valid
 
