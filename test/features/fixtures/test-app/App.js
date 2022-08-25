@@ -87,6 +87,7 @@ export default class App extends React.Component {
                      key={index}
                      title={'Scenario: ' + scenario}
                      onPress={() => {
+                       console.log('Triggered scenario: ' + scenario)
                        this.setState({ scenario })
                      }}/>
     })
