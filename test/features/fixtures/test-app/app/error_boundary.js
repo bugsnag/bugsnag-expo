@@ -14,6 +14,7 @@ export default class ErrorBoundary extends Component {
   }
 
   triggerErrorBoundary = () => {
+    console.log('triggerErrorBoundary')
     this.setState(previous => (
       {
         ebTrigger: true,
@@ -23,6 +24,7 @@ export default class ErrorBoundary extends Component {
   }
 
   renderErrorBoundary = () => {
+    console.log('renderErrorBoundary')
     if (this.state.ebTrigger) {
       return (
         <Buggy />
@@ -33,6 +35,7 @@ export default class ErrorBoundary extends Component {
   }
 
   triggerFallback = () => {
+    console.log('triggerFallback')
     this.setState(previous => (
       {
         ebTrigger: false,
@@ -42,6 +45,7 @@ export default class ErrorBoundary extends Component {
   }
 
   renderFallback = () => {
+    console.log('renderFallback')
     if (this.state.fallbackTrigger) {
       return (
         <Buggy />

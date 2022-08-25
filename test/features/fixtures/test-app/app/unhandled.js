@@ -7,6 +7,7 @@ export default class Unhandled extends Component {
   }
 
   unhandledPromiseRejection = () => {
+    console.log('unhandledPromiseRejection')
     Promise.reject(new Error('UnhandledPromiseRejection'))
   }
 
