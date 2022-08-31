@@ -8,6 +8,9 @@ git clean -xfdf
 # Install expo requirements
 npm install
 
+# Bump package versions to a high value so only our values will match
+npx lerna version 999.999.999 --no-git-tag-version --no-push --no-changelog
+
 # Pack the packages and move them to the test fixture
 npm pack packages/*/
 mv *.tgz test/features/fixtures/test-app
@@ -23,6 +26,7 @@ npm install bugsnag-expo-cli*.tgz
 
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 npm install *.tgz
+yarn import
 
 ./run-bugsnag-expo-cli-install
 
