@@ -9,7 +9,7 @@ git clean -xfdf
 npm install
 
 # Bump package versions to a high value so only our values will match
-npx lerna version 999.999.999 --no-git-tag-version --no-push --no-changelog
+npx lerna version 999.999.999 --no-git-tag-version --no-push --no-changelog --yes
 
 # Pack the packages and move them to the test fixture
 npm pack packages/*/
