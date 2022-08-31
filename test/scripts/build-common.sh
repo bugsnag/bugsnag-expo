@@ -27,6 +27,8 @@ npm install bugsnag-expo-cli*.tgz
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 npm install *.tgz
 
+yarn import
+
 ./run-bugsnag-expo-cli-install
 
 cp $EXPO_CREDENTIALS_PATH credentials.json
