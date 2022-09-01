@@ -6,20 +6,30 @@ const { blue } = require('kleur')
 
 const plugin = '@bugsnag/plugin-expo-eas-sourcemaps'
 
-function usingWorkspaces (projectRoot) {
+function usingYarnV2 (projectRoot) {
   return new Promise((resolve, reject) => {
-    const command = ['workspaces', 'info']
-    const proc = spawn('yarn', command, { cwd: projectRoot })
+    const proc = spawn('yarn', ['-v'], { cwd: projectRoot })
+    proc.stdout.on('data', chunk => resolve(chunk >= '2'))
+    proc.stderr.on('data', chunk => reject(chunk))
+  })
+}
 
-    // buffer output in case of an error
-    proc.stdout.on('data', d => {})
-    proc.stderr.on('data', d => {})
-
-    proc.on('error', err => { reject(err) })
-
-    proc.on('close', code => {
-      resolve(code === 0)
-    })
+function usingWorkspaces (projectRoot, usingYarnV2) {
+  return new Promise((resolve, reject) => {
+    if (usingYarnV2) {
+      const paths = []
+      const proc = spawn('yarn', ['workspaces', 'list'], { cwd: projectRoot })
+      proc.stdout.on('data', chunk => paths.push(chunk))
+      proc.stderr.on('data', chunk => {})
+      proc.on('error', (err) => { reject(err) })
+      proc.on('close', (code, signal) => { resolve(paths.length > 2) })
+    } else {
+      const proc = spawn('yarn', ['workspaces', 'info'], { cwd: projectRoot })
+      proc.stdout.on('data', chunk => {})
+      proc.stderr.on('data', chunk => {})
+      proc.on('error', err => { reject(err) })
+      proc.on('close', (code, signal) => { resolve(code === 0) })
+    }
   })
 }
 
@@ -44,8 +54,9 @@ module.exports = async (projectRoot) => {
     throw e
   }
 
-  // are we in a monorepo?
-  const addMonorepoConfig = await usingWorkspaces(projectRoot)
+  // do we need to add monorepo configuration?
+  const withYarnV2 = await usingYarnV2(projectRoot)
+  const addMonorepoConfig = await usingWorkspaces(projectRoot, withYarnV2)
 
   if (addMonorepoConfig) {
     console.log(blue('> yarn workspaces detected, updating config'))
