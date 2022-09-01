@@ -11,6 +11,10 @@ function resolveCommand (options) {
     command.push('--yarn')
   }
 
+  // dev dependencies
+  command.push('--')
+  command.push('-D')
+
   return command
 }
 
