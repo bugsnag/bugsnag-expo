@@ -23,6 +23,9 @@
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture"
-    }
+    },
+    "plugins": [
+      ["./config-plugins/withRemoveiOSNotificationEntitlement"]
+    ]
   }
 }
