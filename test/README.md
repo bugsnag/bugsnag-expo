@@ -37,7 +37,7 @@ Following the completion of the common steps, the `test/scripts/build-android.sh
 
 1. Move to the `test-app` fixture directory
 2. Invoke `eas build` using local credentials, outputting the file `output.apk`
-    - By default this would produce a `.aab` file, but the `build.production.android.buildType` setting in `eas.json` overrides this to produce a usable `.apk` file
+    - By default this would produce a `.aab` file, but the `build.production.android.buildType` setting in `eas.json` overrides this to produce an `.apk` file usable by maze-runner
     - We don't currently define a separate build scheme within the `eas.json`, simply using the default `production` scheme for the time being
 3. We then copy the product `output.apk` to `build/output.apk` at the top level of this repository to be consumed in later CI stages
 
