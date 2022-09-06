@@ -19,4 +19,4 @@ expect eof
 # expect "If you want to install @bugsnag/expo *"
 # send "\r"
 
-expect eof
+# expect eof
