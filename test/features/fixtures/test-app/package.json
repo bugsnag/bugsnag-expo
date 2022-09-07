@@ -20,8 +20,5 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  "overrides": {
-    "promise": "^8.0.3"
-  },
   "private": true
 }
