@@ -18,12 +18,12 @@
   "license": "MIT",
   "devDependencies": {
     "@bugsnag/core": "^7.16.0",
-    "expo-application": "~4.1.0",
-    "expo-constants": "~13.1.1"
+    "expo-application": "~4.2.2",
+    "expo-constants": "~13.2.3"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.0.0",
-    "expo-application": "~4.1.0",
-    "expo-constants": "~13.1.1"
+    "expo-application": "~4.2.2",
+    "expo-constants": "~13.2.3"
   }
 }
