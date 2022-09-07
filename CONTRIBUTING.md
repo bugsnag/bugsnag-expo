@@ -78,7 +78,7 @@ If you add a new dependency please add it to this list.
 
 To check what native module versions are bundled with Expo, check this file:
 
-https://github.com/expo/expo/blob/master/packages/expo/bundledNativeModules.json
+https://github.com/expo/expo/blob/main/packages/expo/bundledNativeModules.json
 
 ## Updating the CLI to install a compatible notifier version
 
