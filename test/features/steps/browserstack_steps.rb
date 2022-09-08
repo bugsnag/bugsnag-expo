@@ -22,3 +22,24 @@ Then("the event {string} equals the current OS name") do |field_path|
 
   Maze.check.equal(expected, actual_value)
 end
+
+def click_if_present(element)
+  return false unless Maze.driver.wait_for_element(element, 1)
+
+  Maze.driver.click_element_if_present(element)
+rescue Selenium::WebDriver::Error::UnknownError
+  # Ignore Appium errors (e.g. during an ANR)
+  return false
+end
+
+When("I clear any error dialogue") do
+  return if Maze.driver.capabilities['os'].eql?('ios')
+  # It can take multiple clicks to clear a dialog,
+  # so keep pressing until nothing is pressed
+  keep_clicking = true
+  while keep_clicking
+    keep_clicking = click_if_present('android:id/button1') ||
+                    click_if_present('android:id/aerr_close') ||
+                    click_if_present('android:id/aerr_restart')
+  end
+end
