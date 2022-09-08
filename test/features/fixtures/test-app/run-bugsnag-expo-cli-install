@@ -10,13 +10,18 @@ send -- "\r"
 
 expect eof
 
-# install
-spawn npx bugsnag-expo-cli install
+# This code was originally present to install peer dependencies using the bugsnag-expo-cli.
+# However due to issues with that installation interacting with local packages and yarn, it was more consistent to
+# add the peer dependencies directly to the application.
+# The code is kept here as a reminder of the original process in case we need to re-visit it in the future.
 
-expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
-send "y\r"
+# # install
+# spawn npx bugsnag-expo-cli install
 
-expect "If you want to install @bugsnag/expo *"
-send "\r"
+# expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
+# send "y\r"
 
-expect eof
+# expect "If you want to install @bugsnag/expo *"
+# send "\r"
+
+# expect eof

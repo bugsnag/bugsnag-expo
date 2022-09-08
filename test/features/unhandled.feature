@@ -5,6 +5,7 @@ Background:
   And I click the element "unhandled"
 
 Scenario: Catching an Unhandled error
+  When I clear any error dialogue
   Given the element "unhandledErrorButton" is present
   When I click the element "unhandledErrorButton"
   Then I wait to receive an error
@@ -14,6 +15,7 @@ Scenario: Catching an Unhandled error
   And the error Bugsnag-Integrity header is valid
 
 Scenario: Catching an Unhandled promise rejection
+  When I clear any error dialogue
   Given the element "unhandledPromiseRejectionButton" is present
   When I click the element "unhandledPromiseRejectionButton"
   Then I wait to receive an error
