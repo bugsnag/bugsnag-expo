@@ -33,7 +33,6 @@ rescue Selenium::WebDriver::Error::UnknownError
 end
 
 When("I clear any error dialogue") do
-  return if Maze.driver.capabilities['os'].eql?('ios')
   # It can take multiple clicks to clear a dialog,
   # so keep pressing until nothing is pressed
   keep_clicking = true
