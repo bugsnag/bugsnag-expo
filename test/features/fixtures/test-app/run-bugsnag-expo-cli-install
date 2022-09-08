@@ -10,13 +10,15 @@ send -- "\r"
 
 expect eof
 
-# install
-spawn npx bugsnag-expo-cli install
+# This may be required at a later date if we have trouble updating dependencies
 
-expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
-send "y\r"
+# # install
+# spawn npx bugsnag-expo-cli install
 
-expect "If you want to install @bugsnag/expo *"
-send "\r"
+# expect "@bugsnag/expo already appears to be installed, but is missing dependencies. Do you want to install them?"
+# send "y\r"
 
-expect eof
+# expect "If you want to install @bugsnag/expo *"
+# send "\r"
+
+# expect eof
