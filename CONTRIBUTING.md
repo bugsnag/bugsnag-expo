@@ -78,7 +78,9 @@ If you add a new dependency please add it to this list.
 
 To check what native module versions are bundled with Expo, check this file:
 
-https://github.com/expo/expo/blob/master/packages/expo/bundledNativeModules.json
+https://github.com/expo/expo/blob/main/packages/expo/bundledNativeModules.json
+
+Additionally, `@bugsnag/expo` has a dependency on `promise` that must resolve to the same version used by `react-native` to ensure that we attach our unhandled rejection handler to the same instance of promise used by react-native.
 
 ## Updating the CLI to install a compatible notifier version
 
@@ -88,17 +90,18 @@ When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to
 
 To start a release:
 
-- decide on a version number
-- create a new release branch from `next` with the version number in the branch name
-`git checkout -b release/vX.Y.Z`
+- create and push a new branch (e.g. `v46`) from the latest previous branch (e.g. `v45` or `v45-next`)
+- create a new next branch from which the release PR is to be made (e.g. `v46-next`)
+- make the required dependency and CLI changes (see above) for the latest expo version
+- regenerate the expo e2e test fixture using the expo create app cli
 - update the version number and date in the changelog
-- make a PR from your release branch to `master` entitled `Release vX.Y.Z`
-- get the release PR reviewed – all code changes should have been reviewed already, this should be a review of the integration of all changes to be shipped and the changelog
+- make a PR from your release branch (e.g. `v46-next`) to `v46` entitled `Release v46`
+- get the release PR reviewed
 - consider shipping a [prerelease](#prereleases) to aid testing the release
 
 Once the release PR has been approved:
 
-- merge the PR into master
+- merge the PR
 
 You are now ready to make the release. Releases are done using Docker and Docker compose. You do not need to have the release branch checked out on your local machine to make a release – the container pulls a fresh clone of the repo down from GitHub. Prerequisites:
 

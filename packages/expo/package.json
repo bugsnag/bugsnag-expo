@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "45.0.0",
+  "version": "45.1.1",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -49,11 +49,12 @@
     "bugsnag-build-reporter": "^1.0.1"
   },
   "devDependencies": {
-    "expo-constants": "~13.1.1"
+    "expo-constants": "~13.2.3"
   },
   "peerDependencies": {
     "expo": ">=33.0.0",
-    "expo-constants": "~13.1.1",
+    "expo-constants": "~13.2.3",
+    "promise": "^8",
     "react": "*"
   }
 }

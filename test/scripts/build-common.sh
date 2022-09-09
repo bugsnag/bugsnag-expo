@@ -4,6 +4,8 @@
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*
 # And all previous packages are removed
 git clean -xfdf
+# And the yarn cache is clean
+yarn cache clean --all
 
 # Install expo requirements
 npm install

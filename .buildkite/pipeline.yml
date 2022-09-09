@@ -93,7 +93,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 12'
+  - label: ':runner: expo iOS 13'
     depends_on:
       - "build-expo-ipa"
       - "expo-maze-runner-image"
@@ -108,9 +108,9 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_12
+          - --device=IOS_13
           - --a11y-locator
-          - --appium-version=1.16.0
+          - --appium-version=1.17.0
           - --retry=2
           - --order=random
     concurrency: 9
