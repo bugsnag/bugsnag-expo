@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-app-state-breadcrumbs",
-  "version": "45.0.0",
+  "version": "46.0.0",
   "main": "app-state.js",
   "description": "@bugsnag/expo plugin to create breadcrumbs when a React Native app enters the foreground/background",
   "homepage": "https://www.bugsnag.com/",
