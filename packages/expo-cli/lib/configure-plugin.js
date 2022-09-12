@@ -73,6 +73,11 @@ module.exports = async (projectRoot) => {
       if (!packageJson.workspaces.nohoist.includes(sourceMaps)) {
         packageJson.workspaces.nohoist.push(sourceMaps)
       }
+      if (withYarnV2) {
+        packageJson.installConfig = packageJson.installConfig || {}
+        packageJson.installConfig.hoistingLimits = 'workspaces'
+      }
+
       await promisify(writeFile)(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
     } catch (e) {
       // swallow and rethrow for errors that we can produce better messaging
