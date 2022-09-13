@@ -5,15 +5,15 @@ function resolveCommand (options) {
 
   if (options.npm) {
     command.push('--npm')
+    command.push('--')
+    command.push('--save-dev')
   }
 
   if (options.yarn) {
     command.push('--yarn')
+    command.push('--')
+    command.push('--dev')
   }
-
-  // dev dependencies
-  command.push('--')
-  command.push('-D')
 
   return command
 }
