@@ -6,29 +6,29 @@ const { blue } = require('kleur')
 
 const plugin = '@bugsnag/plugin-expo-eas-sourcemaps'
 
-function usingYarnV2 (projectRoot) {
+function usingYarnClassic (projectRoot) {
   return new Promise((resolve, reject) => {
     const proc = spawn('yarn', ['-v'], { cwd: projectRoot })
-    proc.stdout.on('data', chunk => resolve(chunk >= '2'))
+    proc.stdout.on('data', chunk => resolve(chunk < '2'))
     proc.stderr.on('data', chunk => reject(chunk))
   })
 }
 
-function usingWorkspaces (projectRoot, usingYarnV2) {
+function usingWorkspaces (projectRoot, usingYarnClassic) {
   return new Promise((resolve, reject) => {
-    if (usingYarnV2) {
+    if (usingYarnClassic) {
+      const proc = spawn('yarn', ['workspaces', 'info'], { cwd: projectRoot })
+      proc.stdout.on('data', chunk => {})
+      proc.stderr.on('data', chunk => {})
+      proc.on('error', err => { reject(err) })
+      proc.on('close', (code, signal) => { resolve(code === 0) })
+    } else {
       const paths = []
       const proc = spawn('yarn', ['workspaces', 'list'], { cwd: projectRoot })
       proc.stdout.on('data', chunk => paths.push(chunk))
       proc.stderr.on('data', chunk => {})
       proc.on('error', (err) => { reject(err) })
       proc.on('close', (code, signal) => { resolve(paths.length > 2) })
-    } else {
-      const proc = spawn('yarn', ['workspaces', 'info'], { cwd: projectRoot })
-      proc.stdout.on('data', chunk => {})
-      proc.stderr.on('data', chunk => {})
-      proc.on('error', err => { reject(err) })
-      proc.on('close', (code, signal) => { resolve(code === 0) })
     }
   })
 }
@@ -55,8 +55,8 @@ module.exports = async (projectRoot) => {
   }
 
   // do we need to add monorepo configuration?
-  const withYarnV2 = await usingYarnV2(projectRoot)
-  const addMonorepoConfig = await usingWorkspaces(projectRoot, withYarnV2)
+  const withYarnClassic = await usingYarnClassic(projectRoot)
+  const addMonorepoConfig = await usingWorkspaces(projectRoot, withYarnClassic)
 
   if (addMonorepoConfig) {
     console.log(blue('> yarn workspaces detected, updating config'))
@@ -73,7 +73,7 @@ module.exports = async (projectRoot) => {
       if (!packageJson.workspaces.nohoist.includes(sourceMaps)) {
         packageJson.workspaces.nohoist.push(sourceMaps)
       }
-      if (withYarnV2) {
+      if (!withYarnClassic) {
         packageJson.installConfig = packageJson.installConfig || {}
         packageJson.installConfig.hoistingLimits = 'workspaces'
       }
