@@ -33,6 +33,6 @@ yarn import
 
 ./run-bugsnag-expo-cli-install
 
-cp $EXPO_CREDENTIALS_PATH credentials.json
+cp $EXPO_CREDENTIALS_DIR/* .
 
 echo "Common setup complete"
