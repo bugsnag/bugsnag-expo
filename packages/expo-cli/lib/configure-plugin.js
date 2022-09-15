@@ -65,13 +65,15 @@ module.exports = async (projectRoot) => {
       const sourceMaps = '@bugsnag/source-maps'
       const packageJsonPath = join(projectRoot, 'package.json')
       const packageJson = JSON.parse(await promisify(readFile)(packageJsonPath))
-      packageJson.workspaces = packageJson.workspaces || {}
-      packageJson.workspaces.nohoist = packageJson.workspaces.nohoist || []
-      if (!packageJson.workspaces.nohoist.includes(plugin)) {
-        packageJson.workspaces.nohoist.push(plugin)
-      }
-      if (!packageJson.workspaces.nohoist.includes(sourceMaps)) {
-        packageJson.workspaces.nohoist.push(sourceMaps)
+
+      if (withYarnClassic) {
+        packageJson.workspaces = packageJson.workspaces || {}
+        packageJson.workspaces.nohoist = packageJson.workspaces.nohoist || []
+        if (!packageJson.workspaces.nohoist.includes(plugin)) packageJson.workspaces.nohoist.push(plugin)
+        if (!packageJson.workspaces.nohoist.includes(sourceMaps)) packageJson.workspaces.nohoist.push(sourceMaps)
+      } else {
+        packageJson.installConfig = packageJson.installConfig || {}
+        packageJson.installConfig.hoistingLimits = 'workspaces'
       }
 
       await promisify(writeFile)(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
