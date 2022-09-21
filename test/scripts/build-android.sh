@@ -8,11 +8,10 @@ cd test/features/fixtures/test-app
 
 eas build \
   --local \
-  -p ios \
-  --output output.ipa \
-  --non-interactive
+  -p android \
+  --output output.apk
 
 cd ../../../..
 
 mkdir build
-mv test/features/fixtures/test-app/output.ipa build/output.ipa
+mv test/features/fixtures/test-app/output.apk build/output.apk

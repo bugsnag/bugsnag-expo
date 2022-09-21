@@ -1,5 +1,11 @@
 # Changelog
 
+## v45.1.2 (2022-08-21)
+
+### Fixed
+
+- (bugsnag-expo-cli) Improve monorepo compatibility for plugin-expo-eas-sourcemaps installation [#49](https://github.com/bugsnag/bugsnag-expo/pull/49)
+
 ## v45.1.1 (2022-08-04)
 
 ### Added
