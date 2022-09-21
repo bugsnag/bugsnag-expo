@@ -6,6 +6,7 @@
 
 - Added `Bugsnag.isStarted()` to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
 - (plugin-expo-eas-sourcemaps) Add minimum version check to sourcemap plugin [#45](https://github.com/bugsnag/bugsnag-expo/pull/45)
+- (bugsnag-expo-cli) Improve monorepo compatibility for plugin-expo-eas-sourcemaps installation [#49](https://github.com/bugsnag/bugsnag-expo/pull/49)
 
 ## v45.1.0 (2022-07-28)
 
