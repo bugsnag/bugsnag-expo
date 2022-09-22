@@ -1,5 +1,9 @@
 # Changelog
 
+## TBD
+
+- (bugsnag-expo-cli) Improve monorepo compatibility for plugin-expo-eas-sourcemaps installation [#59](https://github.com/bugsnag/bugsnag-expo/pull/59)
+
 ## v46.0.0 (2022-09-09)
 
 This release adds support for expo 46
