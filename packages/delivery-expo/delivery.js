@@ -64,7 +64,7 @@ module.exports = (client, fetch = global.fetch) => {
           if (err) {
             // do not retry oversized payloads regardless of status code
             if (body.length > 10e5) {
-              client._logger.warn(`Discarding over-sized event (${body.length / 10e5}) after failed delivery`)
+              client._logger.warn(`Discarding over-sized event (${body.length / 10e5} MB) after failed delivery`)
               err.isRetryable = false
             }
             return onerror(err, { url, opts }, 'event', cb)
