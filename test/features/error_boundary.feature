@@ -1,7 +1,8 @@
 Feature: Error boundaries
 
 Background:
-  Given the element "errorBoundary" is present
+  Given I clear any error dialogue
+  And the element "errorBoundary" is present
   And I click the element "errorBoundary"
 
 Scenario: A render error is captured by an error boundary

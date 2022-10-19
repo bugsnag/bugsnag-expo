@@ -1,7 +1,8 @@
 Feature: Expo Device data
 
 Background:
-  Given the element "deviceFeature" is present
+  Given I clear any error dialogue
+  And the element "deviceFeature" is present
   And I click the element "deviceFeature"
 
 Scenario: Device data is included by default

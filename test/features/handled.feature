@@ -1,7 +1,8 @@
 Feature: Reporting handled errors
 
 Background:
-  Given the element "handled" is present
+  Given I clear any error dialogue
+  And the element "handled" is present
   And I click the element "handled"
 
 Scenario: Calling notify() with an Error
