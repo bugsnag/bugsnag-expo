@@ -1,7 +1,8 @@
 Feature: Metadata
 
 Background:
-  Given the element "metadataFeature" is present
+  Given I clear any error dialogue
+  And the element "metadataFeature" is present
   And I click the element "metadataFeature"
 
 Scenario: Meta data can be set via the client

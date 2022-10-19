@@ -1,6 +1,9 @@
 Feature: Automatically added breadcrumbs
 
-@skip_android_5
+Background:
+  Given I clear any error dialogue
+
+  @skip_android_5
 Scenario: App-state breadcrumbs are captured by default
   Given the element "appStateBreadcrumbs" is present
   And I click the element "appStateBreadcrumbs"

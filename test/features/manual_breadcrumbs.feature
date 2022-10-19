@@ -1,7 +1,8 @@
 Feature: Manually added breadcrumbs
 
 Background:
-  Given the element "manualBreadcrumbs" is present
+  Given I clear any error dialogue
+  And the element "manualBreadcrumbs" is present
   And I click the element "manualBreadcrumbs"
 
 Scenario: Manual breadcrumbs are enabled when automatic breadcrumbs are disabled

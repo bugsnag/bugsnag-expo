@@ -1,11 +1,11 @@
 Feature: Feature flags
 
 Background:
-  Given the element "featureFlags" is present
+  Given I clear any error dialogue
+  And the element "featureFlags" is present
   And I click the element "featureFlags"
 
 Scenario: feature flags are attached to unhandled errors
-  When I clear any error dialogue
   Given the element "unhandledErrorWithFeatureFlagsButton" is present
   When I click the element "unhandledErrorWithFeatureFlagsButton"
   Then I wait to receive an error
@@ -21,7 +21,6 @@ Scenario: feature flags are attached to unhandled errors
     | from global on error 3 | 111            |
 
 Scenario: feature flags are attached to handled errors
-  When I clear any error dialogue
   Given the element "handledErrorWithFeatureFlagsButton" is present
   When I click the element "handledErrorWithFeatureFlagsButton"
   Then I wait to receive an error
@@ -37,7 +36,6 @@ Scenario: feature flags are attached to handled errors
     | from notify on error   | notify 7636390 |
 
 Scenario: feature flags can be cleared entirely with an unhandled error
-  When I clear any error dialogue
   Given the element "unhandledErrorClearFeatureFlagsButton" is present
   When I click the element "unhandledErrorClearFeatureFlagsButton"
   Then I wait to receive an error
@@ -46,7 +44,6 @@ Scenario: feature flags can be cleared entirely with an unhandled error
   And the event has no feature flags
 
 Scenario: feature flags can be cleared entirely with a handled error
-  When I clear any error dialogue
   Given the element "handledErrorClearFeatureFlagsButton" is present
   When I click the element "handledErrorClearFeatureFlagsButton"
   Then I wait to receive an error
