@@ -14,7 +14,7 @@ describe('expo-cli: set-api-key', () => {
     })
   })
 
-  it('shouldn’t replaces an existing API key', async () => {
+  it('shouldn’t replace an existing API key', async () => {
     await withFixture('already-configured-00', async (projectRoot) => {
       const msg = await setApiKey('AABBCCDD', projectRoot)
       expect(msg).toBe(undefined)
@@ -25,9 +25,14 @@ describe('expo-cli: set-api-key', () => {
     })
   })
 
-  it('should provide a reasonable error when there is no app.json', async () => {
+  it('should create a basic file with apiKey when there is no app.json', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      await expect(setApiKey('AABBCCDD', projectRoot)).rejects.toThrow(/^Couldn’t find app\.json in/)
+      const msg = await setApiKey('AABBCCDD', projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJsonRaw = await readFile(`${projectRoot}/app.json`, 'utf8')
+      const appJson = JSON.parse(appJsonRaw)
+      expect(appJson.expo.extra.bugsnag.apiKey).toBe('AABBCCDD')
     })
   })
 

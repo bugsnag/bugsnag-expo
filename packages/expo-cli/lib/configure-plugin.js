@@ -34,25 +34,35 @@ function usingWorkspaces (projectRoot, usingYarnClassic) {
 }
 
 module.exports = async (projectRoot) => {
+  const appJsonPath = join(projectRoot, 'app.json')
+  let conf
+
+  // read in existing app.json
   try {
-    const appJsonPath = join(projectRoot, 'app.json')
-    const conf = JSON.parse(await promisify(readFile)(appJsonPath, 'utf8'))
-    conf.expo.plugins = conf.expo.plugins || []
-    if (conf.expo.plugins.includes(plugin)) {
-      return plugin + ' is already installed'
-    }
-    conf.expo.plugins.push(plugin)
-    await promisify(writeFile)(appJsonPath, JSON.stringify(conf, null, 2), 'utf8')
+    conf = JSON.parse(await promisify(readFile)(appJsonPath, 'utf8'))
   } catch (e) {
     // swallow and rethrow for errors that we can produce better messaging for
     if (e.code === 'ENOENT') {
-      throw new Error(`Couldn’t find app.json in "${projectRoot}". Is this the root of your Expo project?`)
-    }
-    if (e.name === 'SyntaxError') {
+      conf = {
+        expo: {
+          plugins: []
+        }
+      }
+    } else if (e.name === 'SyntaxError') {
       throw new Error(`Couldn’t parse app.json because it wasn’t valid JSON: "${e.message}"`)
+    } else {
+      throw e
     }
-    throw e
   }
+
+  // update config
+  conf.expo.plugins = conf.expo.plugins || []
+  if (conf.expo.plugins.includes(plugin)) {
+    return plugin + ' is already installed'
+  }
+  conf.expo.plugins.push(plugin)
+
+  await promisify(writeFile)(appJsonPath, JSON.stringify(conf, null, 2), 'utf8')
 
   // do we need to add monorepo configuration?
   const withYarnClassic = await usingYarnClassic(projectRoot)
