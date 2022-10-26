@@ -56,6 +56,7 @@ module.exports = async (projectRoot) => {
   }
 
   // update config
+  conf.expo = conf.expo || {}
   conf.expo.plugins = conf.expo.plugins || []
   if (conf.expo.plugins.includes(plugin)) {
     return plugin + ' is already installed'

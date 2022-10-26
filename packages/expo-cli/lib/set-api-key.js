@@ -27,6 +27,7 @@ module.exports = async (apiKey, projectRoot) => {
     }
   }
 
+  conf.expo = conf.expo || {}
   conf.expo.extra = conf.expo.extra || {}
   conf.expo.extra.bugsnag = conf.expo.extra.bugsnag || {}
   conf.expo.extra.bugsnag.apiKey = apiKey
