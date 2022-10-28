@@ -1,5 +1,11 @@
 # Changelog
 
+## TBD
+
+### Fixed
+
+- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#71](https://github.com/bugsnag/bugsnag-expo/pull/71)
+
 ## v45.1.2 (2022-08-21)
 
 ### Fixed
