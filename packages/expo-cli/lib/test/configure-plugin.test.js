@@ -27,9 +27,14 @@ describe('expo-cli: upload sourcemaps configure-plugin', () => {
     })
   })
 
-  it('should provide a reasonable error when there is no app.json', async () => {
+  it('should create a basic file when there is no app.json', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      await expect(configurePlugin(projectRoot)).rejects.toThrow(/^Couldn’t find app\.json in/)
+      const msg = await configurePlugin(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJsonRaw = await readFile(`${projectRoot}/app.json`, 'utf8')
+      const appJson = JSON.parse(appJsonRaw)
+      expect(appJson.expo.plugins).toStrictEqual(['@bugsnag/plugin-expo-eas-sourcemaps'])
     })
   })
 
