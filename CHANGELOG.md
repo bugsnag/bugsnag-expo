@@ -5,7 +5,7 @@
 ### Added
 
 - Added `Bugsnag.isStarted()` to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
-- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#73](https://github.com/bugsnag/bugsnag-expo/pull/73)
+- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#74](https://github.com/bugsnag/bugsnag-expo/pull/74)
 
 ## v44.0.1 (2022-05-12)
 
