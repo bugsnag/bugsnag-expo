@@ -28,7 +28,7 @@ steps:
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-7"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "14"
@@ -40,7 +40,7 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "ms-arm-12-7"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       DEVELOPER_DIR: "/Applications/Xcode13.4.app"
