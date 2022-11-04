@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+# Switch Node Version; Default to Node 14
+[ "${IN_SUBSHELL}" != "$0" ] && exec env IN_SUBSHELL="$0" nave use "${NODE_VERSION:-14}" bash "$0" "$@" || :
+
 # Lets make sure the build folder was cleared out correctly
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*
 # And all previous packages are removed

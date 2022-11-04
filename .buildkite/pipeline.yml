@@ -31,6 +31,7 @@ steps:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      NODE_VERSION: "14"
     artifact_paths: build/output.apk
     commands:
       - test/scripts/build-android.sh
@@ -43,6 +44,7 @@ steps:
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       DEVELOPER_DIR: "/Applications/Xcode13.4.app"
+      NODE_VERSION: "14"
     artifact_paths: build/output.ipa
     commands:
       - test/scripts/build-ios.sh
