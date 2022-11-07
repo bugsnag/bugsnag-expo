@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo/cli": "0.4.6",
-    "@react-native-community/netinfo": "9.3.0",
+    "@react-native-community/netinfo": "~9.3.6",
     "expo": "~47.0.0",
     "expo-application": "~5.0.1",
     "expo-constants": "~14.0.2",
