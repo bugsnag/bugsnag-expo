@@ -49,11 +49,11 @@
     "bugsnag-build-reporter": "^1.0.1"
   },
   "devDependencies": {
-    "expo-constants": "~13.2.3"
+    "expo-constants": "~14.0.2"
   },
   "peerDependencies": {
-    "expo": ">=33.0.0",
-    "expo-constants": "~13.2.3",
+    "expo": "~47.0.3",
+    "expo-constants": "~14.0.2",
     "promise": "^8",
     "react": "*"
   }
