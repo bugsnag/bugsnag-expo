@@ -2,10 +2,14 @@
 
 ## TBD
 
-### Added
+### Enhancements
 
 - Added `Bugsnag.isStarted()` to check whether Bugsnag has initialized [#34](https://github.com/bugsnag/bugsnag-expo/pull/34)
-- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#80](https://github.com/bugsnag/bugsnag-expo/pull/80)
+- (expo) Add promise v8 as a peer dependency [#80](https://github.com/bugsnag/bugsnag-expo/pull/80)
+
+### Fixes
+
+- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#74](https://github.com/bugsnag/bugsnag-expo/pull/74)
 
 ## v44.0.1 (2022-05-12)
 
