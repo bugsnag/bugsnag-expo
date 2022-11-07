@@ -5,6 +5,7 @@
 ### Fixed
 
 - (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#72](https://github.com/bugsnag/bugsnag-expo/pull/72)
+- (expo) Add promise v8 as a peer dependency [#77](https://github.com/bugsnag/bugsnag-expo/pull/77)
 
 ## v45.1.2 (2022-08-21)
 
