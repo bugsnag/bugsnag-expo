@@ -18,6 +18,7 @@
       "**/*"
     ],
     "ios": {
+      "bitcode": true,
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.testfixture"
     },
