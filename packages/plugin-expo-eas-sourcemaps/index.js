@@ -1,7 +1,7 @@
 const { withAndroidPlugin } = require('./src/android')
 const { withIosPlugin } = require('./src/ios')
 
-const { createRunOncePlugin, WarningAggregator } = require('@expo/config-plugins')
+const { createRunOncePlugin, WarningAggregator } = require('expo/config-plugins')
 
 const pkg = require('./package.json')
 
