@@ -21,11 +21,11 @@ cd test/features/fixtures/test-app
 npm install bugsnag-expo-cli*.tgz
 ./run-bugsnag-expo-cli
 
-# Set EAS Project ID
-sed -i '' "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
-
 # set bugsnag-js override versions if this build was triggered from the bugsnag-js repo
 ./set-bugsnag-js-overrides $BUGSNAG_JS_BRANCH $BUGSNAG_JS_COMMIT
+
+# Set EAS Project ID
+sed -i '' "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
 
 # install the remaining packages, this also re-installs the correct @bugsnag/expo version
 npm install *.tgz
