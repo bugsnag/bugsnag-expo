@@ -42,7 +42,7 @@ steps:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode13.4.app"
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
     artifact_paths: build/output.ipa
     commands:
       - test/scripts/build-ios.sh
