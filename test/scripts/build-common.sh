@@ -24,7 +24,7 @@ npm install bugsnag-expo-cli*.tgz
 ./run-bugsnag-expo-cli
 
 # Set EAS Project ID
-sed -i'' -e "s/EAS_PROJECT_ID/$EAS_PROJECT_ID/g" app.json
+sed -i'' -e "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
 
 # set bugsnag-js override versions if this build was triggered from the bugsnag-js repo
 ./set-bugsnag-js-overrides $BUGSNAG_JS_BRANCH $BUGSNAG_JS_COMMIT
