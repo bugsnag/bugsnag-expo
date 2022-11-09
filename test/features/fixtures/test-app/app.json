@@ -26,6 +26,11 @@
     },
     "plugins": [
       ["./config-plugins/withRemoveiOSNotificationEntitlement"]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "EXPO_EAS_PROJECT_ID"
+      }
+    }
   }
 }
