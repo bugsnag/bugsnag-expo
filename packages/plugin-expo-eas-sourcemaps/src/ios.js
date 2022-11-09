@@ -1,7 +1,7 @@
 const {
   withInfoPlist,
   withXcodeProject
-} = require('@expo/config-plugins')
+} = require('expo/config-plugins')
 
 const buildPhaseName = 'PBXShellScriptBuildPhase'
 const buildPhaseComment = 'Bundle React Native code and images'

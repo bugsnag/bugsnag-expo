@@ -2,7 +2,7 @@ const {
   AndroidConfig,
   withAppBuildGradle,
   withAndroidManifest
-} = require('@expo/config-plugins')
+} = require('expo/config-plugins')
 
 // Using helpers keeps error messages unified and helps cut down on XML format changes.
 const { addMetaDataItemToMainApplication, getMainApplicationOrThrow } = AndroidConfig.Manifest
