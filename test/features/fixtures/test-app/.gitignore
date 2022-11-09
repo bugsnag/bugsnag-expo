@@ -7,3 +7,5 @@ npm-debug.*
 *.mobileprovision
 scenario.json
 bugsnag-expo-*.tgz
+android
+ios
