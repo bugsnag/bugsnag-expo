@@ -11,7 +11,7 @@ Scenario: App data is included by default
   Then I wait to receive an error
   And the event "app.releaseStage" equals "production"
   And the event "app.version" equals "2.0.0"
-  And the event "app.versionCode" equals "1"
+  And the event "app.appVersion" equals "1"
   And the event "app.duration" is not null
   And the event "app.durationInForeground" is not null
   And the event "app.inForeground" is true
