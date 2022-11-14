@@ -54,6 +54,8 @@ const Bugsnag = {
 
     // read the version from app.json if one is not explicitly passed
     if (!opts.appVersion) {
+      console.log('README', Constants.manifest)
+      console.log('README', Constants.manifest2)
       if (Constants.manifest?.version) {
         opts.appVersion = Constants.manifest.version
       } else if (Constants.manifest2?.extra?.expoClient?.version) {
