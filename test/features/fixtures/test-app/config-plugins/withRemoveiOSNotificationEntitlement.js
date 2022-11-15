@@ -1,4 +1,4 @@
-const withEntitlementsPlist = require("expo/config-plugins").withEntitlementsPlist;
+const withEntitlementsPlist = require("@expo/config-plugins").withEntitlementsPlist;
 
 const withRemoveiOSNotificationEntitlement = (config) => {
     return withEntitlementsPlist(config, mod => {
