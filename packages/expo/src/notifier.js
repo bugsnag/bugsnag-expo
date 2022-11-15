@@ -43,8 +43,6 @@ const Bugsnag = {
     if (typeof opts === 'string') opts = { apiKey: opts }
     if (!opts) opts = {}
 
-    console.log('README:', { manifest: Constants.manifest, manifest2: Constants.manifest2 })
-
     // read the api key from app.json if one is not explicitly passed
     if (!opts.apiKey) {
       if (Constants.manifest?.extra?.bugsnag?.apiKey) {
