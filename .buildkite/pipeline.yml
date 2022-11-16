@@ -2,16 +2,17 @@ steps:
   #
   # License audit
   #
-  - label:  ':android: Build expo APK'
+  - label: ':apple: Build expo IPA'
 
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
     commands:
-      - test/scripts/build-android.sh
+      - test/scripts/build-ios.sh
 
   - label: ':apple: Build expo IPA'
 
@@ -25,16 +26,17 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label:  ':android: Build expo APK'
+  - label: ':apple: Build expo IPA'
 
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
     commands:
-      - test/scripts/build-android.sh
+      - test/scripts/build-ios.sh
 
   - label: ':apple: Build expo IPA'
 
@@ -48,16 +50,17 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label:  ':android: Build expo APK'
+  - label: ':apple: Build expo IPA'
 
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
     commands:
-      - test/scripts/build-android.sh
+      - test/scripts/build-ios.sh
 
   - label: ':apple: Build expo IPA'
 
@@ -71,17 +74,6 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label:  ':android: Build expo APK'
-
-    timeout_in_minutes: 20
-    agents:
-      queue: "opensource-arm-mac-cocoa-12"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
-    commands:
-      - test/scripts/build-android.sh
-
   - label: ':apple: Build expo IPA'
 
     timeout_in_minutes: 20
@@ -94,17 +86,6 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label:  ':android: Build expo APK'
-
-    timeout_in_minutes: 20
-    agents:
-      queue: "opensource-arm-mac-cocoa-12"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
-    commands:
-      - test/scripts/build-android.sh
-
   - label: ':apple: Build expo IPA'
 
     timeout_in_minutes: 20
@@ -116,4 +97,3 @@ steps:
     artifact_paths: build/output.ipa
     commands:
       - test/scripts/build-ios.sh
-
