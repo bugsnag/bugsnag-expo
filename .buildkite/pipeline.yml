@@ -2,27 +2,28 @@ steps:
   #
   # License audit
   #
-  - label: ':copyright: License Audit'
+  - label:  ':android: Build expo APK'
+    key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: opensource-arm-mac-cocoa-12
+      queue: "opensource-arm-mac-cocoa-12"
     env:
-      DEVELOPER_DIR: "/Applications/Xcode13.app"
-    command: scripts/license_finder.sh
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+    artifact_paths: build/output.apk
+    commands:
+      - test/scripts/build-android.sh
 
-  - label: ':docker: Build expo maze runner image'
-    key: "expo-maze-runner-image"
-    timeout_in_minutes: 10
-    plugins:
-      - docker-compose#v3.9.0:
-          build: expo-maze-runner
-          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/js
-          cache-from:
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
-      - docker-compose#v3.9.0:
-          push:
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
+  - label: ':apple: Build expo IPA'
+    key: "build-expo-ipa"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
+    commands:
+      - test/scripts/build-ios.sh
 
   - label:  ':android: Build expo APK'
     key: "build-expo-apk"
@@ -47,73 +48,72 @@ steps:
     commands:
       - test/scripts/build-ios.sh
 
-  - label: ':runner: expo Android 12'
-    depends_on:
-      - "build-expo-apk"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.apk"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.apk
-          - --farm=bs
-          - --device=ANDROID_12_0
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-    concurrency: 9
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  - label:  ':android: Build expo APK'
+    key: "build-expo-apk"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+    artifact_paths: build/output.apk
+    commands:
+      - test/scripts/build-android.sh
 
-  - label: ':runner: expo iOS 15'
-    depends_on:
-      - "build-expo-ipa"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_15
-          - --a11y-locator
-          - --appium-version=1.21.0
-          - --retry=2
-          - --order=random
-    concurrency: 9
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  - label: ':apple: Build expo IPA'
+    key: "build-expo-ipa"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
+    commands:
+      - test/scripts/build-ios.sh
 
-  - label: ':runner: expo iOS 13'
-    depends_on:
-      - "build-expo-ipa"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_13
-          - --a11y-locator
-          - --appium-version=1.17.0
-          - --retry=2
-          - --order=random
-    concurrency: 9
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  - label:  ':android: Build expo APK'
+    key: "build-expo-apk"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+    artifact_paths: build/output.apk
+    commands:
+      - test/scripts/build-android.sh
+
+  - label: ':apple: Build expo IPA'
+    key: "build-expo-ipa"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
+    commands:
+      - test/scripts/build-ios.sh
+
+  - label:  ':android: Build expo APK'
+    key: "build-expo-apk"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+    artifact_paths: build/output.apk
+    commands:
+      - test/scripts/build-android.sh
+
+  - label: ':apple: Build expo IPA'
+    key: "build-expo-ipa"
+    timeout_in_minutes: 20
+    agents:
+      queue: "opensource-arm-mac-cocoa-12"
+    env:
+      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
+    artifact_paths: build/output.ipa
+    commands:
+      - test/scripts/build-ios.sh
+
