@@ -3,7 +3,7 @@ steps:
   # License audit
   #
   - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -14,7 +14,7 @@ steps:
       - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -26,7 +26,7 @@ steps:
       - test/scripts/build-ios.sh
 
   - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -37,7 +37,7 @@ steps:
       - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -49,7 +49,7 @@ steps:
       - test/scripts/build-ios.sh
 
   - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -60,7 +60,7 @@ steps:
       - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -72,7 +72,7 @@ steps:
       - test/scripts/build-ios.sh
 
   - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -83,7 +83,7 @@ steps:
       - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -95,7 +95,7 @@ steps:
       - test/scripts/build-ios.sh
 
   - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
@@ -106,7 +106,7 @@ steps:
       - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
+
     timeout_in_minutes: 20
     agents:
       queue: "opensource-arm-mac-cocoa-12"
