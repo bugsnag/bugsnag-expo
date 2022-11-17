@@ -10,13 +10,18 @@
   },
   "dependencies": {
     "expo": "~47.0.6",
-    "expo-screen-orientation": "^5.0.1",
+    "expo-application": "~5.0.1",
+    "expo-constants": "~14.0.2",
+    "expo-crypto": "~12.0.0",
+    "expo-device": "~5.0.0",
+    "expo-file-system": "~15.1.1",
+    "expo-screen-orientation": "~5.0.1",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
     "react-native": "0.70.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.19.3"
   },
   "private": true
 }
