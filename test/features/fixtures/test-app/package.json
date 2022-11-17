@@ -9,9 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/cli": "~0.3.2",
     "@react-native-community/netinfo": "9.3.5",
-    "expo": "47.0.5",
+    "expo": "~47.0.3",
     "expo-application": "~5.0.1",
     "expo-constants": "~14.0.2",
     "expo-crypto": "~12.0.0",
