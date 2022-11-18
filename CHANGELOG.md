@@ -1,6 +1,6 @@
 # Changelog
 
-## v47.0.0 (2022-11-16)
+## v47.0.0 (2022-11-18)
 
 This release adds support for expo 47
 
