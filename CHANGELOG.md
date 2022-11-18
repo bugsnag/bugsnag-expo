@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v46.0.2 (2022-11-21)
 
 ### Fixed
 
