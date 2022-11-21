@@ -1,9 +1,18 @@
-node_modules/**/*
-.expo/*
+node_modules/
+.expo/
+dist/
 npm-debug.*
 *.jks
+*.p8
 *.p12
 *.key
 *.mobileprovision
 scenario.json
 bugsnag-expo-*.tgz
+android
+ios
+*.orig.*
+web-build/
+
+# macOS
+.DS_Store

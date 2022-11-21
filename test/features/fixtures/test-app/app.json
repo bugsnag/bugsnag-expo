@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "Test Fixture",
+    "name": "test-fixture",
     "slug": "test-fixture",
     "privacy": "unlisted",
     "version": "2.0.0",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -22,11 +23,16 @@
       "bundleIdentifier": "com.bugsnag.expo.testfixture"
     },
     "android": {
-      "package": "com.bugsnag.expo.testfixture"
+      "package": "com.bugsnag.expo.testfixture",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
-    "plugins": [
-      ["./config-plugins/withRemoveiOSNotificationEntitlement"]
-    ],
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement"],
     "extra": {
       "eas": {
         "projectId": "EXPO_EAS_PROJECT_ID"

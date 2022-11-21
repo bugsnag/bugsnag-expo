@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Button, Picker, Text } from 'react-native'
+import { StyleSheet, View, Button, Text } from 'react-native'
 import Handled from './app/handled'
 import Unhandled from './app/unhandled'
 import ErrorBoundary from './app/error_boundary'
