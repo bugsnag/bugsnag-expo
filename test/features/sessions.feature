@@ -1,7 +1,8 @@
 Feature: Expo sessions
 
 Background:
-  Given the element "sessions" is present
+  Given I clear any error dialogue
+  And the element "sessions" is present
   And I click the element "sessions"
 
 Scenario: Sessions can be automatically delivered

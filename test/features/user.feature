@@ -1,7 +1,8 @@
 Feature: User data
 
 Background:
-  Given the element "userFeature" is present
+  Given I clear any error dialogue
+  And the element "userFeature" is present
   And I click the element "userFeature"
 
 Scenario: User data can be set via the client

@@ -1,7 +1,8 @@
 Feature: Expo App data
 
 Background:
-  Given the element "appFeature" is present
+  Given I clear any error dialogue
+  And the element "appFeature" is present
   And I click the element "appFeature"
 
 Scenario: App data is included by default
