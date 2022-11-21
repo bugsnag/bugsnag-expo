@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-device",
-  "version": "46.0.0",
+  "version": "47.0.0",
   "main": "device.js",
   "description": "@bugsnag/expo plugin to attach Expo-specific device info to events",
   "homepage": "https://www.bugsnag.com/",
