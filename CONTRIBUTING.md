@@ -88,14 +88,34 @@ When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to
 
 ## Releases
 
-To start a release:
+### Enhancements and bugfixes
 
-- create and push a new branch (e.g. `v46`) from the latest previous branch (e.g. `v45` or `v45-next`)
-- create a new next branch from which the release PR is to be made (e.g. `v46-next`)
-- make the required dependency and CLI changes (see above) for the latest expo version
-- regenerate the expo e2e test fixture using the expo create app cli
+- decide on a new version number, following [semantic versioning](https://semver.org/)
+- create a new release branch from `vX/next` with the new version number in the branch name i.e. `git checkout -b release/vX.Y.Z`
 - update the version number and date in the changelog
-- make a PR from your release branch (e.g. `v46-next`) to `v46` entitled `Release v46`
+- make a PR from your release branch to `vX/main` entitled Release vX.Y.Z
+- get the release PR reviewed – all code changes should have been reviewed already, this should be a review of the integration of all changes to be shipped and the changelog
+- consider shipping a [prerelease](#prereleases) to aid testing the release
+
+### New major version
+
+```mermaid
+graph TD;
+    v47/main-->v48/main;
+    v48/main-->v48/next;
+    v48/next-->PLAT-1234-support-v48;
+    PLAT-1234-support-v48-. PR .->v48/next;
+    v48/next-->release/v48;
+    release/v48-. PR .->v48/main;
+```
+
+- create and push a new **main** branch for the new supported expo version (e.g. `v48/main`) from the latest current branch (e.g. `v47/main`)
+- create a new **next** branch based on the new **main** branch (e.g. `v48/next`)
+- create a feature branch from which the changes to support the new version are to be made (e.g. `PLAT-1234-support-v48`)
+- make the required dependency and CLI changes for the latest expo version (see [Keeping dependencies in sync](#keeping-dependencies-in-sync)) 
+- regenerate the expo e2e test fixture using the `create-expo-app` cli
+- update the version number and release date in the changelog
+- make a PR from your release branch (e.g. `PLAT-1234-support-v48` to `v48/main`) entitled `Release v48.0.0`
 - get the release PR reviewed
 - consider shipping a [prerelease](#prereleases) to aid testing the release
 
@@ -144,6 +164,10 @@ Finally:
     git merge master
     git push
     ```
+
+
+
+
 
 ### Prereleases
 
