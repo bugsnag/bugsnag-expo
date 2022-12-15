@@ -12,7 +12,7 @@ describe('plugin: expo app', () => {
     jest.resetModules()
   })
 
-  it('should should use revisionId if defined (all platforms)', done => {
+  it('should use revisionId if defined (all platforms)', done => {
     const VERSION = '1.0.0'
     const REVISION_ID = '1.0.0-r132432'
 
@@ -40,7 +40,7 @@ describe('plugin: expo app', () => {
     c.notify(new Error('flip'))
   })
 
-  it('should record nativeVersionCode on android', done => {
+  it('should record nativeVersionCode and versionCode on android', done => {
     const VERSION_CODE = '1.0'
 
     jest.doMock('expo-application', () => ({ nativeBuildVersion: VERSION_CODE }))
@@ -50,7 +50,7 @@ describe('plugin: expo app', () => {
           android: {}
         },
         manifest: { version: '1.0.0' },
-        appOwnership: 'standalone'
+        appOwnership: null
       }
     }))
 
@@ -63,6 +63,7 @@ describe('plugin: expo app', () => {
         const r = JSON.parse(JSON.stringify(payload))
         expect(r).toBeTruthy()
         expect(r.events[0].metaData.app.nativeVersionCode).toBe(VERSION_CODE)
+        expect(r.events[0].metaData.app.versionCode).toBe(VERSION_CODE)
         done()
       },
       sendSession: () => {}
@@ -70,7 +71,7 @@ describe('plugin: expo app', () => {
     c.notify(new Error('flip'))
   })
 
-  it('should record nativeBundleVersion on ios', done => {
+  it('should record nativeBundleVersion and bundleVersion on ios', done => {
     const BUNDLE_VERSION = '1.0'
 
     jest.doMock('expo-application', () => ({ nativeBuildVersion: BUNDLE_VERSION }))
@@ -80,7 +81,7 @@ describe('plugin: expo app', () => {
           ios: {}
         },
         manifest: { version: '1.0.0' },
-        appOwnership: 'standalone'
+        appOwnership: null
       }
     }))
 
@@ -93,6 +94,7 @@ describe('plugin: expo app', () => {
         const r = JSON.parse(JSON.stringify(payload))
         expect(r).toBeTruthy()
         expect(r.events[0].metaData.app.nativeBundleVersion).toBe(BUNDLE_VERSION)
+        expect(r.events[0].metaData.app.bundleVersion).toBe(BUNDLE_VERSION)
         done()
       },
       sendSession: () => {}

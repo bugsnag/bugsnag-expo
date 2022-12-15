@@ -16,15 +16,17 @@ module.exports = {
       lastState = newState
     })
 
-    let nativeBundleVersion, nativeVersionCode
+    let nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode
 
-    if (Constants.appOwnership === 'standalone') {
+    if (Constants.appOwnership !== 'expo') {
       if (Constants.platform.ios) {
         nativeBundleVersion = Application.nativeBuildVersion
+        bundleVersion = Application.nativeBuildVersion
       }
 
       if (Constants.platform.android) {
         nativeVersionCode = Application.nativeBuildVersion
+        versionCode = Application.nativeBuildVersion
       }
     }
 
@@ -47,7 +49,7 @@ module.exports = {
         event.app.durationInForeground = now - lastEnteredForeground
       }
 
-      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode })
+      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode })
 
       if (Constants.manifest?.revisionId) {
         event.app.codeBundleId = Constants.manifest.revisionId
