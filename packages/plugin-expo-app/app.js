@@ -33,15 +33,8 @@ module.exports = {
     client.addOnSession(session => {
       if (versionCode) {
         session.app.versionCode = versionCode
-      }
-      else if (bundleVersion) {
+      } else if (bundleVersion) {
         session.app.bundleVersion = bundleVersion
-      }
-      
-      if (Constants.manifest?.revisionId) {
-        session.app.codeBundleId = Constants.manifest.revisionId
-      } else if (Constants.manifest2?.extra?.expoClient?.revisionId) {
-        session.app.codeBundleId = Constants.manifest2.extra.expoClient.revisionId
       }
     })
 
@@ -57,12 +50,6 @@ module.exports = {
       }
 
       event.addMetadata('app', { nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode })
-
-      if (Constants.manifest?.revisionId) {
-        event.app.codeBundleId = Constants.manifest.revisionId
-      } else if (Constants.manifest2?.extra?.expoClient?.revisionId) {
-        event.app.codeBundleId = Constants.manifest2.extra.expoClient.revisionId
-      }
     }, true)
   }
 }

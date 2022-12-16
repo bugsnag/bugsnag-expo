@@ -12,34 +12,6 @@ describe('plugin: expo app', () => {
     jest.resetModules()
   })
 
-  it('should use revisionId if defined (all platforms)', done => {
-    const VERSION = '1.0.0'
-    const REVISION_ID = '1.0.0-r132432'
-
-    jest.doMock('expo-application', () => ({}))
-    jest.doMock('expo-constants', () => ({
-      default: {
-        platform: {},
-        manifest: { version: VERSION, revisionId: REVISION_ID }
-      }
-    }))
-
-    const plugin = require('..')
-
-    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
-
-    c._setDelivery(client => ({
-      sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        expect(r.events[0].app.codeBundleId).toBe(REVISION_ID)
-        done()
-      },
-      sendSession: () => {}
-    }))
-    c.notify(new Error('flip'))
-  })
-
   it('should record nativeVersionCode and versionCode on android', done => {
     const VERSION_CODE = '1.0'
 
@@ -97,7 +69,7 @@ describe('plugin: expo app', () => {
     const plugin = require('..')
 
     const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
-    
+
     c._sessionDelegate = {
       startSession: (client, session) => {
         client._delivery.sendSession(session)
