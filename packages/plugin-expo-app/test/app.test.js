@@ -57,6 +57,11 @@ describe('plugin: expo app', () => {
     const plugin = require('..')
 
     const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+    c._sessionDelegate = {
+      startSession: (client, session) => {
+        client._delivery.sendSession(session)
+      }
+    }
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
@@ -66,8 +71,12 @@ describe('plugin: expo app', () => {
         expect(r.events[0].metaData.app.versionCode).toBe(VERSION_CODE)
         done()
       },
-      sendSession: () => {}
+      sendSession: (session) => {
+        expect(session).toBeTruthy()
+        expect(session.app.versionCode).toBe(VERSION_CODE)
+      }
     }))
+    c.startSession()
     c.notify(new Error('flip'))
   })
 
@@ -88,6 +97,12 @@ describe('plugin: expo app', () => {
     const plugin = require('..')
 
     const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+    
+    c._sessionDelegate = {
+      startSession: (client, session) => {
+        client._delivery.sendSession(session)
+      }
+    }
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
@@ -97,8 +112,12 @@ describe('plugin: expo app', () => {
         expect(r.events[0].metaData.app.bundleVersion).toBe(BUNDLE_VERSION)
         done()
       },
-      sendSession: () => {}
+      sendSession: (session) => {
+        expect(session).toBeTruthy()
+        expect(session.app.bundleVersion).toBe(BUNDLE_VERSION)
+      }
     }))
+    c.startSession()
     c.notify(new Error('flip'))
   })
 
