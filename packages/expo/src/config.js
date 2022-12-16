@@ -2,6 +2,7 @@
 
 const { schema } = require('@bugsnag/core/config')
 const Constants = require('expo-constants').default
+const stringWithLength = require('@bugsnag/core/lib/validators/string-with-length')
 
 // If the developer property is not present in the manifest, it means the app is
 // not connected to a development tool and is either a published app running in
@@ -30,6 +31,11 @@ module.exports = {
       if (IS_PRODUCTION_MODE) return 'local-prod'
       return 'local-dev'
     }
+  },
+  codeBundleId: {
+    defaultValue: () => undefined,
+    message: 'should be a string',
+    validate: val => (val === undefined || stringWithLength(val))
   }
 }
 

@@ -31,6 +31,9 @@ module.exports = {
     }
 
     client.addOnSession(session => {
+      if (client._config.codeBundleId) {
+        session.app.codeBundleId = client._config.codeBundleId
+      }
       if (versionCode) {
         session.app.versionCode = versionCode
       } else if (bundleVersion) {
@@ -47,6 +50,10 @@ module.exports = {
 
       if (inForeground) {
         event.app.durationInForeground = now - lastEnteredForeground
+      }
+
+      if (client._config.codeBundleId) {
+        event.app.codeBundleId = client._config.codeBundleId
       }
 
       event.addMetadata('app', { nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode })
