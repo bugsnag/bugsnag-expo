@@ -41,7 +41,7 @@ describe('plugin: expo app', () => {
         const r = JSON.parse(JSON.stringify(payload))
         expect(r).toBeTruthy()
         expect(r.events[0].metaData.app.nativeVersionCode).toBe(VERSION_CODE)
-        expect(r.events[0].metaData.app.versionCode).toBe(VERSION_CODE)
+        expect(r.events[0].app.versionCode).toBe(VERSION_CODE)
         done()
       },
       sendSession: (session) => {
@@ -82,7 +82,7 @@ describe('plugin: expo app', () => {
         const r = JSON.parse(JSON.stringify(payload))
         expect(r).toBeTruthy()
         expect(r.events[0].metaData.app.nativeBundleVersion).toBe(BUNDLE_VERSION)
-        expect(r.events[0].metaData.app.bundleVersion).toBe(BUNDLE_VERSION)
+        expect(r.events[0].app.bundleVersion).toBe(BUNDLE_VERSION)
         done()
       },
       sendSession: (session) => {

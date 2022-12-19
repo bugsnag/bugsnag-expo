@@ -34,6 +34,7 @@ module.exports = {
       if (client._config.codeBundleId) {
         session.app.codeBundleId = client._config.codeBundleId
       }
+
       if (versionCode) {
         session.app.versionCode = versionCode
       } else if (bundleVersion) {
@@ -56,7 +57,13 @@ module.exports = {
         event.app.codeBundleId = client._config.codeBundleId
       }
 
-      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode })
+      if (versionCode) {
+        event.app.versionCode = versionCode
+      } else if (bundleVersion) {
+        event.app.bundleVersion = bundleVersion
+      }
+
+      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode })
     }, true)
   }
 }
