@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.testfixture",
-      "buildNumber": 1
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture",
