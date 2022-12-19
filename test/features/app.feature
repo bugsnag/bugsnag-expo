@@ -20,10 +20,10 @@ Scenario: App data is included by default
   # Parameter not present on iOS devices
   And the event "app.versionCode" equals the platform-dependent string:
     | android | 1     |
-    | ios     | @skip |
+    | ios     | @null |
   # Parameter not present on Android devices
   And the event "app.bundleVersion" equals the platform-dependent string:
-    | android | @skip |
+    | android | @null |
     | ios     | 1     |
 
 Scenario: App data can be modified by a callback
