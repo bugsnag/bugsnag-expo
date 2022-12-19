@@ -29,6 +29,7 @@ describe('plugin: expo app', () => {
     const plugin = require('..')
 
     const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+
     c._sessionDelegate = {
       startSession: (client, session) => {
         client._delivery.sendSession(session)
@@ -179,5 +180,79 @@ describe('plugin: expo app', () => {
     }))
 
     setTimeout(() => client.notify(new Error('flooopy doo')), delayMs)
+  })
+
+  it('should record codeBundleId if configured', done => {
+    const CODE_BUNDLE_ID = '691f4728-4bf5-4da3-a954-ea9a10fa17d2'
+
+    jest.doMock('expo-application', () => ({}))
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: {},
+        manifest: {}
+      }
+    }))
+
+    const plugin = require('..')
+
+    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+    c._config.codeBundleId = CODE_BUNDLE_ID
+
+    c._sessionDelegate = {
+      startSession: (client, session) => {
+        client._delivery.sendSession(session)
+      }
+    }
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].app.codeBundleId).toBe(CODE_BUNDLE_ID)
+        done()
+      },
+      sendSession: (session) => {
+        expect(session).toBeTruthy()
+        expect(session.app.codeBundleId).toBe(CODE_BUNDLE_ID)
+      }
+    }))
+    c.startSession()
+    c.notify(new Error('flip'))
+  })
+
+  it('should not record codeBundleId if not configured', done => {
+
+    jest.doMock('expo-application', () => ({}))
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: {},
+        manifest: {}
+      }
+    }))
+
+    const plugin = require('..')
+
+    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+
+    c._sessionDelegate = {
+      startSession: (client, session) => {
+        client._delivery.sendSession(session)
+      }
+    }
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].app.codeBundleId).toBe(undefined)
+        done()
+      },
+      sendSession: (session) => {
+        expect(session).toBeTruthy()
+        expect(session.app.codeBundleId).toBe(undefined)
+      }
+    }))
+    c.startSession()
+    c.notify(new Error('flip'))
   })
 })
