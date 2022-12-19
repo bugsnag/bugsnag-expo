@@ -15,7 +15,16 @@ Scenario: App data is included by default
   And the event "app.durationInForeground" is not null
   And the event "app.inForeground" is true
   And the event "app.type" equals the current OS name
+  And the event "app.codeBundleId" equals "691f4728-4bf5-4da3-a954-ea9a10fa17d2"
   And the error Bugsnag-Integrity header is valid
+  # Parameter not present on iOS devices
+  And the event "app.versionCode" equals the platform-dependent string:
+    | android | 1     |
+    | ios     | @skip |
+  # Parameter not present on Android devices
+  And the event "app.bundleVersion" equals the platform-dependent string:
+    | android | @skip |
+    | ios     | 1     |
 
 Scenario: App data can be modified by a callback
   Given the element "enhancedAppButton" is present
@@ -27,4 +36,5 @@ Scenario: App data can be modified by a callback
   And the event "app.durationInForeground" is not null
   And the event "app.inForeground" is true
   And the event "app.type" equals "custom app type"
+  And the event "app.codeBundleId" equals "1.2.3"
   And the error Bugsnag-Integrity header is valid
