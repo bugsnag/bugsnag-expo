@@ -221,7 +221,6 @@ describe('plugin: expo app', () => {
   })
 
   it('should not record codeBundleId if not configured', done => {
-
     jest.doMock('expo-application', () => ({}))
     jest.doMock('expo-constants', () => ({
       default: {
