@@ -16,27 +16,22 @@ module.exports = {
       lastState = newState
     })
 
-    let nativeBundleVersion, nativeVersionCode, bundleVersion, versionCode
+    let bundleVersion, versionCode
 
     if (Constants.appOwnership !== 'expo') {
       if (Constants.platform.ios) {
-        nativeBundleVersion = Application.nativeBuildVersion
         bundleVersion = Application.nativeBuildVersion
-      }
-
-      if (Constants.platform.android) {
-        nativeVersionCode = Application.nativeBuildVersion
+      } else if (Constants.platform.android) {
         versionCode = Application.nativeBuildVersion
       }
     }
 
     client.addOnSession(session => {
-      if (client._config.codeBundleId) {
-        session.app.codeBundleId = client._config.codeBundleId
-      }
-
       session.app.versionCode = versionCode
       session.app.bundleVersion = bundleVersion
+
+      if (client._config.codeBundleId) {
+        session.app.codeBundleId = client._config.codeBundleId
       }
     })
 
@@ -57,9 +52,8 @@ module.exports = {
 
       event.app.versionCode = versionCode
       event.app.bundleVersion = bundleVersion
-      }
 
-      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode })
+      event.addMetadata('app', { nativeBundleVersion: bundleVersion, nativeVersionCode: versionCode })
     }, true)
   }
 }
