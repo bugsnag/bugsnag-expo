@@ -35,10 +35,8 @@ module.exports = {
         session.app.codeBundleId = client._config.codeBundleId
       }
 
-      if (versionCode) {
-        session.app.versionCode = versionCode
-      } else if (bundleVersion) {
-        session.app.bundleVersion = bundleVersion
+      session.app.versionCode = versionCode
+      session.app.bundleVersion = bundleVersion
       }
     })
 
