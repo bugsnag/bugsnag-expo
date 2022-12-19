@@ -1,6 +1,9 @@
 import { BugsnagStatic, Config, Client } from '@bugsnag/core'
 
-type ExpoConfig = Partial<Config> & { codeBundleId?: string }
+interface ExpoConfig extends Partial<Config> { 
+  codeBundleId?: string 
+}
+
 interface ExpoBugsnagStatic extends BugsnagStatic {
   start(apiKeyOrOpts?: string | ExpoConfig): Client
   isStarted(): boolean
