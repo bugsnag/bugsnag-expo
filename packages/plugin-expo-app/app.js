@@ -55,10 +55,8 @@ module.exports = {
         event.app.codeBundleId = client._config.codeBundleId
       }
 
-      if (versionCode) {
-        event.app.versionCode = versionCode
-      } else if (bundleVersion) {
-        event.app.bundleVersion = bundleVersion
+      event.app.versionCode = versionCode
+      event.app.bundleVersion = bundleVersion
       }
 
       event.addMetadata('app', { nativeBundleVersion, nativeVersionCode })
