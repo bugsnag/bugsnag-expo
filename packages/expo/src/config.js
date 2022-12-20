@@ -35,7 +35,7 @@ module.exports = {
   codeBundleId: {
     defaultValue: () => undefined,
     message: 'should be a string',
-    validate: val => (val === undefined || stringWithLength(val))
+    validate: val => val === undefined || stringWithLength(val)
   }
 }
 
