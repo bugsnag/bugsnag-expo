@@ -20,14 +20,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bugsnag.expo.testfixture"
+      "bundleIdentifier": "com.bugsnag.expo.testfixture",
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
