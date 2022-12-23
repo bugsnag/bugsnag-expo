@@ -12,7 +12,7 @@ eas build \
   --output output.ipa \
   --non-interactive
 
-cd ../../../..
+cd ../../..
 
 mkdir build
 mv features/fixtures/test-app/output.ipa build/output.ipa

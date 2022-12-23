@@ -11,7 +11,7 @@ eas build \
   -p android \
   --output output.apk
 
-cd ../../../..
+cd ../../..
 
 mkdir build
 mv features/fixtures/test-app/output.apk build/output.apk
