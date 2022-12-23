@@ -1,10 +1,8 @@
-#!
-
 set -e
 
 ./features/scripts/build-common.sh
 
-cd features/fixtures/test-app
+pushd features/fixtures/test-app
 
 eas build \
   --local \
@@ -12,7 +10,7 @@ eas build \
   --output output.ipa \
   --non-interactive
 
-cd ../../..
+popd
 
 mkdir build
 mv features/fixtures/test-app/output.ipa build/output.ipa
