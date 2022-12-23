@@ -41,7 +41,7 @@ npm run test:lint
 
 These tests are implemented with our notifier testing tool [Maze runner](https://github.com/bugsnag/maze-runner).
 
-End to end tests are written in cucumber-style `.feature` files, and need Ruby-backed "steps" in order to know what to run. The tests are located in the top level [`test`](/test/) directory.
+End to end tests are written in cucumber-style `.feature` files, and need Ruby-backed "steps" in order to know what to run. The tests are located in the top level [`features`](/features/) directory.
 
 Maze runner's CLI and the test fixtures are containerised so you'll need Docker (and Docker Compose) to run them.
 
