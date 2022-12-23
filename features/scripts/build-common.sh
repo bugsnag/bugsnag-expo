@@ -15,9 +15,9 @@ npx lerna version 999.999.999 --no-git-tag-version --no-push --no-changelog --ye
 
 # Pack the packages and move them to the test fixture
 npm pack packages/*/
-mv *.tgz test/features/fixtures/test-app
+mv *.tgz features/fixtures/test-app
 
-cd test/features/fixtures/test-app
+cd features/fixtures/test-app
 
 # Install the bugsnag-expo-cli and run setup
 npm install bugsnag-expo-cli*.tgz

@@ -8,18 +8,18 @@ The requirements for a machine building the test fixture on CLI can be found wit
 
 ## Build process
 
-Depending on the build type, the build is initiated via calling the `test/features/scripts/build-android.sh` or `test/features/scripts/build-ios.sh` scripts.
+Depending on the build type, the build is initiated via calling the `features/scripts/build-android.sh` or `features/scripts/build-ios.sh` scripts.
 
 ### Common steps
 
-Each script initially calls the `test/features/scripts/build-common.sh` script.  This sets up the bugsnag expo packages by:
+Each script initially calls the `features/scripts/build-common.sh` script.  This sets up the bugsnag expo packages by:
 
 1. Clearing any `build` directory that may have been created previously
 2. Installing the `bugsnag-expo` package requirements, including lerna
 3. Using lerna to set the current package version to `999.999.999` so we can install it without yarn attempting to pull packages from npm
 4. Packaging the repository into `.tgz` installable packages and moving them into the test fixture
 
-All subsequent steps are executed within the test-fixture directory, `test/features/fixtures/test-app`
+All subsequent steps are executed within the test-fixture directory, `features/fixtures/test-app`
 
 5. The `bugsnag-expo-cli` package is installed from the tarball, and a script executes the following commands:
     - `bugsnag-expo-cli set-api-key` to set a pre-defined test api key in the app configuration
@@ -33,7 +33,7 @@ All subsequent steps are executed within the test-fixture directory, `test/featu
 
 ### Android steps
 
-Following the completion of the common steps, the `test/features/scripts/build-android.sh` script will:
+Following the completion of the common steps, the `features/scripts/build-android.sh` script will:
 
 1. Move to the `test-app` fixture directory
 2. Invoke `eas build` using local credentials, outputting the file `output.apk`
@@ -43,7 +43,7 @@ Following the completion of the common steps, the `test/features/scripts/build-a
 
 ### iOS steps
 
-Following the completion of the common steps, then `test/features/scripts/build-ios.sh` script will:
+Following the completion of the common steps, then `features/scripts/build-ios.sh` script will:
 
 1. Move to the `test-app` fixture directory
 2. Invoke `eas build` using local credentials, outputting the file `output.ipa`
