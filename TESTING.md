@@ -47,6 +47,12 @@ Maze runner's CLI and the test fixtures are containerised so you'll need Docker 
 
 __Note: only Bugsnag employees can run the end-to-end tests.__ We have dedicated test infrastructure and private BrowserStack credentials which can't be shared outside of the organisation.
 
+### Building the test fixtures
+
+The requirements for a machine building the test fixture on CLI can be found within our private `platforms-ansible` repository.
+
+Once the machine is set up, depending on the build type, run either `features/scripts/build-android.sh` or `features/scripts/build-ios.sh`.
+
 ### Authenticating with the private container registry
 
 You'll need to set the credentials for the aws profile in order to access the private docker registry:
