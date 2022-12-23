@@ -8,11 +8,11 @@ The requirements for a machine building the test fixture on CLI can be found wit
 
 ## Build process
 
-Depending on the build type, the build is initiated via calling the `test/scripts/build-android.sh` or `test/scripts/build-ios.sh` scripts.
+Depending on the build type, the build is initiated via calling the `test/features/scripts/build-android.sh` or `test/features/scripts/build-ios.sh` scripts.
 
 ### Common steps
 
-Each script initially calls the `test/scripts/build-common.sh` script.  This sets up the bugsnag expo packages by:
+Each script initially calls the `test/features/scripts/build-common.sh` script.  This sets up the bugsnag expo packages by:
 
 1. Clearing any `build` directory that may have been created previously
 2. Installing the `bugsnag-expo` package requirements, including lerna
@@ -33,7 +33,7 @@ All subsequent steps are executed within the test-fixture directory, `test/featu
 
 ### Android steps
 
-Following the completion of the common steps, the `test/scripts/build-android.sh` script will:
+Following the completion of the common steps, the `test/features/scripts/build-android.sh` script will:
 
 1. Move to the `test-app` fixture directory
 2. Invoke `eas build` using local credentials, outputting the file `output.apk`
@@ -43,7 +43,7 @@ Following the completion of the common steps, the `test/scripts/build-android.sh
 
 ### iOS steps
 
-Following the completion of the common steps, then `test/scripts/build-ios.sh` script will:
+Following the completion of the common steps, then `test/features/scripts/build-ios.sh` script will:
 
 1. Move to the `test-app` fixture directory
 2. Invoke `eas build` using local credentials, outputting the file `output.ipa`

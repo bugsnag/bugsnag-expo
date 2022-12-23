@@ -2,7 +2,7 @@
 
 set -e
 
-./test/scripts/build-common.sh
+./test/features/scripts/build-common.sh
 
 cd test/features/fixtures/test-app
 
