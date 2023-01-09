@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-app",
-  "version": "47.0.0",
+  "version": "47.1.0",
   "main": "app.js",
   "description": "@bugsnag/expo plugin to provide information about an Expo app",
   "homepage": "https://www.bugsnag.com/",

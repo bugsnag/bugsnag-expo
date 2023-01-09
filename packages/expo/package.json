@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "47.0.0",
+  "version": "47.1.0",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -36,7 +36,7 @@
     "@bugsnag/delivery-expo": "^47.0.0",
     "@bugsnag/plugin-browser-session": "^7.16.0",
     "@bugsnag/plugin-console-breadcrumbs": "^7.16.0",
-    "@bugsnag/plugin-expo-app": "^47.0.0",
+    "@bugsnag/plugin-expo-app": "^47.1.0",
     "@bugsnag/plugin-expo-app-state-breadcrumbs": "^47.0.0",
     "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^47.0.0",
     "@bugsnag/plugin-expo-device": "^47.0.0",
