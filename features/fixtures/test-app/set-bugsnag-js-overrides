@@ -55,6 +55,7 @@ require "json"
 final_json = File.open("package.json") do |file|
   package_json = JSON.parse(file.read)
 
+  package_json["overrides"] ||= {}
   package_json["overrides"].merge!({
     "@bugsnag/core" => version,
     "@bugsnag/plugin-browser-session" => version,

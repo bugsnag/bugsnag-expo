@@ -16,23 +16,22 @@ module.exports = {
       lastState = newState
     })
 
-    let nativeBundleVersion, nativeVersionCode
+    let bundleVersion, versionCode
 
-    if (Constants.appOwnership === 'standalone') {
+    if (Constants.appOwnership !== 'expo') {
       if (Constants.platform.ios) {
-        nativeBundleVersion = Application.nativeBuildVersion
-      }
-
-      if (Constants.platform.android) {
-        nativeVersionCode = Application.nativeBuildVersion
+        bundleVersion = Application.nativeBuildVersion
+      } else if (Constants.platform.android) {
+        versionCode = Application.nativeBuildVersion
       }
     }
 
     client.addOnSession(session => {
-      if (Constants.manifest?.revisionId) {
-        session.app.codeBundleId = Constants.manifest.revisionId
-      } else if (Constants.manifest2?.extra?.expoClient?.revisionId) {
-        session.app.codeBundleId = Constants.manifest2.extra.expoClient.revisionId
+      session.app.versionCode = versionCode
+      session.app.bundleVersion = bundleVersion
+
+      if (client._config.codeBundleId) {
+        session.app.codeBundleId = client._config.codeBundleId
       }
     })
 
@@ -47,13 +46,14 @@ module.exports = {
         event.app.durationInForeground = now - lastEnteredForeground
       }
 
-      event.addMetadata('app', { nativeBundleVersion, nativeVersionCode })
-
-      if (Constants.manifest?.revisionId) {
-        event.app.codeBundleId = Constants.manifest.revisionId
-      } else if (Constants.manifest2?.extra?.expoClient?.revisionId) {
-        event.app.codeBundleId = Constants.manifest2.extra.expoClient.revisionId
+      if (client._config.codeBundleId) {
+        event.app.codeBundleId = client._config.codeBundleId
       }
+
+      event.app.versionCode = versionCode
+      event.app.bundleVersion = bundleVersion
+
+      event.addMetadata('app', { nativeBundleVersion: bundleVersion, nativeVersionCode: versionCode })
     }, true)
   }
 }

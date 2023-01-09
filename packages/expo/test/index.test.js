@@ -137,6 +137,7 @@ describe('expo notifier', () => {
     Bugsnag.start({
       apiKey: API_KEY,
       appVersion: '1.2.3',
+      codeBundleId: '691f4728-4bf5-4da3-a954-ea9a10fa17d2',
       appType: 'worker',
       autoDetectErrors: true,
       enabledErrorTypes: {
@@ -166,7 +167,7 @@ describe('expo notifier', () => {
       expect(onError).toHaveBeenCalled()
 
       expect(_delivery.sendSession).toHaveBeenCalledWith(expect.objectContaining({
-        app: expect.objectContaining({ releaseStage: 'production', version: '1.2.3', type: 'worker' }),
+        app: expect.objectContaining({ releaseStage: 'production', version: '1.2.3', type: 'worker', codeBundleId: '691f4728-4bf5-4da3-a954-ea9a10fa17d2' }),
         device: expect.objectContaining({ manufacturer: 'Google', model: 'Pixel 4', modelNumber: undefined, osName: 'android', totalMemory: undefined }),
         sessions: expect.arrayContaining([expect.objectContaining({ id: expect.any(String), startedAt: expect.any(Date) })])
       }))
@@ -175,7 +176,7 @@ describe('expo notifier', () => {
         apiKey: '030bab153e7c2349be364d23b5ae93b5',
         events: expect.arrayContaining([
           expect.objectContaining({
-            app: expect.objectContaining({ releaseStage: 'production', version: '1.2.3', type: 'worker' }),
+            app: expect.objectContaining({ releaseStage: 'production', version: '1.2.3', type: 'worker', codeBundleId: '691f4728-4bf5-4da3-a954-ea9a10fa17d2' }),
             breadcrumbs: [],
             device: expect.objectContaining({ manufacturer: 'Google', model: 'Pixel 4', modelNumber: undefined, osName: 'android', totalMemory: undefined }),
             errors: expect.arrayContaining([
