@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v47.1.0 (2023-01-09)
 
 ### Fixed
 
