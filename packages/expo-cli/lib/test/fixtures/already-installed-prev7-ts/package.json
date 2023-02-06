@@ -1,8 +1,8 @@
 {
-  "name": "bugsnag-test-fixture-01",
+  "name": "already-installed-prev7-ts",
   "private": "true",
   "version": "0.0.0",
   "dependencies": {
-    "@bugsnag/expo": "7.0.0"
+    "@bugsnag/expo": "^6.5.1"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "name": "already-installed-postv7-js",
+  "private": "true",
+  "version": "0.0.0",
+  "dependencies": {
+    "@bugsnag/expo": "^7.0.1",
+    "@react-native-community/netinfo": "*",
+    "expo-application": "*",
+    "expo-constants": "*",
+    "expo-crypto": "*",
+    "expo-device": "*",
+    "expo-file-system": "*"
+  }
+}
