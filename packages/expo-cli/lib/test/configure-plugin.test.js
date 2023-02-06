@@ -4,7 +4,7 @@ const { readFile } = require('fs/promises')
 
 describe('expo-cli: upload sourcemaps configure-plugin', () => {
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const msg = await configurePlugin(projectRoot)
       expect(msg).toBe(undefined)
 

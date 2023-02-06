@@ -8,7 +8,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   })
 
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual(['install', '@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
@@ -34,7 +34,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   })
 
   it('should allow forcing install with NPM', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -67,7 +67,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   })
 
   it('should allow forcing install with Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -102,7 +102,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   // highly doubt this will ever fail, assuming one of npm or yarn will take precedence over the other
   // if test begins to fail, might need to consider additonal error messages
   it('should allow forcing install with both NPM and Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -160,7 +160,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     jest.doMock('child_process', () => ({ spawn }))
     const installPlugin = require('../install-plugin')
 
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/plugin-expo-eas-sourcemaps @bugsnag/source-maps"
 stdout:
 some data on stdout
@@ -188,7 +188,7 @@ some data on stderr`
     jest.doMock('child_process', () => ({ spawn }))
     const installPlugin = require('../install-plugin')
 
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       await expect(installPlugin(projectRoot, { yarn: false })).rejects.toThrow(/floop/)
     })
   })
