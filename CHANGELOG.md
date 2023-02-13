@@ -2,6 +2,10 @@
 
 ## TBD
 
+### Added
+
+- (bugsnag-expo-cli) Updated bugsnag-expo-cli to support Typescript [#98](https://github.com/bugsnag/bugsnag-expo/pull/98)
+
 ### Fixed
 
 - (plugin-expo-eas-sourcemaps) Reinstate API key in Android manifest [#117](https://github.com/bugsnag/bugsnag-expo/pull/117)
