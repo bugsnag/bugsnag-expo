@@ -1,5 +1,26 @@
 # Changelog
 
+## v47.1.0 (2023-01-09)
+
+### Fixed
+
+- Fixed an issue with source map matching for standalone Android apps built using EAS Build [#92](https://github.com/bugsnag/bugsnag-expo/pull/92)
+
+### Added
+
+- Added `app.versionCode` (Android) and `app.bundleVersion` (iOS) metadata for standalone apps [#92](https://github.com/bugsnag/bugsnag-expo/pull/92)
+- Added `codeBundleId` configuration option [#92](https://github.com/bugsnag/bugsnag-expo/pull/92)
+
+## v47.0.0 (2022-11-21)
+
+This release adds support for expo 47
+
+## v46.0.2 (2022-11-21)
+
+### Fixed
+
+- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#71](https://github.com/bugsnag/bugsnag-expo/pull/71)
+
 ## v46.0.1 (2022-09-22)
 
 ### Fixed

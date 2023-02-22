@@ -32,7 +32,7 @@ services:
         aliases:
           - maze-runner
     volumes:
-      - ./build:/app/test/build
+      - ./build:/app/build
 
   release:
     build:

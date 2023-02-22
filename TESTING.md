@@ -41,11 +41,17 @@ npm run test:lint
 
 These tests are implemented with our notifier testing tool [Maze runner](https://github.com/bugsnag/maze-runner).
 
-End to end tests are written in cucumber-style `.feature` files, and need Ruby-backed "steps" in order to know what to run. The tests are located in the top level [`test`](/test/) directory.
+End to end tests are written in cucumber-style `.feature` files, and need Ruby-backed "steps" in order to know what to run. The tests are located in the top level [`features`](/features/) directory.
 
 Maze runner's CLI and the test fixtures are containerised so you'll need Docker (and Docker Compose) to run them.
 
 __Note: only Bugsnag employees can run the end-to-end tests.__ We have dedicated test infrastructure and private BrowserStack credentials which can't be shared outside of the organisation.
+
+### Building the test fixtures
+
+The requirements for a machine building the test fixture on CLI can be found within our private `platforms-ansible` repository.
+
+Once the machine is set up, depending on the build type, run either `features/scripts/build-android.sh` or `features/scripts/build-ios.sh`.
 
 ### Authenticating with the private container registry
 

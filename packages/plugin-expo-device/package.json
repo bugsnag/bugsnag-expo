@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-device",
-  "version": "46.0.0",
+  "version": "47.0.0",
   "main": "device.js",
   "description": "@bugsnag/expo plugin to attach Expo-specific device info to events",
   "homepage": "https://www.bugsnag.com/",
@@ -18,12 +18,12 @@
   "license": "MIT",
   "devDependencies": {
     "@bugsnag/core": "^7.16.0",
-    "expo-constants": "~13.2.3",
-    "expo-device": "~4.3.0"
+    "expo-constants": "~14.0.2",
+    "expo-device": "~5.0.0"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.0.0",
-    "expo-constants": "~13.2.3",
-    "expo-device": "~4.3.0"
+    "expo-constants": "~14.0.2",
+    "expo-device": "~5.0.0"
   }
 }

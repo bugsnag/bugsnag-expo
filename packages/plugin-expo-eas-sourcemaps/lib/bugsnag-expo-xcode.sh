@@ -4,6 +4,7 @@ set -o errexit
 
 INFO_PLIST=$BUILT_PRODUCTS_DIR/$INFOPLIST_PATH
 APP_VERSION=$(/usr/libexec/PlistBuddy -c "print :CFBundleShortVersionString" "$INFO_PLIST")
+BUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c "print :CFBundleVersion" "$INFO_PLIST")
 API_KEY="$BUGSNAG_API_KEY"
 
 # in RN 0.64+ the JS bundle is in this location
@@ -41,6 +42,7 @@ PROJECT_ROOT=${PWD%\/ios}
 ARGS=(
     "--api-key" "$API_KEY"
     "--app-version" "$APP_VERSION"
+    "--app-bundle-version" "$BUNDLE_VERSION"
     "--bundle" "$BUNDLE_FILE"
     "--platform" "ios"
     "--source-map" "$SOURCE_MAP"

@@ -33,7 +33,7 @@ steps:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
     artifact_paths: build/output.apk
     commands:
-      - test/scripts/build-android.sh
+      - features/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
     key: "build-expo-ipa"
@@ -42,9 +42,10 @@ steps:
       queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      DEVELOPER_DIR: "/Applications/Xcode14.app"
     artifact_paths: build/output.ipa
     commands:
-      - test/scripts/build-ios.sh
+      - features/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
     depends_on:
