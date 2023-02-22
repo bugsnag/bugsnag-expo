@@ -203,7 +203,7 @@ describe('delivery: expo', () => {
   })
 
   it('does not attempt to re-send oversized payloads', done => {
-    // A 401 is considered retryable but this will be override by the payload size check
+    // A 401 is considered retryable but this will be overridden by the payload size check
     const { requests, server } = mockServer(401)
     server.listen(err => {
       expect(err).toBeUndefined()
@@ -222,14 +222,17 @@ describe('delivery: expo', () => {
         redactedKeys: []
       }
 
-      let didLog = false
-      const log = () => { didLog = true }
+      const logger = {
+        info: jest.fn(),
+        warn: jest.fn(),
+        error: jest.fn()
+      }
 
-      delivery({ _config: config, _logger: { error: log, info: () => {} } }, fetch).sendEvent(payload, (err) => {
-        expect(didLog).toBe(true)
+      delivery({ _config: config, _logger: logger }, fetch).sendEvent(payload, (err) => {
+        expect(logger.warn).toHaveBeenCalledWith('Discarding over-sized event (1.014603 MB) after failed delivery')
         expect(enqueueSpy).not.toHaveBeenCalled()
         expect(err).toBeTruthy()
-        expect(requests.length).toBe(1)
+        expect(requests.length).toBe(0)
         server.close()
         done()
       })
