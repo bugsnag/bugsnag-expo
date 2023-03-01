@@ -18,10 +18,10 @@
   "license": "MIT",
   "devDependencies": {
     "@bugsnag/core": "^7.16.0",
-    "@react-native-community/netinfo": "9.3.5"
+    "@react-native-community/netinfo": "9.3.7"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.0.0",
-    "@react-native-community/netinfo": "9.3.5"
+    "@react-native-community/netinfo": "9.3.7"
   }
 }
