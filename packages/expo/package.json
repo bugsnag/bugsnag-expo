@@ -52,7 +52,7 @@
     "expo-constants": "~14.2.1"
   },
   "peerDependencies": {
-    "expo": "^47.0.0",
+    "expo": "^48.0.0",
     "expo-constants": "~14.2.1",
     "promise": "^8.3.0",
     "react": "*"
