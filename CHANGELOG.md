@@ -1,5 +1,13 @@
 # Changelog
 
+## v45.1.3 (2022-03-02)
+
+### Fixed
+
+- (bugsnag-expo-cli) Fix issue with automated installation when using app.config.js [#72](https://github.com/bugsnag/bugsnag-expo/pull/72)
+- (expo) Add promise v8 as a peer dependency [#77](https://github.com/bugsnag/bugsnag-expo/pull/77)
+- (plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#101](https://github.com/bugsnag/bugsnag-expo/pull/101)
+
 ## v45.1.2 (2022-08-21)
 
 ### Fixed
