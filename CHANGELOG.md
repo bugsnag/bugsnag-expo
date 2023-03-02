@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v45.1.3 (2022-03-02)
 
 ### Fixed
 
