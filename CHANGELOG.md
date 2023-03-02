@@ -1,6 +1,6 @@
 # Changelog
 
-## v47.1.1 (2022-03-02)
+## v47.1.1 (2023-03-02)
 
 (plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
 
