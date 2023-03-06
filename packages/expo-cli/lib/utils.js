@@ -22,9 +22,18 @@ async function getDependencies (directory) {
   return cachedDependencies.get(directory)
 }
 
+function resolvePackageName (packageName, version) {
+  if (version === 'latest') {
+    return packageName
+  }
+
+  return `${packageName}@${version}`
+}
+
 module.exports = {
   onCancel: () => process.exit(),
   getDependencies,
+  resolvePackageName,
   DEPENDENCIES: [
     '@react-native-community/netinfo',
     'expo-application',

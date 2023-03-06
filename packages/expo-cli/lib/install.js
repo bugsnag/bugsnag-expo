@@ -1,8 +1,8 @@
 const { spawn } = require('child_process')
-const { DEPENDENCIES } = require('./utils')
+const { DEPENDENCIES, resolvePackageName } = require('./utils')
 
 function resolveCommand (version, options) {
-  const command = ['install', resolvePackageName(version)].concat(DEPENDENCIES)
+  const command = ['install', resolvePackageName('@bugsnag/expo', version)].concat(DEPENDENCIES)
 
   if (options.npm) {
     command.push('--npm')
@@ -13,14 +13,6 @@ function resolveCommand (version, options) {
   }
 
   return command
-}
-
-function resolvePackageName (version) {
-  if (version === 'latest') {
-    return '@bugsnag/expo'
-  }
-
-  return `@bugsnag/expo@${version}`
 }
 
 module.exports = (version, projectRoot, options) => {
