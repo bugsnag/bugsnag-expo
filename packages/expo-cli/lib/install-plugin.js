@@ -1,46 +1,14 @@
-const { spawn } = require('child_process')
+const { createForProject } = require('@expo/package-manager')
+const { resolvePackageName } = require('./utils')
 
-function resolveCommand (options) {
-  const command = ['install', '@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps']
+module.exports = (version, projectRoot, options) => {
+  const packages = [resolvePackageName('@bugsnag/plugin-expo-eas-sourcemaps', version), '@bugsnag/source-maps']
 
-  if (options.npm) {
-    command.push('--npm')
-    command.push('--')
-    command.push('--save-dev')
-  }
-
-  if (options.yarn) {
-    command.push('--yarn')
-    command.push('--')
-    command.push('--dev')
-  }
-
-  return command
-}
-
-module.exports = (projectRoot, options) => {
-  return new Promise((resolve, reject) => {
-    const command = resolveCommand(options)
-    const proc = spawn('expo', command, { cwd: projectRoot })
-
-    // buffer output in case of an error
-    let stdout = ''
-    let stderr = ''
-    proc.stdout.on('data', d => { stdout += d })
-    proc.stderr.on('data', d => { stderr += d })
-
-    proc.on('error', err => { reject(err) })
-
-    proc.on('close', code => {
-      if (code === 0) {
-        return resolve()
-      }
-
-      reject(
-        new Error(
-          `Command exited with non-zero exit code (${code}) "expo ${command.join(' ')}"\nstdout:\n${stdout}\n\nstderr:\n${stderr}`
-        )
-      )
-    })
+  // Expo's package manager will reject with an error if the child process exits with a non-zero code
+  // it also buffers the output and attaches it to any errors - https://github.com/expo/spawn-async/blob/main/src/spawnAsync.ts
+  const packageManager = createForProject(projectRoot, options)
+  return packageManager.addDevAsync(packages).catch(error => {
+    error.message += `\nstdout:\n${error.stdout}\n\nstderr:\n${error.stderr}`
+    throw error
   })
 }
