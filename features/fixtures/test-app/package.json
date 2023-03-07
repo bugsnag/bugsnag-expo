@@ -9,23 +9,23 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-community/netinfo": "9.3.5",
-    "expo": "~47.0.3",
-    "expo-application": "~5.0.1",
-    "expo-constants": "~14.0.2",
-    "expo-crypto": "~12.0.0",
-    "expo-device": "~5.0.0",
-    "expo-file-system": "~15.1.1",
-    "expo-screen-orientation": "~5.0.1",
-    "expo-status-bar": "~1.4.2",
-    "react": "18.1.0",
-    "react-native": "0.70.5"
+    "@react-native-community/netinfo": "9.3.7",
+    "expo": "~48.0.4",
+    "expo-application": "~5.1.1",
+    "expo-constants": "~14.2.1",
+    "expo-crypto": "~12.2.1",
+    "expo-device": "~5.2.1",
+    "expo-file-system": "~15.2.2",
+    "expo-screen-orientation": "~5.1.1",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-native": "0.71.3"
   },
   "resolutions": {
-    "expo-modules-core": "1.0.4"
+    "expo-modules-core": "1.2.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3"
+    "@babel/core": "^7.20.0"
   },
   "private": true
 }
