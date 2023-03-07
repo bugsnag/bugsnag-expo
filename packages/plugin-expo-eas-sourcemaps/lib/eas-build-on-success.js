@@ -30,15 +30,15 @@ access(sourceMap, constants.R_OK, error => {
 
 let appConfig, apiKey
 try {
-  appConfig = require(`${process.env.EAS_BUILD_WORKINGDIR}/app.json`)
+  appConfig = require(`${process.cwd()}/app.json`)
   apiKey = appConfig?.expo?.extra?.bugsnag?.apiKey
 } catch (error) {
-  console.error(`Error: failed to load app.json file at ${process.env.EAS_BUILD_WORKINGDIR}/app.json.\n${error}`)
+  console.error(`Error: Failed to load app.json file ${process.cwd()}/app.json.\n${error}`)
   exit(1)
 }
 
 if (!apiKey) {
-  console.error(`Error: No Bugsnag API key detected in ${process.env.EAS_BUILD_WORKINGDIR}/app.json`)
+  console.error('Error: No Bugsnag API key detected in app.json')
   exit(1)
 }
 
