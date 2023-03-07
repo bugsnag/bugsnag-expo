@@ -23,7 +23,7 @@ module.exports = async (argv, globalOpts) => {
   const res = await prompts({
     type: 'confirm',
     name: 'addPlugin',
-    message: 'Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json)',
+    message: 'Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json and package.json)',
     initial: true
   }, { onCancel })
 

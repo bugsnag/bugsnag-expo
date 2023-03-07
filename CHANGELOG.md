@@ -5,6 +5,7 @@
 ### Fixed
 
 - (bugsnag-expo-cli) CLI tool now installs a sourcemap plugin version that matches the Expo SDK version [#111](https://github.com/bugsnag/bugsnag-expo/pull/111)
+- (plugin-expo-eas-sourcemaps) Use EAS Build lifecycle hook for Android source map uploads [#112](https://github.com/bugsnag/bugsnag-expo/pull/112)
 
 ## v47.1.1 (2023-03-02)
 

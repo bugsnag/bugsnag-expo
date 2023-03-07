@@ -59,23 +59,38 @@ module.exports = async (projectRoot) => {
   conf.expo = conf.expo || {}
   conf.expo.plugins = conf.expo.plugins || []
   if (conf.expo.plugins.includes(plugin)) {
-    return plugin + ' is already installed'
+    console.log(blue('Plugin is already configured in app.json'))
+  } else {
+    conf.expo.plugins.push(plugin)
+    await promisify(writeFile)(appJsonPath, JSON.stringify(conf, null, 2), 'utf8')
   }
-  conf.expo.plugins.push(plugin)
 
-  await promisify(writeFile)(appJsonPath, JSON.stringify(conf, null, 2), 'utf8')
+  // update package.json
+  try {
+    const packageJsonPath = join(projectRoot, 'package.json')
+    const packageJson = JSON.parse(await promisify(readFile)(packageJsonPath))
 
-  // do we need to add monorepo configuration?
-  const withYarnClassic = await usingYarnClassic(projectRoot)
-  const addMonorepoConfig = await usingWorkspaces(projectRoot, withYarnClassic)
+    // add the post-build hook (if it doesn't already exist)
+    const sourceMapBuildHook = 'npx bugsnag-eas-build-on-success'
+    packageJson.scripts = packageJson.scripts || {}
+    const existingBuildHook = packageJson.scripts['eas-build-on-success']
 
-  if (addMonorepoConfig) {
-    console.log(blue('> yarn workspaces detected, updating config'))
+    if (existingBuildHook && existingBuildHook.includes(sourceMapBuildHook)) {
+      console.log(blue('EAS Build hook already configured in package.json'))
+    } else if (existingBuildHook) {
+      packageJson.scripts['eas-build-on-success'] = `${existingBuildHook} && ${sourceMapBuildHook}`
+    } else {
+      packageJson.scripts['eas-build-on-success'] = sourceMapBuildHook
+    }
 
-    try {
+    // do we need to add monorepo configuration?
+    const withYarnClassic = await usingYarnClassic(projectRoot)
+    const addMonorepoConfig = await usingWorkspaces(projectRoot, withYarnClassic)
+
+    if (addMonorepoConfig) {
+      console.log(blue('> yarn workspaces detected, updating config'))
+
       const sourceMaps = '@bugsnag/source-maps'
-      const packageJsonPath = join(projectRoot, 'package.json')
-      const packageJson = JSON.parse(await promisify(readFile)(packageJsonPath))
 
       if (withYarnClassic) {
         packageJson.workspaces = packageJson.workspaces || {}
@@ -86,17 +101,17 @@ module.exports = async (projectRoot) => {
         packageJson.installConfig = packageJson.installConfig || {}
         packageJson.installConfig.hoistingLimits = 'workspaces'
       }
-
-      await promisify(writeFile)(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
-    } catch (e) {
-      // swallow and rethrow for errors that we can produce better messaging
-      if (e.code === 'ENOENT') {
-        throw new Error(`Couldn’t find package.json in "${projectRoot}".`)
-      }
-      if (e.name === 'SyntaxError') {
-        throw new Error(`Couldn’t parse package.json because it wasn’t valid JSON: "${e.message}"`)
-      }
-      throw e
     }
+
+    await promisify(writeFile)(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8')
+  } catch (e) {
+    // swallow and rethrow for errors that we can produce better messaging
+    if (e.code === 'ENOENT') {
+      throw new Error(`Couldn’t find package.json in "${projectRoot}".`)
+    }
+    if (e.name === 'SyntaxError') {
+      throw new Error(`Couldn’t parse package.json because it wasn’t valid JSON: "${e.message}"`)
+    }
+    throw e
   }
 }
