@@ -10,5 +10,8 @@
     "expo-crypto": "*",
     "expo-device": "*",
     "expo-file-system": "*"
+  },
+  "scripts": {
+    "eas-build-on-success": "npx bugsnag-eas-build-on-success"
   }
 }
