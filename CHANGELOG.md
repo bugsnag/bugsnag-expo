@@ -1,6 +1,8 @@
 # Changelog
 
-## TBD
+## v48.0.0 (2023-03-07)
+
+This release adds support for expo 48
 
 ### Fixed
 
@@ -9,7 +11,9 @@
 
 ## v47.1.1 (2023-03-02)
 
-(plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
 
 ## v47.1.0 (2023-01-09)
 
