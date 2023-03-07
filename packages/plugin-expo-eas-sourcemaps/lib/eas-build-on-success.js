@@ -7,7 +7,7 @@ const { exit } = require('process')
 const PROJECT_ROOT = process.cwd()
 
 if (process.env.EAS_BUILD_PLATFORM !== 'android') {
-  console.log('Skipping Android source map upload: iOS build detected')
+  console.log('Skipping Android source map upload: Android build not detected')
   exit(0)
 } else if (process.env.EAS_BUILD_PROFILE === 'development') {
   console.log('Skipping Android source map upload: Development build detected')
