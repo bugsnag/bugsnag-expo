@@ -1,8 +1,19 @@
 # Changelog
 
+## v48.0.0 (2023-03-07)
+
+This release adds support for expo 48
+
+### Fixed
+
+- (bugsnag-expo-cli) CLI tool now installs a sourcemap plugin version that matches the Expo SDK version [#111](https://github.com/bugsnag/bugsnag-expo/pull/111)
+- (plugin-expo-eas-sourcemaps) Use EAS Build lifecycle hook for Android source map uploads [#112](https://github.com/bugsnag/bugsnag-expo/pull/112)
+
 ## v47.1.1 (2023-03-02)
 
-(plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
 
 ## v47.1.0 (2023-01-09)
 

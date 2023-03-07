@@ -1,4 +1,3 @@
-const { withAndroidPlugin } = require('./src/android')
 const { withIosPlugin } = require('./src/ios')
 
 const { createRunOncePlugin, WarningAggregator } = require('@expo/config-plugins')
@@ -7,7 +6,6 @@ const pkg = require('./package.json')
 
 function withSourcemapUploads (config) {
   const onPremConfig = getOnPremConfig(config)
-  config = withAndroidPlugin(config, onPremConfig)
   config = withIosPlugin(config, onPremConfig)
   return config
 }
