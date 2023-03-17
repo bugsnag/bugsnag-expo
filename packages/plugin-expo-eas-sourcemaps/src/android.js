@@ -22,11 +22,13 @@ function setBugsnagConfig (config, androidManifest) {
   // Get the <application /> tag and assert if it doesn't exist.
   const mainApplication = getMainApplicationOrThrow(androidManifest)
 
-  addMetaDataItemToMainApplication(
-    mainApplication,
-    apiKeyName,
-    apiKeyValue
-  )
+  if (apiKeyValue) {
+    addMetaDataItemToMainApplication(
+      mainApplication,
+      apiKeyName,
+      apiKeyValue
+    )
+  }
 
   return androidManifest
 }
