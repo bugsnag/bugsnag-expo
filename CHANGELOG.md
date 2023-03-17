@@ -1,5 +1,12 @@
 # Changelog
 
+## TBD
+
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Reinstate API key in Android manifest [#117](https://github.com/bugsnag/bugsnag-expo/pull/117)
+- (plugin-expo-eas-sourcemaps) Support dynamic configuration files in EAS Build lifecycle hook [#117](https://github.com/bugsnag/bugsnag-expo/pull/117)
+
 ## v48.0.0 (2023-03-07)
 
 This release adds support for expo 48
