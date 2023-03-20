@@ -119,5 +119,4 @@ describe('expo-cli: insert', () => {
       expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag\.start\(\);\s/)
     })
   })
-
 })

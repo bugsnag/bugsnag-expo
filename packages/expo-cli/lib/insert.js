@@ -8,8 +8,7 @@ const importRe = /from ["']@bugsnag\/expo["']/
 const requireRe = /require\(["']@bugsnag\/expo["']\)/
 
 module.exports = async (projectRoot) => {
-
-  function checkFileExists(filename) {
+  function checkFileExists (filename) {
     const appPath = join(projectRoot, filename)
     return existsSync(appPath)
   }
@@ -21,7 +20,7 @@ module.exports = async (projectRoot) => {
     if (importRe.test(app) || requireRe.test(app)) {
       return `@bugsnag/expo is already imported in ${filename}`
     }
-   // write to file
+    // write to file
     await promisify(writeFile)(appPath, `${await getCode(projectRoot)}\n${app}`, 'utf8')
   }
 
