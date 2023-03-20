@@ -4,19 +4,19 @@ const { InstalledState, detectInstalledState, detectInstalledVersion } = require
 describe('expo-cli: detect-installed', () => {
   describe('detectInstalledVersion', () => {
     it('should work on a fresh project', async () => {
-      await withFixture('blank-00', async (projectRoot) => {
+      await withFixture('blank-js', async (projectRoot) => {
         const version = await detectInstalledVersion(projectRoot)
         expect(version).toBe(undefined)
       })
     })
 
     it('should work on project with Bugsnag installed', async () => {
-      await withFixture('already-configured-00', async (projectRoot) => {
+      await withFixture('already-configured-js-import', async (projectRoot) => {
         const version = await detectInstalledVersion(projectRoot)
         expect(version).toBe('^7.0.0')
       })
 
-      await withFixture('already-configured-01', async (projectRoot) => {
+      await withFixture('already-configured-js-require', async (projectRoot) => {
         const version = await detectInstalledVersion(projectRoot)
         expect(version).toBe('7.0.0')
       })
@@ -25,14 +25,14 @@ describe('expo-cli: detect-installed', () => {
 
   describe('detectInstalledState', () => {
     it('should return "NONE" when Bugsnag and dependencies are missing', async () => {
-      await withFixture('blank-00', async (projectRoot) => {
+      await withFixture('blank-js', async (projectRoot) => {
         const state = await detectInstalledState(projectRoot)
         expect(state).toBe(InstalledState.NONE)
       })
     })
 
     it('should return "BUGSNAG_EXPO" when Bugsnag is installed but dependencies are missing', async () => {
-      await withFixture('already-installed-00', async (projectRoot) => {
+      await withFixture('already-installed-prev7-js', async (projectRoot) => {
         const state = await detectInstalledState(projectRoot)
         expect(state).toBe(InstalledState.BUGSNAG_EXPO)
       })
@@ -46,7 +46,7 @@ describe('expo-cli: detect-installed', () => {
     })
 
     it('should return "BUGSNAG_EXPO | ALL_DEPENDENCIES" when both Bugsnag and dependencies are installed', async () => {
-      await withFixture('already-installed-01', async (projectRoot) => {
+      await withFixture('already-installed-postv7-js', async (projectRoot) => {
         const state = await detectInstalledState(projectRoot)
         expect(state).toBe(InstalledState.BUGSNAG_EXPO | InstalledState.ALL_DEPENDENCIES)
       })

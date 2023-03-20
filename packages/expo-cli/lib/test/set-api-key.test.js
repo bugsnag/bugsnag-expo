@@ -4,7 +4,7 @@ const { readFile } = require('fs/promises')
 
 describe('expo-cli: set-api-key', () => {
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const msg = await setApiKey('AABBCCDD', projectRoot)
       expect(msg).toBe(undefined)
 
@@ -15,7 +15,7 @@ describe('expo-cli: set-api-key', () => {
   })
 
   it('shouldn’t replace an existing API key', async () => {
-    await withFixture('already-configured-00', async (projectRoot) => {
+    await withFixture('already-configured-js-import', async (projectRoot) => {
       const msg = await setApiKey('AABBCCDD', projectRoot)
       expect(msg).toBe(undefined)
 
