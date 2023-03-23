@@ -29,6 +29,8 @@ services:
       BROWSER_STACK_ACCESS_KEY:
       BITBAR_USERNAME:
       BITBAR_ACCESS_KEY:
+    ports:
+      - "9000-9499:9339"
     networks:
       default:
         aliases:

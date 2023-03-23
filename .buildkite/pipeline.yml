@@ -58,6 +58,7 @@ steps:
       docker-compose#v3.9.0:
         pull: expo-maze-runner
         run: expo-maze-runner
+        service-ports: true
         use-aliases: true
         command:
           - --app=build/output.apk
