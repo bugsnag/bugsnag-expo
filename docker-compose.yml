@@ -27,6 +27,8 @@ services:
       DEBUG:
       BROWSER_STACK_USERNAME:
       BROWSER_STACK_ACCESS_KEY:
+      BITBAR_USERNAME:
+      BITBAR_ACCESS_KEY:
     networks:
       default:
         aliases:

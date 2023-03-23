@@ -61,13 +61,15 @@ steps:
         use-aliases: true
         command:
           - --app=build/output.apk
-          - --farm=bs
-          - --device=ANDROID_12_0
+          - --farm=bb
+          - --device=ANDROID_12
           - --a11y-locator
           - --fail-fast
+          - --no-tunnel
+          - --aws-public-ip
           - --retry=2
-    concurrency: 9
-    concurrency_group: 'browserstack-app'
+    concurrency: 25
+    concurrency_group: 'bitbar-app'
     concurrency_method: eager
 
   - label: ':runner: expo iOS 15'
