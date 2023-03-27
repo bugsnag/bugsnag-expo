@@ -5,6 +5,7 @@
 ### Added
 
 - (bugsnag-expo-cli) Updated bugsnag-expo-cli to support Typescript [#98](https://github.com/bugsnag/bugsnag-expo/pull/98)
+- Read API key and app version from `Constants.expoConfig` [#119](https://github.com/bugsnag/bugsnag-expo/pull/119)
 
 ### Fixed
 
