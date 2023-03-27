@@ -4,7 +4,7 @@ const { readFile } = require('fs/promises')
 
 describe('expo-cli: add-hook', () => {
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const msg = await addHook(projectRoot)
       expect(msg).toBe(undefined)
 
@@ -16,7 +16,7 @@ describe('expo-cli: add-hook', () => {
   })
 
   it('shouldn’t duplicate the hook config', async () => {
-    await withFixture('already-configured-00', async (projectRoot) => {
+    await withFixture('already-configured-js-import', async (projectRoot) => {
       const msg = await addHook(projectRoot)
       expect(msg).toMatch(/already/)
 

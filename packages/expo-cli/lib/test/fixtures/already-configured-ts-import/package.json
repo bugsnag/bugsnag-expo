@@ -1,8 +1,8 @@
 {
-  "name": "bugsnag-test-fixture-03",
+  "name": "already-configured-ts-import",
   "private": "true",
   "version": "0.0.0",
   "dependencies": {
-    "@bugsnag/expo": "^6.5.1"
+    "@bugsnag/expo": "7.0.0"
   }
 }

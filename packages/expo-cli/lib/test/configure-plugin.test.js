@@ -5,7 +5,7 @@ const { blue } = require('kleur')
 
 describe('expo-cli: upload sourcemaps configure-plugin', () => {
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const msg = await configurePlugin(projectRoot)
       expect(msg).toBe(undefined)
 
@@ -33,7 +33,7 @@ describe('expo-cli: upload sourcemaps configure-plugin', () => {
   })
 
   it('shouldn’t duplicate the EAS build hook', async () => {
-    await withFixture('already-installed-01', async (projectRoot) => {
+    await withFixture('already-installed-postv7-js', async (projectRoot) => {
       const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
 
       await configurePlugin(projectRoot)

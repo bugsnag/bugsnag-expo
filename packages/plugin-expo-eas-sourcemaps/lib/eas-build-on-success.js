@@ -3,6 +3,7 @@
 const { access } = require('fs').promises
 const { reactNative } = require('@bugsnag/source-maps')
 const { exit } = require('process')
+const { getConfig } = require('@expo/config')
 
 const PROJECT_ROOT = process.cwd()
 
@@ -29,15 +30,15 @@ const uploadSourceMaps = async () => {
 
   let appConfig, apiKey
   try {
-    appConfig = require(`${PROJECT_ROOT}/app.json`)
-    apiKey = appConfig?.expo?.extra?.bugsnag?.apiKey
+    appConfig = getConfig(PROJECT_ROOT)
+    apiKey = appConfig?.exp?.extra?.bugsnag?.apiKey
   } catch (error) {
-    console.error(`Error: Failed to load app.json file ${PROJECT_ROOT}/app.json.\n${error}`)
+    console.error(`Error: Failed to read app config in ${PROJECT_ROOT}.\n${error}`)
     exit(1)
   }
 
   if (!apiKey) {
-    console.error('Error: No Bugsnag API key detected in app.json')
+    console.error('Error: No Bugsnag API key detected in app config')
     exit(1)
   }
 
@@ -47,8 +48,8 @@ const uploadSourceMaps = async () => {
     bundle,
     sourceMap,
     platform: 'android',
-    appVersion: appConfig?.expo?.version,
-    appVersionCode: appConfig?.expo?.android?.versionCode?.toString()
+    appVersion: appConfig?.exp?.version,
+    appVersionCode: appConfig?.exp?.android?.versionCode?.toString()
   }).then(() => {
     console.log(`Successfully uploaded the following files:\n${[bundle, sourceMap].join('\n')}`)
   }).catch(error => {

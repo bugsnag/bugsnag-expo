@@ -16,7 +16,7 @@ describe('plugin: expo device', () => {
       default: {
         installationId: '123',
         platform: { android: {} },
-        manifest: { sdkVersion: SDK_VERSION },
+        expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
         appOwnership: 'standalone'
       }
@@ -84,7 +84,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-constants', () => ({
       default: {
         platform: { ios: {} },
-        manifest: { sdkVersion: SDK_VERSION },
+        expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
         appOwnership: 'expo'
       }
@@ -148,7 +148,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-constants', () => ({
       default: {
         platform: { ios: {} },
-        manifest: { sdkVersion: SDK_VERSION },
+        expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
         appOwnership: 'expo'
       }
@@ -195,7 +195,7 @@ describe('plugin: expo device', () => {
       default: {
         installationId: '123',
         platform: { ios: {} },
-        manifest: { sdkVersion: SDK_VERSION },
+        expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
         appOwnership: 'expo'
       }
@@ -269,7 +269,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-constants', () => ({
       default: {
         platform: { ios: {} },
-        manifest: { sdkVersion: SDK_VERSION },
+        expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
         appOwnership: 'guest'
       }
