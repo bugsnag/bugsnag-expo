@@ -44,7 +44,9 @@ export default class App extends React.Component {
       endpoints: {}
     }
 
+    console.log("[BUGSNAG_TEST_FIXTURE] App Constructor")
     getEndpoints().then((endpoints) => {
+      console.log("[BUGSNAG_TEST_FIXTURE] endpoints loaded", endpoints)
       this.setState({ endpoints: endpoints })
       return ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
     }).then(() => this.setState({ loaded: true }))

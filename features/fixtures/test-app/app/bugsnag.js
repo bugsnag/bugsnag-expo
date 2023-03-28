@@ -7,13 +7,21 @@ const endpoints = {
 }
 
 const getEndpoints = async () => {
-  const fixtureConfigUri = FileSystem.documentDirectory + "fixture_config.json"
-  const configStr = await FileSystem.readAsStringAsync(fixtureConfigUri)
-  const config = JSON.parse(configStr)
-  const mazeAddress = config.maze_address
-  return {
-    notify: `http://${mazeAddress}/notify`,
-    sessions: `http://${mazeAddress}/sessions`
+
+  try {
+    const fixtureConfigUri = FileSystem.documentDirectory + "fixture_config.json"
+    const configStr = await FileSystem.readAsStringAsync(fixtureConfigUri)
+    console.log("[BUGSNAG_TEST_FIXTURE] config file loaded", configStr)
+    const config = JSON.parse(configStr)
+    const mazeAddress = config.maze_address
+    return {
+      notify: `http://${mazeAddress}/notify`,
+      sessions: `http://${mazeAddress}/sessions`
+    }
+  }
+  catch (e) {
+    console.log("[BUGSNAG_TEST_FIXTURE] failed to load config file", e)
+    return Promise.resolve(endpoints)
   }
 }
 
