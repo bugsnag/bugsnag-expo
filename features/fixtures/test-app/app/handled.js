@@ -7,10 +7,14 @@ export default class Handled extends Component {
   constructor(props) {
     super(props)
 
-    this.state.bugsnagClient = Bugsnag.createClient({
+    const bugsnag = Bugsnag.createClient({
       endpoints: this.props.endpoints,
       autoTrackSessions: false
     })
+
+    this.state = {
+      bugsnagClient: bugsnag
+    }
   }
 
   handledError = () => {

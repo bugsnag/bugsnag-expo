@@ -9,9 +9,16 @@ const endpoints = {
 const getEndpoints = async () => {
 
   try {
+    console.error("[BUGSNAG_TEST_FIXTURE] cacheDirectory:", FileSystem.cacheDirectory)
+    console.error("[BUGSNAG_TEST_FIXTURE] documentDirectory:", FileSystem.documentDirectory)
+
+    const contents = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+    console.error(`[BUGSNAG_TEST_FIXTURE] documentDirectory contents: ${contents.join(', ')}`)
+
     const fixtureConfigUri = FileSystem.documentDirectory + "fixture_config.json"
     const configStr = await FileSystem.readAsStringAsync(fixtureConfigUri)
-    console.log("[BUGSNAG_TEST_FIXTURE] config file loaded", configStr)
+    console.error("[BUGSNAG_TEST_FIXTURE] config file loaded", configStr)
+    
     const config = JSON.parse(configStr)
     const mazeAddress = config.maze_address
     return {
@@ -20,7 +27,7 @@ const getEndpoints = async () => {
     }
   }
   catch (e) {
-    console.log("[BUGSNAG_TEST_FIXTURE] failed to load config file", e)
+    console.error(`[BUGSNAG_TEST_FIXTURE] failed to load config file: ${e.message}`, e)
     return Promise.resolve(endpoints)
   }
 }
