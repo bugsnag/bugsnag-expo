@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, Button, Text } from 'react-native'
 import Handled from './app/handled'
 import Unhandled from './app/unhandled'
@@ -15,6 +15,7 @@ import Sessions from './app/sessions'
 import NetworkBreadcrumbs from './app/network_breadcrumbs'
 import FeatureFlags from './app/feature_flags'
 import * as ScreenOrientation from 'expo-screen-orientation'
+import { getEndpoints } from './app/bugsnag'
 
 const SCENARIOS = [
   'handled',
@@ -40,16 +41,19 @@ export default class App extends React.Component {
     this.state = {
       scenario: null,
       loaded: false,
+      endpoints: {}
     }
 
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
-      .then(() => this.setState({ loaded: true }))
+    getEndpoints().then((endpoints) => {
+      this.setState({ endpoints: endpoints })
+      return ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+    }).then(() => this.setState({ loaded: true }))
   }
 
   renderScenario() {
     switch (this.state.scenario) {
       case 'handled':
-        return <Handled />
+        return <Handled endpoints={this.state.endpoints} />
       case 'unhandled':
         return <Unhandled />
       case 'errorBoundary':

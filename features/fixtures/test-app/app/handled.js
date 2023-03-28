@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import { View, Button } from 'react-native'
-import { bugsnagClient } from './bugsnag'
+import Bugsnag from '@bugsnag/expo'
 
 export default class Handled extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state.bugsnagClient = Bugsnag.createClient({
+      endpoints: this.props.endpoints,
+      autoTrackSessions: false
+    })
+  }
+
   handledError = () => {
-    bugsnagClient.notify(new Error('HandledError'))
+    this.state.bugsnagClient.notify(new Error('HandledError'))
   }
 
   handledCaughtError = () => {
     try {
       throw new Error('HandledCaughtError');
     } catch (error) {
-      bugsnagClient.notify(error);
+      this.state.bugsnagClient.notify(error);
     }
   }
 
