@@ -69,10 +69,32 @@ describe('expo-cli: insert', () => {
       expect(appTsAfter).toBe(appTsBefore)
     })
   })
+  
+  it('shouldn’t insert if @bugsnag/expo is already imported (import, tsx)', async () => {
+    await withFixture('already-configured-ts-import', async (projectRoot) => {
+      const appTsBefore = await readFile(`${projectRoot}/App.tsx`, 'utf8')
+      const msg = await insert(projectRoot)
+      expect(msg).toMatch(/already/)
 
-  it('should provide a reasonable error when there is no App.js or App.ts', async () => {
+      const appTsAfter = await readFile(`${projectRoot}/App.txs`, 'utf8')
+      expect(appTsAfter).toBe(appTsBefore)
+    })
+  })
+
+  it('shouldn’t insert if @bugsnag/expo is already imported (require, tsx)', async () => {
+    await withFixture('already-configured-ts-require', async (projectRoot) => {
+      const appTsBefore = await readFile(`${projectRoot}/App.tsx`, 'utf8')
+      const msg = await insert(projectRoot)
+      expect(msg).toMatch(/already/)
+
+      const appTsAfter = await readFile(`${projectRoot}/App.tsx`, 'utf8')
+      expect(appTsAfter).toBe(appTsBefore)
+    })
+  })
+
+  it('should provide a reasonable error when there is no App.js or App.ts/tsx', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js or App\.ts in/)
+      await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js or App\.ts\/tsx in/)
     })
   })
 
