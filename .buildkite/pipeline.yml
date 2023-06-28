@@ -24,28 +24,28 @@ steps:
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
 
-  - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
-    timeout_in_minutes: 20
-    agents:
-      queue: "opensource-arm-mac-cocoa-12"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-    artifact_paths: build/output.apk
-    commands:
-      - features/scripts/build-android.sh
+  # - label:  ':android: Build expo APK'
+  #   key: "build-expo-apk"
+  #   timeout_in_minutes: 20
+  #   agents:
+  #     queue: "opensource-arm-mac-cocoa-12"
+  #   env:
+  #     EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+  #   artifact_paths: build/output.apk
+  #   commands:
+  #     - test/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "ms-arm-12-8"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode14.app"
+      DEVELOPER_DIR: "/Applications/Xcode13.4.app"
     artifact_paths: build/output.ipa
     commands:
-      - features/scripts/build-ios.sh
+      - test/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
     depends_on:
@@ -94,7 +94,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 13'
+  - label: ':runner: expo iOS 12'
     depends_on:
       - "build-expo-ipa"
       - "expo-maze-runner-image"
@@ -109,9 +109,9 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_13
+          - --device=IOS_12
           - --a11y-locator
-          - --appium-version=1.17.0
+          - --appium-version=1.16.0
           - --retry=2
           - --order=random
     concurrency: 9
