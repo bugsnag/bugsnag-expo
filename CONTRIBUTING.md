@@ -2,15 +2,14 @@
 
 This document should cover most topics surrounding contributing to this repo.
 
-* [How to contribute](#how-to-contribute)
-  * [Reporting issues](#reporting-issues)
-  * [Fixing issues](#fixing-issues)
-  * [Adding features](#adding-features)
+* [Reporting issues](#reporting-issues)
+* [Fixing issues](#fixing-issues)
+* [Adding features](#adding-features)
+* [Supporting new Expo SDK versions](#supporting-new-expo-sdk-versions)
 * [System requirements](#system-requirements)
-* [Keeping dependencies in sync](#keeping-dependencies-in-sync)
-* [New version of Expo](#updating-the-cli-to-install-a-compatible-notifier-version)
 * [Testing](#testing)
-* [Releases](#releases)
+* [CI](#ci)
+* [Releasing](#releasing)
 
 ## Reporting issues
 Are you having trouble getting started? Please [contact us directly](mailto:support@bugsnag.com?subject=%5BGitHub%5D%20bugsnag-expo%20-%20having%20trouble%20getting%20started%20with%20Bugsnag) for assistance with integrating Bugsnag into your application.
@@ -43,25 +42,15 @@ Here’s a bit about our process designing and building the Bugsnag libraries:
 * Our open source libraries span many languages and frameworks so we strive to ensure they are idiomatic on the given platform, but also consistent in terminology between platforms. That way the core concepts are familiar whether you adopt Bugsnag for one platform or many.
 * Finally, one of our goals is to ensure our libraries work reliably, even in crashy, multi-threaded environments. Oftentimes, this requires an intensive engineering design and code review process that adheres to our style and linting guidelines.
 
-## System requirements
+## Supporting new Expo SDK versions
 
-In order to develop on the project you’ll need to be on Mac/Linux٭. You’ll need:
-- [node](https://nodejs.org) `v8+` (which includes [npm](https://www.npmjs.com/get-npm) 5+)
-- [git](https://git-scm.com/)
+### Updating the CLI to install a compatible notifier version
 
-If you want to run the end-to-end tests locally you'll need [Docker](https://www.docker.com/products/docker-desktop) (including Docker Compose), and the [AWS CLI](https://aws.amazon.com/cli/). Note that you'll also need some BrowserStack and AWS credentials which are only available to Bugsnag employees.
+When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to be published. For example, for SDK 48 there is a `@bugsnag/expo` v48. To mark the new SDK as supported, update the CLI's `LATEST_SUPPORTED_EXPO_SDK` in [`packages/expo-cli/lib/version-information.js`](./packages/expo-cli/lib/version-information.js).
 
-## Testing
+For details on how to release a new version, please see the [release](./docs/RELEASING.md#new-major-release) document.
 
-A full guide to testing can be found in the [testing](./docs/TESTING.md) document
-
-### CI
-
-CI runs on Buildkite. Tests are run automatically on any branch from within this repo. PRs from external repos do not run on the private test infrastructure. Once an external PR has been reviewed by a Bugsnag employee, a branch can be created within this repo in order to run on CI.
-
-⚠️ __Caution__: exercise due-diligence before creating a branch based on an external contribution
-
-## Keeping dependencies in sync
+### Keeping dependencies in sync
 
 The Expo notifier depends on some modules whose native code, if it exists, is bundled with Expo core. That means the version we depend on must match, otherwise we get conflicts and/or there are native/JS interface differences.
 
@@ -84,9 +73,27 @@ https://github.com/expo/expo/blob/main/packages/expo/bundledNativeModules.json
 
 Additionally, `@bugsnag/expo` has a dependency on `promise` that must resolve to the same version used by `react-native` to ensure that we attach our unhandled rejection handler to the same instance of promise used by react-native.
 
-## Updating the CLI to install a compatible notifier version
+### Creating a new example app
 
-When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to be published. For example, for SDK 48 there is a `@bugsnag/expo` v48. To mark the new SDK as supported, update the CLI's `LATEST_SUPPORTED_EXPO_SDK` in [`packages/expo-cli/lib/version-information.js`](./packages/expo-cli/lib/version-information.js)
+This repository includes an example app for each supported version in the `/examples` directory. Please initialise a barebones app in this directory using the official expo tools, and remove versions no longer supported. We support the current version of expo and the last 2 major versions.
+
+## System requirements
+
+In order to develop on the project you’ll need to be on Mac/Linux٭. You’ll need:
+- [node](https://nodejs.org) `v8+` (which includes [npm](https://www.npmjs.com/get-npm) 5+)
+- [git](https://git-scm.com/)
+
+If you want to run the end-to-end tests locally you'll need [Docker](https://www.docker.com/products/docker-desktop) (including Docker Compose), and the [AWS CLI](https://aws.amazon.com/cli/). Note that you'll also need some BrowserStack and AWS credentials which are only available to Bugsnag employees.
+
+## Testing
+
+A full guide to testing can be found in the [testing](./docs/TESTING.md) document
+
+## CI
+
+CI runs on Buildkite. Tests are run automatically on any branch from within this repo. PRs from external repos do not run on the private test infrastructure. Once an external PR has been reviewed by a Bugsnag employee, a branch can be created within this repo in order to run on CI.
+
+⚠️ __Caution__: exercise due-diligence before creating a branch based on an external contribution
 
 ## Releasing
 
