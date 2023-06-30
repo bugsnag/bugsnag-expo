@@ -9,9 +9,6 @@
 - get the pull request reviewed – all code changes should have been reviewed already, this should be a review of the integration of all changes to be shipped and the changelog
 - consider shipping a [prerelease](#prereleases) to aid testing the release
 
-<!-- Tom -->
-<!-- Should we also consider merging or cherry-picking the fix to other affected major version branches? -->
-
 ## New Expo SDK release
 
 ```mermaid
