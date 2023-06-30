@@ -1,6 +1,8 @@
 # Releases
 
-## Enhancements and bug fixes
+## Create a release branch
+
+### Enhancements and bug fixes
 
 - decide on a new version number, following [semantic versioning](https://semver.org/)
 - create a new release branch from `vX/next` with the new version number in the branch name i.e. `git checkout -b release/vX.Y.Z`
@@ -11,7 +13,9 @@
 
 ⚠️ **Note**: Consider merging or cherry-picking the fix to other affected major version branches
 
-## New Expo SDK release
+### New major release
+
+When a new Expo SDK is released, we should also publish a matching major version.
 
 - create and push a new **main** branch for the new supported Expo version (e.g. `v48/main`) from the latest current branch (e.g. `v47/main`), checking for unreleased changes in the equivalent `next` branch (e.g. `v47/next`)
 - create a new **next** branch based on the new **main** branch (e.g. `v48/next`)
@@ -35,9 +39,7 @@ graph TD;
     release/v48-. PR .->v48/main;
 ```
 
-***
-
-## Once the release PR has been merged
+## Publish the release
 
 You are now ready to make the release. Releases are done using Docker. You do not need to have the release branch checked out on your local machine to make a release – the container pulls a fresh clone of the repo down from GitHub. 
 
@@ -50,27 +52,31 @@ You are now ready to make the release. Releases are done using Docker. You do no
 - Ensure your `.gitconfig` file in your home directory is configured to contain your name and email address
 - Generate a [personal access token](https://github.com/settings/tokens/new) on GitHub and store it somewhere secure
 
-Build the release container:
+### Building
+
+Before publishing your release, you must first build the release container:
 
 `docker-compose build release`
 
-After building the container, you can now make the release:
+### Publishing
 
-**Note**: Consider shipping a [prerelease](#prereleases) to aid testing the release
+You may want to consider shipping a [prerelease](#prerelease) to aid testing the changes before publishing
 
 ```sh
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
 RELEASE_BRANCH=<the branch to publish a new release from> \
-VERSION=patch \
+VERSION=[major | minor | patch] \
   docker-compose run release
 ```
 
 This process is interactive and will require you to confirm that you want to publish the changed packages. It will also prompt for 2FA.
 
-**Note**: if a prerelease was made, to graduate it into a normal release you will want to use `patch` as the version.
+**Note**: if a prerelease was made, to graduate it into a normal release you will need to use `patch` as the version.
 
-### Finally
+### Final Steps
+
+After publishing the release, the following steps must also be completed:
 
 - create a release on GitHub https://github.com/bugsnag/bugsnag-expo/releases/new
 - use the tag vX.Y.Z as the name of the release
@@ -82,11 +88,9 @@ This process is interactive and will require you to confirm that you want to pub
     git merge v48/main
     git push
     ```
-
-> **New Expo SDK release**
-> 
-> - Change the default branch on GitHub to the new `vX/next` branch
-> - Update the `@bugsnag/js` pipeline on Buildkite so that it always triggers the latest 3 expo versions
+- for new major versions:
+    - change the default branch on GitHub to the new `vX/next` branch
+    - update the `@bugsnag/js` pipeline on Buildkite so that it always triggers the latest 3 expo versions
 
 ### Prereleases
 
