@@ -1,4 +1,4 @@
-# Releases
+# Releasing
 
 ## Create a release branch
 

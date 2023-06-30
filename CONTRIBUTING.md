@@ -88,6 +88,6 @@ Additionally, `@bugsnag/expo` has a dependency on `promise` that must resolve to
 
 When a new Expo SDK is released, a new matching `@bugsnag/expo` version needs to be published. For example, for SDK 48 there is a `@bugsnag/expo` v48. To mark the new SDK as supported, update the CLI's `LATEST_SUPPORTED_EXPO_SDK` in [`packages/expo-cli/lib/version-information.js`](./packages/expo-cli/lib/version-information.js)
 
-## Releases
+## Releasing
 
-A full guide to releases can be found in the [releases](./docs/RELEASES.md) document
+A full guide to releases can be found in the [release](./docs/RELEASING.md) document
