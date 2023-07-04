@@ -8,6 +8,9 @@
         "credentialsSource": "local",
         "android": {
           "buildType": "apk"
+        },
+        "ios": {
+          "enterpriseProvisioning": "universal"
         }
       }
     },
