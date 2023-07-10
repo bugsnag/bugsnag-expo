@@ -11,7 +11,7 @@
   "author": "Bugsnag",
   "license": "MIT",
   "dependencies": {
-    "@expo/package-manager": "^1.0.1",
+    "@expo/package-manager": "^1.0.2",
     "command-line-args": "^5.0.2",
     "kleur": "^3.0.2",
     "prompts": "^2.0.4",
