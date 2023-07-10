@@ -1,7 +1,7 @@
 const semver = require('semver')
 
 // the major version number of the latest Expo SDK we support
-const LATEST_SUPPORTED_EXPO_SDK = 48
+const LATEST_SUPPORTED_EXPO_SDK = 49
 
 class Version {
   constructor (expoSdkVersion, bugsnagVersion, isLegacy = false) {
