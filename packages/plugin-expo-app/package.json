@@ -17,7 +17,7 @@
   "author": "Bugsnag",
   "license": "MIT",
   "devDependencies": {
-    "@bugsnag/core": "^7.16.0",
+    "@bugsnag/core": "^7.19.0",
     "expo-application": "~5.3.0",
     "expo-constants": "~14.4.2"
   },
