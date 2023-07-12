@@ -34,7 +34,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement"],
+    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement", "./config-plugins/withAddClearTextTrafficAndroid"],
     "extra": {
       "eas": {
         "projectId": "EXPO_EAS_PROJECT_ID"
