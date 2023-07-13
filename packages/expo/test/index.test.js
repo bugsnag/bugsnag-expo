@@ -3,14 +3,16 @@ const delivery = require('@bugsnag/delivery-expo')
 jest.mock('expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
 jest.mock('../../plugin-expo-device/node_modules/expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
@@ -19,7 +21,8 @@ jest.mock('../../plugin-expo-app/node_modules/expo-application', () => ({}))
 jest.mock('../../plugin-expo-app/node_modules/expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
@@ -228,6 +231,61 @@ describe('expo notifier', () => {
       }), expect.any(Function))
 
       done()
+    })
+  })
+
+  describe('configuration', () => {
+    beforeEach(() => {
+      jest.resetModules()
+    })
+
+    it('sets a default value for releaseStage correctly (production)', () => {
+      jest.mock('expo-constants', () => ({
+        default: {
+          platform: {},
+          expoConfig: {},
+          expoGoConfig: {}
+        }
+      }))
+
+      const config = require('../src/config')
+      expect(config.releaseStage.defaultValue()).toBe('production')
+    })
+
+    it('sets a default value for releaseStage correctly (local-dev)', () => {
+      jest.mock('expo-constants', () => ({
+        default: {
+          platform: {},
+          expoConfig: {},
+          expoGoConfig: {
+            developer: {
+              tool: 'expo-cli'
+            }
+          }
+        }
+      }))
+
+      global.__DEV__ = true
+      const config = require('../src/config')
+      expect(config.releaseStage.defaultValue()).toBe('local-dev')
+    })
+
+    it('sets a default value for releaseStage correctly (local-prod)', () => {
+      jest.mock('expo-constants', () => ({
+        default: {
+          platform: {},
+          expoConfig: {
+            developer: {
+              tool: 'expo-cli'
+            }
+          },
+          expoGoConfig: {}
+        }
+      }))
+
+      global.__DEV__ = false
+      const config = require('../src/config')
+      expect(config.releaseStage.defaultValue()).toBe('local-prod')
     })
   })
 })

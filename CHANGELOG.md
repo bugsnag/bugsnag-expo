@@ -1,5 +1,13 @@
 # Changelog
 
+## v49.0.0 (2023-07-13)
+
+This release adds support for expo 49
+
+### Changed
+
+- Replace deprecated Constants.manifest [#141](https://github.com/bugsnag/bugsnag-expo/pull/141)
+
 ## v48.1.0 (2023-03-27)
 
 ### Added
