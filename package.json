@@ -13,7 +13,7 @@
     "jest-expo": "^48.0.1",
     "lerna": "^6.0.1",
     "react": "18.2.0",
-    "react-native": "0.72.1",
+    "react-native": "0.72.3",
     "verdaccio": "^5.10.2"
   },
   "scripts": {

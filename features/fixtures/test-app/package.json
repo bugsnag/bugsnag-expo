@@ -19,7 +19,7 @@
     "expo-screen-orientation": "~6.0.2",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
-    "react-native": "0.72.1"
+    "react-native": "0.72.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
