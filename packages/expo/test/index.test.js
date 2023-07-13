@@ -3,14 +3,16 @@ const delivery = require('@bugsnag/delivery-expo')
 jest.mock('expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
 jest.mock('../../plugin-expo-device/node_modules/expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
@@ -19,7 +21,8 @@ jest.mock('../../plugin-expo-app/node_modules/expo-application', () => ({}))
 jest.mock('../../plugin-expo-app/node_modules/expo-constants', () => ({
   default: {
     platform: {},
-    expoConfig: {}
+    expoConfig: {},
+    expoGoConfig: {}
   }
 }))
 
