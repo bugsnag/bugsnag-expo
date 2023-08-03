@@ -7,7 +7,7 @@ const stringWithLength = require('@bugsnag/core/lib/validators/string-with-lengt
 // If the developer property is not present it means the app is
 // not connected to a development tool and is either a published app running in
 // the Expo client, or a standalone app
-const IS_PRODUCTION = !Constants.expoConfig.developer && !Constants.expoGoConfig.developer
+const IS_PRODUCTION = !Constants.expoConfig?.developer && !Constants.expoGoConfig?.developer
 
 // The app can still run in production "mode" in development environments, in which
 // cases the global boolean __DEV__ will be set to true

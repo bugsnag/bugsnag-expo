@@ -1,5 +1,11 @@
 # Changelog
 
+## v49.0.1 (2023-08-03)
+
+### Fixed
+
+- Fix a crash in configuration when Constants.expoGoConfig is null [#145](https://github.com/bugsnag/bugsnag-expo/pull/145)
+
 ## v49.0.0 (2023-07-13)
 
 This release adds support for expo 49

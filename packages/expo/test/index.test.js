@@ -4,7 +4,7 @@ jest.mock('expo-constants', () => ({
   default: {
     platform: {},
     expoConfig: {},
-    expoGoConfig: {}
+    expoGoConfig: null
   }
 }))
 
@@ -12,7 +12,7 @@ jest.mock('../../plugin-expo-device/node_modules/expo-constants', () => ({
   default: {
     platform: {},
     expoConfig: {},
-    expoGoConfig: {}
+    expoGoConfig: null
   }
 }))
 
@@ -22,7 +22,7 @@ jest.mock('../../plugin-expo-app/node_modules/expo-constants', () => ({
   default: {
     platform: {},
     expoConfig: {},
-    expoGoConfig: {}
+    expoGoConfig: null
   }
 }))
 
@@ -244,7 +244,7 @@ describe('expo notifier', () => {
         default: {
           platform: {},
           expoConfig: {},
-          expoGoConfig: {}
+          expoGoConfig: null
         }
       }))
 
@@ -256,7 +256,7 @@ describe('expo notifier', () => {
       jest.mock('expo-constants', () => ({
         default: {
           platform: {},
-          expoConfig: {},
+          expoConfig: null,
           expoGoConfig: {
             developer: {
               tool: 'expo-cli'
@@ -279,7 +279,7 @@ describe('expo notifier', () => {
               tool: 'expo-cli'
             }
           },
-          expoGoConfig: {}
+          expoGoConfig: null
         }
       }))
 
