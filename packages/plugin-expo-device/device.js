@@ -31,7 +31,7 @@ module.exports = {
       runtimeVersions: {
         reactNative: rnVersion,
         expoApp: Constants.expoVersion,
-        expoSdk: Constants.expoConfig.sdkVersion,
+        expoSdk: Constants.expoConfig?.sdkVersion,
         androidApiLevel: Constants.platform.android ? String(Platform.Version) : undefined
       },
       totalMemory: Device.totalMemory
