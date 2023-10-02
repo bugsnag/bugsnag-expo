@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "47.1.0",
+  "version": "49.0.1",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -32,29 +32,29 @@
   "author": "Bugsnag",
   "license": "MIT",
   "dependencies": {
-    "@bugsnag/core": "^7.16.0",
-    "@bugsnag/delivery-expo": "^47.0.0",
-    "@bugsnag/plugin-browser-session": "^7.16.0",
-    "@bugsnag/plugin-console-breadcrumbs": "^7.16.0",
-    "@bugsnag/plugin-expo-app": "^47.1.0",
-    "@bugsnag/plugin-expo-app-state-breadcrumbs": "^47.0.0",
-    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^47.0.0",
-    "@bugsnag/plugin-expo-device": "^47.0.0",
-    "@bugsnag/plugin-network-breadcrumbs": "^7.16.0",
-    "@bugsnag/plugin-react": "^7.16.0",
-    "@bugsnag/plugin-react-native-global-error-handler": "^7.16.0",
-    "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^7.16.0",
-    "@bugsnag/plugin-react-native-unhandled-rejection": "^7.16.0",
-    "@bugsnag/source-maps": "^2.3.0",
-    "bugsnag-build-reporter": "^1.0.1"
+    "@bugsnag/core": "^7.19.0",
+    "@bugsnag/delivery-expo": "^49.0.0",
+    "@bugsnag/plugin-browser-session": "^7.19.0",
+    "@bugsnag/plugin-console-breadcrumbs": "^7.19.0",
+    "@bugsnag/plugin-expo-app": "^49.0.0",
+    "@bugsnag/plugin-expo-app-state-breadcrumbs": "^49.0.0",
+    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^49.0.0",
+    "@bugsnag/plugin-expo-device": "^49.0.1",
+    "@bugsnag/plugin-network-breadcrumbs": "^7.19.0",
+    "@bugsnag/plugin-react": "^7.19.0",
+    "@bugsnag/plugin-react-native-global-error-handler": "^7.19.0",
+    "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^7.19.0",
+    "@bugsnag/plugin-react-native-unhandled-rejection": "^7.19.0",
+    "@bugsnag/source-maps": "^2.3.1",
+    "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
-    "expo-constants": "~14.0.2"
+    "expo-constants": "~14.4.2"
   },
   "peerDependencies": {
-    "expo": "^47.0.0",
-    "expo-constants": "~14.0.2",
-    "promise": "^8",
+    "expo": "^49.0.0",
+    "expo-constants": "~14.4.2",
+    "promise": "^8.3.0",
     "react": "*"
   }
 }

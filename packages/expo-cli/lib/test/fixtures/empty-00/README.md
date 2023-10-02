@@ -1,1 +1,1 @@
-This project has no app.json or App.js
+This project has no app.json, App.js or package.json

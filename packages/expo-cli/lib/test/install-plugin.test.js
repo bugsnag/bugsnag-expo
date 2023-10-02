@@ -1,6 +1,4 @@
 const withFixture = require('./lib/with-fixture')
-const { EventEmitter } = require('events')
-const { Readable } = require('stream')
 
 describe('expo-cli: upload-sourcemaps install plugin', () => {
   beforeEach(() => {
@@ -8,188 +6,168 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   })
 
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
-      const spawn = (cmd, args, opts) => {
-        expect(cmd).toBe('expo')
-        expect(args).toEqual(['install', '@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
-        expect(opts).toEqual({ cwd: projectRoot })
-
-        const proc = new EventEmitter()
-        proc.stdout = new Readable({
-          read () {}
-        })
-        proc.stderr = new Readable({
-          read () {}
-        })
-        setTimeout(() => proc.emit('close', 0), 10)
-        return proc
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          return Promise.resolve()
+        }
       }
 
-      jest.doMock('child_process', () => ({ spawn }))
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ npm: false, yarn: false })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: false, yarn: false })
+      const msg = await installPlugin('latest', projectRoot, { npm: false, yarn: false })
       expect(msg).toBe(undefined)
     })
   })
 
   it('should allow forcing install with NPM', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
-      const spawn = (cmd, args, opts) => {
-        expect(cmd).toBe('expo')
-        expect(args).toEqual([
-          'install',
-          '@bugsnag/plugin-expo-eas-sourcemaps',
-          '@bugsnag/source-maps',
-          '--npm',
-          '--',
-          '--save-dev'
-        ])
-        expect(opts).toEqual({ cwd: projectRoot })
-
-        const proc = new EventEmitter()
-        proc.stdout = new Readable({
-          read () {}
-        })
-        proc.stderr = new Readable({
-          read () {}
-        })
-        setTimeout(() => proc.emit('close', 0), 10)
-        return proc
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          return Promise.resolve()
+        }
       }
 
-      jest.doMock('child_process', () => ({ spawn }))
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ npm: true })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: true })
+      const msg = await installPlugin('latest', projectRoot, { npm: true })
       expect(msg).toBe(undefined)
     })
   })
 
   it('should allow forcing install with Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
-      const spawn = (cmd, args, opts) => {
-        expect(cmd).toBe('expo')
-        expect(args).toEqual([
-          'install',
-          '@bugsnag/plugin-expo-eas-sourcemaps',
-          '@bugsnag/source-maps',
-          '--yarn',
-          '--',
-          '--dev'
-        ])
-        expect(opts).toEqual({ cwd: projectRoot })
-
-        const proc = new EventEmitter()
-        proc.stdout = new Readable({
-          read () {}
-        })
-        proc.stderr = new Readable({
-          read () {}
-        })
-        setTimeout(() => proc.emit('close', 0), 10)
-        return proc
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          return Promise.resolve()
+        }
       }
 
-      jest.doMock('child_process', () => ({ spawn }))
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ yarn: true })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { yarn: true })
+      const msg = await installPlugin('latest', projectRoot, { yarn: true })
       expect(msg).toBe(undefined)
     })
   })
 
-  // highly doubt this will ever fail, assuming one of npm or yarn will take precedence over the other
-  // if test begins to fail, might need to consider additonal error messages
+  // not sure if this test is really necessary any more?
   it('should allow forcing install with both NPM and Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
-      const spawn = (cmd, args, opts) => {
-        expect(cmd).toBe('expo')
-        expect(args).toEqual([
-          'install',
-          '@bugsnag/plugin-expo-eas-sourcemaps',
-          '@bugsnag/source-maps',
-          '--npm',
-          '--',
-          '--save-dev',
-          '--yarn',
-          '--',
-          '--dev'
-        ])
-
-        expect(opts).toEqual({ cwd: projectRoot })
-
-        const proc = new EventEmitter()
-        proc.stdout = new Readable({
-          read () {}
-        })
-        proc.stderr = new Readable({
-          read () {}
-        })
-        setTimeout(() => proc.emit('close', 0), 10)
-        return proc
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          return Promise.resolve()
+        }
       }
 
-      jest.doMock('child_process', () => ({ spawn }))
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ npm: true, yarn: true })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
       const installPlugin = require('../install-plugin')
 
-      const msg = await installPlugin(projectRoot, { npm: true, yarn: true })
+      const msg = await installPlugin('latest', projectRoot, { npm: true, yarn: true })
       expect(msg).toBe(undefined)
     })
   })
 
-  it('should add stderr/stdout output onto error if there is one (non-zero exit code)', async () => {
-    const spawn = (cmd, args, opts) => {
-      const proc = new EventEmitter()
-      proc.stdout = new Readable({
-        read () {
-          this.push('some data on stdout')
-          this.push(null)
+  it('should allow specifying a package version', async () => {
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps@^48.0.0', '@bugsnag/source-maps'])
+          return Promise.resolve()
         }
-      })
-      proc.stderr = new Readable({
-        read () {
-          this.push('some data on stderr')
-          this.push(null)
+      }
+
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ yarn: false })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
+      const installPlugin = require('../install-plugin')
+      const msg = await installPlugin('^48.0.0', projectRoot, { yarn: false })
+      expect(msg).toBe(undefined)
+    })
+  })
+
+  it('should throw an error if the command does', async () => {
+    await withFixture('blank-js', async (projectRoot) => {
+      const packageManager = {
+        addDevAsync: async (packages) => {
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          return Promise.reject(new Error('floop'))
         }
-      })
-      setTimeout(() => proc.emit('close', 1), 10)
-      return proc
+      }
+
+      const createForProject = (root, options) => {
+        expect(root).toEqual(projectRoot)
+        expect(options).toEqual({ yarn: false })
+        return packageManager
+      }
+
+      jest.doMock('@expo/package-manager', () => ({ createForProject }))
+      const installPlugin = require('../install-plugin')
+      await expect(installPlugin('latest', projectRoot, { yarn: false })).rejects.toThrow(/floop/)
+    })
+  })
+
+  it('should add stderr/stdout output onto error if there is one', async () => {
+    const packageManager = {
+      addDevAsync: async (packages) => {
+        expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+        const error = new Error('floop')
+        error.stdout = 'some data on stdout'
+        error.stderr = 'some data on stderr'
+        return Promise.reject(error)
+      }
     }
 
-    jest.doMock('child_process', () => ({ spawn }))
+    const createForProject = (root, options) => {
+      return packageManager
+    }
+
+    jest.doMock('@expo/package-manager', () => ({ createForProject }))
     const installPlugin = require('../install-plugin')
 
-    await withFixture('blank-00', async (projectRoot) => {
-      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/plugin-expo-eas-sourcemaps @bugsnag/source-maps"
+    await withFixture('blank-js', async (projectRoot) => {
+      const expected = `floop
 stdout:
 some data on stdout
 
 stderr:
 some data on stderr`
 
-      await expect(installPlugin(projectRoot, { npm: false })).rejects.toThrow(expected)
-    })
-  })
-
-  it('should throw an error if the command does', async () => {
-    const spawn = (cmd, args, opts) => {
-      const proc = new EventEmitter()
-      proc.stdout = new Readable({
-        read () {}
-      })
-      proc.stderr = new Readable({
-        read () {}
-      })
-      setTimeout(() => proc.emit('error', new Error('floop')), 10)
-      return proc
-    }
-
-    jest.doMock('child_process', () => ({ spawn }))
-    const installPlugin = require('../install-plugin')
-
-    await withFixture('blank-00', async (projectRoot) => {
-      await expect(installPlugin(projectRoot, { yarn: false })).rejects.toThrow(/floop/)
+      await expect(installPlugin('latest', projectRoot, { npm: false })).rejects.toThrow(expected)
     })
   })
 })

@@ -1,5 +1,5 @@
 const { join } = require('path')
-const { readFile, writeFile } = require('fs')
+const { readFile, writeFile, existsSync } = require('fs')
 const { promisify } = require('util')
 const { detectInstalledVersion } = require('./detect-installed')
 const semver = require('semver')
@@ -8,19 +8,28 @@ const importRe = /from ["']@bugsnag\/expo["']/
 const requireRe = /require\(["']@bugsnag\/expo["']\)/
 
 module.exports = async (projectRoot) => {
-  try {
-    const appJsPath = join(projectRoot, 'App.js')
-    const appJs = await promisify(readFile)(appJsPath, 'utf8')
-    if (importRe.test(appJs) || requireRe.test(appJs)) {
-      return '@bugsnag/expo is already imported in App.js'
+  function checkFileExists (filename) {
+    const appPath = join(projectRoot, filename)
+    return existsSync(appPath)
+  }
+
+  const writeBugsnagImport = async (filename) => {
+    // check if import statement has already been added and return
+    const appPath = join(projectRoot, filename)
+    const app = await promisify(readFile)(appPath, 'utf8')
+    if (importRe.test(app) || requireRe.test(app)) {
+      return `@bugsnag/expo is already imported in ${filename}`
     }
-    await promisify(writeFile)(appJsPath, `${await getCode(projectRoot)}\n${appJs}`, 'utf8')
-  } catch (e) {
-    // swallow and rethrow for errors that we can produce better messaging for
-    if (e.code === 'ENOENT') {
-      throw new Error(`Couldn’t find App.js in "${projectRoot}". Is this the root of your Expo project?`)
-    }
-    throw e
+    // write to file
+    await promisify(writeFile)(appPath, `${await getCode(projectRoot)}\n${app}`, 'utf8')
+  }
+
+  if (checkFileExists('App.ts')) {
+    return await writeBugsnagImport('App.ts')
+  } else if (checkFileExists('App.js')) {
+    return await writeBugsnagImport('App.js')
+  } else {
+    throw new Error(`Couldn’t find App.js or App.ts in "${projectRoot}". Is this the root of your Expo project?`)
   }
 }
 

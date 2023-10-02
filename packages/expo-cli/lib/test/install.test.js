@@ -8,7 +8,7 @@ describe('expo-cli: install', () => {
   })
 
   it('should work on a fresh project', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -43,7 +43,7 @@ describe('expo-cli: install', () => {
   })
 
   it('should allow forcing install with NPM', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -79,7 +79,7 @@ describe('expo-cli: install', () => {
   })
 
   it('should allow forcing install with Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -115,7 +115,7 @@ describe('expo-cli: install', () => {
   })
 
   it('should allow forcing install with both NPM and Yarn', async () => {
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const spawn = (cmd, args, opts) => {
         expect(cmd).toBe('expo')
         expect(args).toEqual([
@@ -174,7 +174,7 @@ describe('expo-cli: install', () => {
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
 
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo @react-native-community/netinfo expo-application expo-constants expo-crypto expo-device expo-file-system"
 stdout:
 some data on stdout
@@ -202,7 +202,7 @@ some data on stderr`
     jest.doMock('child_process', () => ({ spawn }))
     const install = require('../install')
 
-    await withFixture('blank-00', async (projectRoot) => {
+    await withFixture('blank-js', async (projectRoot) => {
       await expect(install('latest', projectRoot, { yarn: false })).rejects.toThrow(/floop/)
     })
   })

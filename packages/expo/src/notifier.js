@@ -28,7 +28,7 @@ const internalPlugins = [
   require('@bugsnag/plugin-expo-device'),
   require('@bugsnag/plugin-expo-app'),
   require('@bugsnag/plugin-console-breadcrumbs'),
-  require('@bugsnag/plugin-network-breadcrumbs')([NET_INFO_REACHABILITY_URL, Constants.manifest?.logUrl || Constants.manifest2?.extra?.expoGo?.logUrl]),
+  require('@bugsnag/plugin-network-breadcrumbs')([NET_INFO_REACHABILITY_URL, Constants.expoConfig?.logUrl || Constants.expoGoConfig?.logUrl]),
   require('@bugsnag/plugin-expo-app-state-breadcrumbs'),
   require('@bugsnag/plugin-expo-connectivity-breadcrumbs'),
   require('@bugsnag/plugin-react-native-orientation-breadcrumbs'),
@@ -45,20 +45,12 @@ const Bugsnag = {
 
     // read the api key from app.json if one is not explicitly passed
     if (!opts.apiKey) {
-      if (Constants.manifest?.extra?.bugsnag?.apiKey) {
-        opts.apiKey = Constants.manifest.extra.bugsnag.apiKey
-      } else if (Constants.manifest2?.extra?.expoClient?.extra?.bugsnag?.apiKey) {
-        opts.apiKey = Constants.manifest2.extra.expoClient.extra.bugsnag.apiKey
-      }
+      opts.apiKey = Constants.expoConfig?.extra?.bugsnag?.apiKey
     }
 
     // read the version from app.json if one is not explicitly passed
     if (!opts.appVersion) {
-      if (Constants.manifest?.version) {
-        opts.appVersion = Constants.manifest.version
-      } else if (Constants.manifest2?.extra?.expoClient?.version) {
-        opts.appVersion = Constants.manifest2.extra.expoClient.version
-      }
+      opts.appVersion = Constants.expoConfig?.version
     }
 
     const bugsnag = new Client(opts, schema, internalPlugins, { name, version, url })

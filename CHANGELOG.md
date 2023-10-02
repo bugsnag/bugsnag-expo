@@ -1,5 +1,46 @@
 # Changelog
 
+## v49.0.1 (2023-08-03)
+
+### Fixed
+
+- Fix a crash in configuration when Constants.expoGoConfig is null [#145](https://github.com/bugsnag/bugsnag-expo/pull/145)
+
+## v49.0.0 (2023-07-13)
+
+This release adds support for expo 49
+
+### Changed
+
+- Replace deprecated Constants.manifest [#141](https://github.com/bugsnag/bugsnag-expo/pull/141)
+
+## v48.1.0 (2023-03-27)
+
+### Added
+
+- (bugsnag-expo-cli) Updated bugsnag-expo-cli to support Typescript [#98](https://github.com/bugsnag/bugsnag-expo/pull/98)
+- Read API key and app version from `Constants.expoConfig` [#119](https://github.com/bugsnag/bugsnag-expo/pull/119)
+
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Reinstate API key in Android manifest [#117](https://github.com/bugsnag/bugsnag-expo/pull/117)
+- (plugin-expo-eas-sourcemaps) Support dynamic configuration files in EAS Build lifecycle hook [#117](https://github.com/bugsnag/bugsnag-expo/pull/117)
+
+## v48.0.0 (2023-03-07)
+
+This release adds support for expo 48
+
+### Fixed
+
+- (bugsnag-expo-cli) CLI tool now installs a sourcemap plugin version that matches the Expo SDK version [#111](https://github.com/bugsnag/bugsnag-expo/pull/111)
+- (plugin-expo-eas-sourcemaps) Use EAS Build lifecycle hook for Android source map uploads [#112](https://github.com/bugsnag/bugsnag-expo/pull/112)
+
+## v47.1.1 (2023-03-02)
+
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Restrict Bugsnag Android Gradle Plugin dependency to v7 [#104](https://github.com/bugsnag/bugsnag-expo/pull/104)
+
 ## v47.1.0 (2023-01-09)
 
 ### Fixed
