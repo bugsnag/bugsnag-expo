@@ -87,7 +87,6 @@ steps:
           - --farm=bs
           - --device=IOS_15
           - --a11y-locator
-          - --appium-version=1.21.0
           - --retry=2
           - --order=random
     concurrency: 5
@@ -111,7 +110,6 @@ steps:
           - --farm=bs
           - --device=IOS_13
           - --a11y-locator
-          - --appium-version=1.17.0
           - --retry=2
           - --order=random
     concurrency: 5
