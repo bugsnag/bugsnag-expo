@@ -60,4 +60,11 @@ if [ ! -z "$ENDPOINT" ]; then
   ARGS+=("$ENDPOINT")
 fi
 
-../node_modules/.bin/bugsnag-source-maps upload-react-native "${ARGS[@]}"
+# Make sure that node binary exists
+source `$NODE_BINARY --print "require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/node-binary.sh'"`
+
+# Retrieve the expo node binary
+BUGSNAG_EXPO_NODE_BINARY=$($NODE_BINARY --print "require('path').dirname(require.resolve('@bugsnag/source-maps/package.json'))")
+
+# Start upload the source maps to bugsnag
+$BUGSNAG_EXPO_NODE_BINARY upload-react-native "${ARGS[@]}"

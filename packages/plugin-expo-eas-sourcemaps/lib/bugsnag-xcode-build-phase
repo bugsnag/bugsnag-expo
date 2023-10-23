@@ -1,0 +1,8 @@
+if [[ -f "$PODS_ROOT/../.xcode.env" ]]; then
+    source "$PODS_ROOT/../.xcode.env"
+fi
+if [[ -f "$PODS_ROOT/../.xcode.env.local" ]]; then
+    source "$PODS_ROOT/../.xcode.env.local"
+fi
+
+SOURCE_MAP="$TMPDIR/$(md5 -qs "$CONFIGURATION_BUILD_DIR")-main.jsbundle.map" `$NODE_BINARY --print "require('path').dirname(require.resolve('@bugsnag/plugin-expo-eas-sourcemaps/package.json')) + '/lib/bugsnag-expo-xcode.sh'"`
