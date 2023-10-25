@@ -1,5 +1,15 @@
 # Changelog
 
+## TBD
+
+### Added
+
+- (delivery-expo) Explicitly mark failed payloads >1MB as not retryable [#65](https://github.com/bugsnag/bugsnag-expo/pull/65)
+
+### Fixed
+
+- (plugin-expo-eas-sourcemaps) Ensure EAS sourcemap config plugin is idempotent [#156](https://github.com/bugsnag/bugsnag-expo/pull/156)
+
 ## v49.0.1 (2023-08-03)
 
 ### Fixed
