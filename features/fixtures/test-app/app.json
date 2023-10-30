@@ -22,7 +22,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.testfixture",
       "buildNumber": "1",
-      "jsEngine": "jsc"
+      "jsEngine": "hermes"
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture",
