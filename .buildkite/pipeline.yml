@@ -39,11 +39,10 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "macos-13-arm"
+      queue: "opensource-arm-mac-cocoa-12"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       DEVELOPER_DIR: "/Applications/Xcode14.app"
-      NODE_VERSION: "16"
     artifact_paths: build/output.ipa
     commands:
       - features/scripts/build-ios.sh
