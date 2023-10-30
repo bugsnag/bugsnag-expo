@@ -43,6 +43,7 @@ steps:
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       DEVELOPER_DIR: "/Applications/Xcode15.app"
+      NODE_VERSION: "16"
     artifact_paths: build/output.ipa
     commands:
       - features/scripts/build-ios.sh
