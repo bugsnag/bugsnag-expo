@@ -21,9 +21,6 @@
     "react": "18.1.0",
     "react-native": "0.70.14"
   },
-  "resolutions": {
-    "expo-modules-core": "1.0.4"
-  },
   "devDependencies": {
     "@babel/core": "^7.19.3"
   },
