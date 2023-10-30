@@ -42,7 +42,7 @@ steps:
       queue: "macos-13-arm"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode15.app"
+      DEVELOPER_DIR: "/Applications/Xcode14.3.app"
       NODE_VERSION: "16"
     artifact_paths: build/output.ipa
     commands:
