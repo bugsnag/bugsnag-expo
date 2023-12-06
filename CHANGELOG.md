@@ -1,6 +1,6 @@
 # Changelog
 
-## TBD
+## v49.0.2 (2023-12-07)
 
 ### Added
 
