@@ -61,7 +61,14 @@ module.exports = (client, fetch = global.fetch) => {
         }
         client._logger.info(`Sending event ${event.events[0].errors[0].errorClass}: ${event.events[0].errors[0].errorMessage}`)
         send(url, opts, err => {
-          if (err) return onerror(err, { url, opts }, 'event', cb)
+          if (err) {
+            // do not retry oversized payloads regardless of status code
+            if (body.length > 10e5) {
+              client._logger.warn(`Discarding over-sized event (${body.length / 10e5} MB) after failed delivery`)
+              err.isRetryable = false
+            }
+            return onerror(err, { url, opts }, 'event', cb)
+          }
           cb(null)
         })
       } catch (e) {
