@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "49.0.1",
+  "version": "49.0.2",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@bugsnag/core": "^7.19.0",
-    "@bugsnag/delivery-expo": "^49.0.0",
+    "@bugsnag/delivery-expo": "^49.0.2",
     "@bugsnag/plugin-browser-session": "^7.19.0",
     "@bugsnag/plugin-console-breadcrumbs": "^7.19.0",
     "@bugsnag/plugin-expo-app": "^49.0.0",
