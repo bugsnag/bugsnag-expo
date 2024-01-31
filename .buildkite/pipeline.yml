@@ -32,6 +32,7 @@ steps:
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "18"
+      JAVA_VERSION: "17"
     artifact_paths: build/output.apk
     commands:
       - features/scripts/build-android.sh
