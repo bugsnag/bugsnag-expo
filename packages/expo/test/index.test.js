@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const delivery = require('@bugsnag/delivery-expo')
 
 jest.mock('expo-constants', () => ({

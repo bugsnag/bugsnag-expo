@@ -71,6 +71,7 @@ describe('delivery: expo', () => {
   let enqueueSpy
 
   beforeEach(() => {
+    jest.clearAllMocks()
     enqueueSpy = jest.fn().mockResolvedValue(true)
 
     UndeliveredPayloadQueue.mockImplementation(() => ({
@@ -347,13 +348,34 @@ describe('delivery: expo', () => {
     })
   })
 
-  // eslint-disable-next-line jest/expect-expect
   it('starts the redelivery loop if there is a connection', done => {
+    const startSpy = jest.fn()
+    const stopSpy = jest.fn()
+
     RedeliveryLoop.mockImplementation(() => ({
-      start: done
+      start: startSpy,
+      stop: stopSpy
+    }))
+
+    let watcher
+
+    NetworkStatus.mockImplementation(() => ({
+      isConnected: false,
+      watch: fn => {
+        watcher = fn
+        onWatch()
+      }
     }))
 
     delivery({ _logger: noopLogger }, fetch)
+
+    const onWatch = () => {
+      expect(typeof watcher).toBe('function')
+      watcher(true)
+      expect(startSpy).toHaveBeenCalledTimes(2)
+      expect(stopSpy).not.toHaveBeenCalled()
+      done()
+    }
   })
 
   it('stops the redelivery loop if there is not a connection', done => {
@@ -380,10 +402,10 @@ describe('delivery: expo', () => {
     const onWatch = () => {
       expect(typeof watcher).toBe('function')
       watcher(true)
-      expect(startSpy).toHaveBeenCalled()
+      expect(startSpy).toHaveBeenCalledTimes(2)
       expect(stopSpy).not.toHaveBeenCalled()
       watcher(false)
-      expect(stopSpy).toHaveBeenCalled()
+      expect(stopSpy).toHaveBeenCalledTimes(2)
       done()
     }
   })
