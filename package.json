@@ -22,5 +22,9 @@
     "test:lint": "eslint --report-unused-disable-directives --max-warnings=0 .",
     "local-npm:start": "verdaccio --config ./verdaccio-config.yml",
     "local-npm:publish-all": "lerna publish --yes --force-publish --exact --no-push --no-git-reset --no-git-tag-version --registry 'http://localhost:4873'"
-  }
+  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
 }
