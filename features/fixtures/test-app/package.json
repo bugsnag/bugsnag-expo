@@ -19,7 +19,10 @@
     "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.73.2"
+    "react-native": "0.73.2",
+    "@bugsnag/expo": "*",
+    "bugsnag-expo-cli": "*",
+    "@bugsnag/plugin-expo-eas-sourcemaps": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
