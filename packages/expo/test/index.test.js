@@ -12,7 +12,7 @@ jest.mock('expo-constants', () => ({
   }
 }))
 
-jest.mock('../../plugin-expo-device/node_modules/expo-constants', () => ({
+jest.mock('../../../node_modules/expo-constants', () => ({
   default: {
     platform: {},
     expoConfig: {},
@@ -20,9 +20,9 @@ jest.mock('../../plugin-expo-device/node_modules/expo-constants', () => ({
   }
 }))
 
-jest.mock('../../plugin-expo-app/node_modules/expo-application', () => ({}))
+jest.mock('../../../node_modules/expo-application', () => ({}))
 
-jest.mock('../../plugin-expo-app/node_modules/expo-constants', () => ({
+jest.mock('../../../node_modules/expo-constants', () => ({
   default: {
     platform: {},
     expoConfig: {},
@@ -31,7 +31,7 @@ jest.mock('../../plugin-expo-app/node_modules/expo-constants', () => ({
 }))
 
 jest.mock('@bugsnag/delivery-expo')
-jest.mock('../../delivery-expo/node_modules/expo-crypto', () => ({}))
+jest.mock('../../../node_modules/expo-crypto', () => ({}))
 
 jest.mock('react-native', () => ({
   NativeModules: {
@@ -61,7 +61,7 @@ jest.mock('react-native', () => ({
   }
 }))
 
-jest.mock('../../delivery-expo/node_modules/expo-file-system', () => ({
+jest.mock('../../../node_modules/expo-file-system', () => ({
   cacheDirectory: 'file://var/data/foo.bar.app/',
   downloadAsync: jest.fn(() => Promise.resolve({ md5: 'md5', uri: 'uri' })),
   getInfoAsync: jest.fn(() => Promise.resolve({ exists: true, md5: 'md5', uri: 'uri' })),
@@ -75,17 +75,17 @@ jest.mock('../../delivery-expo/node_modules/expo-file-system', () => ({
   createDownloadResumable: jest.fn(() => Promise.resolve())
 }))
 
-jest.mock('../../delivery-expo/node_modules/@react-native-community/netinfo', () => ({
+jest.mock('../../../node_modules/@react-native-community/netinfo', () => ({
   addEventListener: jest.fn(),
   fetch: () => Promise.resolve({ isConnected: true })
 }))
 
-jest.mock('../../plugin-expo-connectivity-breadcrumbs/node_modules/@react-native-community/netinfo', () => ({
+jest.mock('../../../node_modules/@react-native-community/netinfo', () => ({
   addEventListener: jest.fn(),
   fetch: () => Promise.resolve({ isConnected: true })
 }))
 
-jest.doMock('../../plugin-expo-device/node_modules/expo-device', () => ({
+jest.doMock('../../../node_modules/expo-device', () => ({
   manufacturer: 'Google',
   modelName: 'Pixel 4'
 }))
