@@ -1,15 +1,21 @@
-const { getDefaultConfig } = require('@expo/metro-config');
+const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
 
-const defaultConfig = getDefaultConfig(__dirname);
+// Find the project and workspace directories
+const projectRoot = __dirname;
+// This can be replaced with `find-yarn-workspace-root`
+const workspaceRoot = path.resolve(projectRoot, '../..');
 
-defaultConfig.resolver.extraNodeModules = {
-  'expo': `${__dirname}/node_modules/expo`,
-  'expo-modules-core': `${__dirname}/node_modules/expo-modules-core`,
-  'react-native': `${__dirname}/node_modules/react-native`,
-  'react': `${__dirname}/node_modules/react`,
-  '@babel/runtime': `${__dirname}/node_modules/@babel/runtime`,
-  'promise': `${__dirname}/node_modules/promise`,
-  '@unimodules/core': `${__dirname}/node_modules/@unimodules/core`,
-}
+const config = getDefaultConfig(projectRoot);
 
-module.exports = defaultConfig;
+// 1. Watch all files within the monorepo
+config.watchFolders = [workspaceRoot];
+// 2. Let Metro know where to resolve packages and in what order
+config.resolver.nodeModulesPaths = [
+  path.resolve(projectRoot, 'node_modules'),
+  path.resolve(workspaceRoot, 'node_modules'),
+];
+// 3. Force Metro to resolve (sub)dependencies only from the `nodeModulesPaths`
+// config.resolver.disableHierarchicalLookup = true;
+
+module.exports = config;
