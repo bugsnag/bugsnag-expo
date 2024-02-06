@@ -21,7 +21,16 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.testfixture",
-      "buildNumber": "1"
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+            "NSExceptionDomains": {
+              "bs-local.com": {
+                "NSExceptionAllowsInsecureHTTPLoads": true
+              }
+          }
+        }
+      }
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture",
