@@ -73,7 +73,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 15'
+  - label: ':runner: expo iOS 16'
     depends_on:
       - "build-expo-ipa"
       - "expo-maze-runner-image"
@@ -88,7 +88,7 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_15
+          - --device=IOS_16
           - --a11y-locator
           - --retry=2
           - --order=random
@@ -96,7 +96,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 13'
+  - label: ':runner: expo iOS 14'
     depends_on:
       - "build-expo-ipa"
       - "expo-maze-runner-image"
@@ -111,7 +111,7 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_13
+          - --device=IOS_14
           - --a11y-locator
           - --retry=2
           - --order=random
