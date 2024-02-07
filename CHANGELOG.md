@@ -1,5 +1,9 @@
 # Changelog
 
+## v50.0.0 (2024-02-07)
+
+This release adds support for expo 50
+
 ## v49.0.2 (2023-12-07)
 
 ### Added
