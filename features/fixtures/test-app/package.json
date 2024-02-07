@@ -1,6 +1,6 @@
 {
   "name": "test-fixture",
-  "version": "1.0.0",
+  "version": "50.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@bugsnag/expo": "^50.0.0",
     "@react-native-community/netinfo": "11.1.0",
     "expo": "^50.0.0",
     "expo-application": "~5.8.3",
@@ -19,14 +20,13 @@
     "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.73.2",
-    "@bugsnag/expo": "*"
+    "react-native": "0.73.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "bugsnag-expo-cli": "*",
-    "@bugsnag/plugin-expo-eas-sourcemaps": "*",
-    "@bugsnag/source-maps": "^2.3.1"
+    "@bugsnag/plugin-expo-eas-sourcemaps": "^50.0.0",
+    "@bugsnag/source-maps": "^2.3.1",
+    "bugsnag-expo-cli": "^50.0.0"
   },
   "private": true
 }
