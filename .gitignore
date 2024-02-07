@@ -19,4 +19,5 @@ compile_commands.json
 .cache
 .clangd
 package-lock.json
+yarn.lock
 /config

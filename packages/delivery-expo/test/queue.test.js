@@ -17,21 +17,19 @@ jest.mock('expo-file-system', () => ({
 
 describe('delivery: expo -> queue', () => {
   describe('peek()', () => {
-    it('returns null if there are no files', async (done) => {
+    it('returns null if there are no files', async () => {
       const q = new Queue('stuff')
       expect(await q.peek()).toBe(null)
-      done()
     })
 
-    it('returns null if there are only files that don’t match the expected pattern', async (done) => {
+    it('returns null if there are only files that don’t match the expected pattern', async () => {
       FileSystem.readDirectoryAsync = () => Promise.resolve(['.DS_Store', '.meta', 'something_else'])
 
       const q = new Queue('stuff')
       expect(await q.peek()).toBe(null)
-      done()
     })
 
-    it('parses an existing file into JSON', async (done) => {
+    it('parses an existing file into JSON', async () => {
       let readPath
 
       FileSystem.readAsStringAsync = (path) => {
@@ -51,22 +49,20 @@ describe('delivery: expo -> queue', () => {
       expect(req).not.toBe(null)
       expect(req?.payload.url).toBe('https://notify.bugsnag.com/')
       expect(req?.id).toBe(readPath)
-      done()
     })
 
-    it('calls the onerror callback and returns null if there is an error', async (done) => {
+    it('calls the onerror callback and returns null if there is an error', async () => {
       FileSystem.readAsStringAsync = (path) => Promise.reject(new Error('beep'))
       FileSystem.readDirectoryAsync = () => Promise.reject(new Error('beep'))
 
       const q = new Queue('stuff', err => {
         expect(err).not.toBe(null)
-        done()
       })
       const req = await q.peek()
       expect(req).toBe(null)
     })
 
-    it('removes a file if it’s not valid json', async (done) => {
+    it('removes a file if it’s not valid json', async () => {
       let files = []
       FileSystem.readAsStringAsync = (path) => Promise.resolve('{ not valid json')
       FileSystem.readDirectoryAsync = () => Promise.resolve(files)
@@ -79,23 +75,23 @@ describe('delivery: expo -> queue', () => {
       const q = new Queue('stuff')
       const req = await q.peek()
       expect(req).toBe(null)
-      done()
     })
   })
 
   describe('enqueue()', () => {
-    it('ensures the directory exists first', async (done) => {
+    it('ensures the directory exists first', async () => {
       FileSystem.getInfoAsync = (path) => {
         expect(path).toBe('file://var/data/foo.bar.app/bugsnag/stuff')
         return Promise.resolve({ exists: true, isDirectory: true })
       }
 
+      FileSystem.readDirectoryAsync = () => Promise.resolve([])
+
       const q = new Queue('stuff', err => expect(err).toBe(null))
       await q.enqueue()
-      done()
     })
 
-    it('creates the directory if it does not exist', async (done) => {
+    it('creates the directory if it does not exist', async () => {
       FileSystem.getInfoAsync = (path) => {
         expect(path).toBe('file://var/data/foo.bar.app/bugsnag/stuff')
         return Promise.resolve({ exists: false })
@@ -105,12 +101,13 @@ describe('delivery: expo -> queue', () => {
         return Promise.resolve()
       }
 
+      FileSystem.readDirectoryAsync = () => Promise.resolve([])
+
       const q = new Queue('stuff', err => expect(err).toBe(null))
       await q.enqueue({})
-      done()
     })
 
-    it('calls the onerror callback if there is an error', async (done) => {
+    it('calls the onerror callback if there is an error', async () => {
       FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true })
       FileSystem.readDirectoryAsync = () => {
         return Promise.reject(new Error('beep'))
@@ -118,10 +115,9 @@ describe('delivery: expo -> queue', () => {
 
       const q = new Queue('stuff', err => expect(err).not.toBe(null))
       await q.enqueue({})
-      done()
     })
 
-    it('should purge items that are over the limit', async (done) => {
+    it('should purge items that are over the limit', async () => {
       FileSystem.getInfoAsync = () => Promise.resolve({ exists: true, isDirectory: true })
       FileSystem.readDirectoryAsync = () => {
         const files = Array(70).fill(1).map(() => Queue.generateFilename('stuff'))
@@ -132,18 +128,16 @@ describe('delivery: expo -> queue', () => {
 
       const q = new Queue('stuff')
       await q.enqueue({})
-      setTimeout(() => {
-        expect(deleteSpy).toHaveBeenCalledTimes(6)
-        done()
-      }, 10)
+      expect(deleteSpy).toHaveBeenCalledTimes(6)
     })
   })
 
   describe('update()', () => {
-    it('should merge the updates with the existing object', async (done) => {
+    it('should merge the updates with the existing object', async () => {
       FileSystem.readAsStringAsync = (path) => Promise.resolve('{"retries":2}')
+      let update = { retries: 0 }
       FileSystem.writeAsStringAsync = async (path, data) => {
-        expect(JSON.parse(data).retries).toBe(3)
+        update = JSON.parse(data)
         return Promise.resolve()
       }
 
@@ -151,12 +145,13 @@ describe('delivery: expo -> queue', () => {
       await q.update('file://var/data/foo.bar.app/bugsnag/stuff/bugsnag-stuff-1234.json', {
         retries: 3
       })
-      done()
+
+      expect(update.retries).toBe(3)
     })
   })
 
   describe('init()', () => {
-    it('should only enter the create logic once for simultaneous calls', async (done) => {
+    it('should only enter the create logic once for simultaneous calls', async () => {
       const exists = false
       const isDirectory = false
       let makeCount = 0
@@ -182,14 +177,12 @@ describe('delivery: expo -> queue', () => {
       }))
       await Promise.all(proms.map(p => p()))
       expect(makeCount).toBe(1)
-      done()
     })
 
-    // eslint-disable-next-line jest/expect-expect
-    it('should tolerate errors when the directory was succesfully created', async (done) => {
+    it('should tolerate errors when the directory was succesfully created', async () => {
       let exists = false
       let isDirectory = false
-      FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
+      FileSystem.getInfoAsync = jest.fn(async () => ({ exists, isDirectory }))
       FileSystem.makeDirectoryAsync = () => new Promise((resolve, reject) => {
         setTimeout(() => {
           exists = true
@@ -200,7 +193,7 @@ describe('delivery: expo -> queue', () => {
 
       const q = new Queue('stuff')
       await q.init()
-      done()
+      expect(FileSystem.getInfoAsync).toHaveBeenCalledTimes(2)
     })
 
     it('should rethrow errors when the directory was not succesfully created', async () => {
@@ -218,7 +211,7 @@ describe('delivery: expo -> queue', () => {
       await expect(q.init()).rejects.toThrow('fleerp')
     })
 
-    it('should reject all pending promises', async (done) => {
+    it('should reject all pending promises', (done) => {
       const exists = false
       const isDirectory = false
       FileSystem.getInfoAsync = async () => ({ exists, isDirectory })
@@ -230,13 +223,14 @@ describe('delivery: expo -> queue', () => {
 
       const q = new Queue('stuff')
       const errs = []
-      await Promise.all([
+      Promise.all([
         q.init().catch(e => errs.push(e)),
         q.init().catch(e => errs.push(e)),
         q.init().catch(e => errs.push(e))
-      ])
-      expect(errs.length).toBe(3)
-      done()
+      ]).then(() => {
+        expect(errs.length).toBe(3)
+        done()
+      })
     })
   })
 })
