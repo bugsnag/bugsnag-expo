@@ -117,7 +117,7 @@ Scenario: Network breadcrumbs are captured by default
   And the exception "message" equals "defaultNetworkBreadcrumbsBehaviour"
   And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
   And the event "breadcrumbs.1.metaData.status" equals 200
-  And the event "breadcrumbs.1.metaData.request" equals "GET http://postman-echo.com/get"
+  And the event "breadcrumbs.1.metaData.request" equals "GET https://postman-echo.com/get"
   And the error Bugsnag-Integrity header is valid
 
 Scenario: Network breadcrumbs can be disabled explicitly
@@ -152,5 +152,5 @@ Scenario: Network breadcrumbs overrides auto-breadcrumbs
   And the exception "message" equals "overrideNetworkBreadcrumbsBehaviour"
   And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
   And the event "breadcrumbs.0.metaData.status" equals 200
-  And the event "breadcrumbs.0.metaData.request" equals "GET http://postman-echo.com/get"
+  And the event "breadcrumbs.0.metaData.request" equals "GET https://postman-echo.com/get"
   And the error Bugsnag-Integrity header is valid

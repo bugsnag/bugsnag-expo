@@ -35,9 +35,6 @@ cd bugsnag-expo
 # Install top-level dependencies
 npm i
 
-# Bootstrap all of the packages
-npm run bootstrap
-
 # Run the unit tests
 npm run test:unit
 

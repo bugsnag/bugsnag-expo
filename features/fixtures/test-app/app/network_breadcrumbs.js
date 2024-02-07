@@ -60,7 +60,7 @@ export default class NetworkBreadcrumbs extends Component {
   }
 
   async triggerNetworkBreadcrumbsError(client, message) {
-    await fetch("http://postman-echo.com/get")
+    await fetch("https://postman-echo.com/get")
       .then(response => {
         client.notify(new Error(message))
       })
