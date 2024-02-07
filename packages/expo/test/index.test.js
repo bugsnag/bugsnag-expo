@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 
 const delivery = require('@bugsnag/delivery-expo')
 
@@ -89,6 +86,14 @@ jest.doMock('../../../node_modules/expo-device', () => ({
   manufacturer: 'Google',
   modelName: 'Pixel 4'
 }))
+
+const networkBreadcrumbsPlugin = {
+  load: () => () => {}
+}
+
+jest.mock('../../../node_modules/@bugsnag/plugin-network-breadcrumbs', () => {
+  return () => networkBreadcrumbsPlugin
+})
 
 global.ErrorUtils = {
   setGlobalHandler: jest.fn(),
