@@ -17,7 +17,6 @@
     "verdaccio": "^5.10.2"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
     "test:unit": "jest",
     "test:lint": "eslint --report-unused-disable-directives --max-warnings=0 .",
     "local-npm:start": "verdaccio --config ./verdaccio-config.yml",
