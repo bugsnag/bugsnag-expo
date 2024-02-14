@@ -45,6 +45,7 @@ steps:
       DEVELOPER_DIR: "/Applications/Xcode14.app"
     artifact_paths: build/output.ipa
     commands:
+      - bundle install
       - features/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
@@ -66,7 +67,7 @@ steps:
           - --a11y-locator
           - --fail-fast
           - --retry=2
-    concurrency: 5 
+    concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
