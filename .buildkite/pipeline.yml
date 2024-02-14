@@ -48,6 +48,7 @@ steps:
       NODE_VERSION: "18"
     artifact_paths: build/output.ipa
     commands:
+      - bundle install
       - features/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
