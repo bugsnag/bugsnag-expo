@@ -49,6 +49,7 @@ steps:
     artifact_paths: build/output.ipa
     commands:
       - bundle install
+      - which fastlane
       - features/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
