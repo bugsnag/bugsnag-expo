@@ -41,10 +41,10 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "macos-12-arm"
+      queue: "macos-13-arm"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode-14.1.0.app"
+      DEVELOPER_DIR: "/Applications/Xcode-15.2.0.app"
       NODE_VERSION: "18"
     artifact_paths: build/output.ipa
     commands:
