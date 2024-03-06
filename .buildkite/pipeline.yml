@@ -24,18 +24,18 @@ steps:
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
             - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
 
-  - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
-    timeout_in_minutes: 20
-    agents:
-      queue: "opensource-arm-mac-cocoa-12"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      NODE_VERSION: "18"
-      JAVA_VERSION: "17"
-    artifact_paths: build/output.apk
-    commands:
-      - features/scripts/build-android.sh
+  # - label:  ':android: Build expo APK'
+  #   key: "build-expo-apk"
+  #   timeout_in_minutes: 20
+  #   agents:
+  #     queue: "opensource-arm-mac-cocoa-12"
+  #   env:
+  #     EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+  #     NODE_VERSION: "18"
+  #     JAVA_VERSION: "17"
+  #   artifact_paths: build/output.apk
+  #   commands:
+  #     - features/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
     key: "build-expo-ipa"
@@ -51,28 +51,28 @@ steps:
       - bundle install
       - features/scripts/build-ios.sh
 
-  - label: ':runner: expo Android 12'
-    depends_on:
-      - "build-expo-apk"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.apk"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.apk
-          - --farm=bs
-          - --device=ANDROID_12_0
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  # - label: ':runner: expo Android 12'
+  #   depends_on:
+  #     - "build-expo-apk"
+  #     - "expo-maze-runner-image"
+  #   timeout_in_minutes: 50
+  #   plugins:
+  #     artifacts#v1.5.0:
+  #       download: "build/output.apk"
+  #     docker-compose#v3.9.0:
+  #       pull: expo-maze-runner
+  #       run: expo-maze-runner
+  #       use-aliases: true
+  #       command:
+  #         - --app=build/output.apk
+  #         - --farm=bs
+  #         - --device=ANDROID_12_0
+  #         - --a11y-locator
+  #         - --fail-fast
+  #         - --retry=2
+  #   concurrency: 5
+  #   concurrency_group: 'browserstack-app'
+  #   concurrency_method: eager
 
   - label: ':runner: expo iOS 16'
     depends_on:
