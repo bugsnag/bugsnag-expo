@@ -24,10 +24,10 @@
       "buildNumber": "1",
       "infoPlist": {
         "NSAppTransportSecurity": {
-            "NSExceptionDomains": {
-              "bs-local.com": {
-                "NSExceptionAllowsInsecureHTTPLoads": true
-              }
+          "NSExceptionDomains": {
+            "bs-local.com": {
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            }
           }
         }
       }
@@ -43,10 +43,17 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement", "./config-plugins/withAddClearTextTrafficAndroid"],
+    "plugins": [
+      "./config-plugins/withRemoveiOSNotificationEntitlement",
+      "./config-plugins/withAddClearTextTrafficAndroid",
+      "@bugsnag/plugin-expo-eas-sourcemaps"
+    ],
     "extra": {
       "eas": {
-        "projectId": "EXPO_EAS_PROJECT_ID"
+        "projectId": ""
+      },
+      "bugsnag": {
+        "apiKey": "645470b8c7f62177e1a723e26c9a48d7"
       }
     }
   }
