@@ -4,7 +4,7 @@ set -e
 
 pushd features/fixtures/test-app
 
-npx eas-cli@7.2.0 build \
+npx eas-cli@latest build \
   --local \
   -p ios \
   --output output.ipa \
