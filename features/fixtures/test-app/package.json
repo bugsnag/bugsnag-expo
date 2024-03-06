@@ -11,16 +11,16 @@
   "dependencies": {
     "@bugsnag/expo": "*",
     "@react-native-community/netinfo": "11.1.0",
-    "expo": "^50.0.0",
+    "expo": "~50.0.8",
     "expo-application": "~5.8.3",
     "expo-constants": "~15.4.5",
-    "expo-crypto": "~12.8.0",
+    "expo-crypto": "~12.8.1",
     "expo-device": "~5.9.3",
-    "expo-file-system": "~16.0.5",
+    "expo-file-system": "~16.0.7",
     "expo-screen-orientation": "~6.4.1",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
-    "react-native": "0.73.2"
+    "react-native": "0.73.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -49,12 +49,13 @@
     "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
-    "expo-constants": "~15.4.1"
+    "expo-constants": "~15.4.5"
   },
   "peerDependencies": {
     "expo": "^50.0.0",
-    "expo-constants": "~15.4.1",
+    "expo-constants": "~15.4.5",
     "promise": "^8.3.0",
-    "react": "*"
+    "react": "*",
+    "react-native": "*"
   }
 }
