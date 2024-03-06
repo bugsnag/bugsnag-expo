@@ -29,11 +29,5 @@
     "@bugsnag/source-maps": "^2.3.1",
     "bugsnag-expo-cli": "*"
   },
-  "private": true,
-  "workspaces": {
-    "nohoist": [
-      "@bugsnag/plugin-expo-eas-sourcemaps",
-      "@bugsnag/source-maps"
-    ]
-  }
+  "private": true
 }
