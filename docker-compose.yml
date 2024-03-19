@@ -6,11 +6,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.ci
 
   expo-maze-runner:
-    build:
-      context: .
-      dockerfile: dockerfiles/Dockerfile.expo
-      args:
-        - BUILDKITE_BUILD_NUMBER
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
     environment:
       BUILDKITE:
       BUILDKITE_BRANCH:
@@ -34,6 +30,7 @@ services:
           - maze-runner
     volumes:
       - ./build:/app/build
+      - ./features:/app/features
 
   release:
     build:
