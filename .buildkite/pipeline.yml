@@ -28,7 +28,7 @@ steps:
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "macos-13-arm"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "18"
