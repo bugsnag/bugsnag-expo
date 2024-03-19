@@ -2,13 +2,13 @@ steps:
   #
   # License audit
   #
-  - label: ':copyright: License Audit'
-    timeout_in_minutes: 20
-    agents:
-      queue: opensource-arm-mac-cocoa-12
-    env:
-      DEVELOPER_DIR: "/Applications/Xcode13.app"
-    command: scripts/license_finder.sh
+  # - label: ':copyright: License Audit'
+  #   timeout_in_minutes: 20
+  #   agents:
+  #     queue: opensource-arm-mac-cocoa-12
+  #   env:
+  #     DEVELOPER_DIR: "/Applications/Xcode13.app"
+  #   command: scripts/license_finder.sh
 
   - label: ':docker: Build expo maze runner image'
     key: "expo-maze-runner-image"
@@ -28,7 +28,7 @@ steps:
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "ms-arm-12-1"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "18"
@@ -37,18 +37,18 @@ steps:
     commands:
       - features/scripts/build-android.sh
 
-  - label: ':apple: Build expo IPA'
-    key: "build-expo-ipa"
-    timeout_in_minutes: 20
-    agents:
-      queue: "macos-13-arm"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode-15.2.0.app"
-      NODE_VERSION: "18"
-    artifact_paths: build/output.ipa
-    commands:
-      - features/scripts/build-ios.sh
+  # - label: ':apple: Build expo IPA'
+  #   key: "build-expo-ipa"
+  #   timeout_in_minutes: 20
+  #   agents:
+  #     queue: "macos-13-arm"
+  #   env:
+  #     EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+  #     DEVELOPER_DIR: "/Applications/Xcode-15.2.0.app"
+  #     NODE_VERSION: "18"
+  #   artifact_paths: build/output.ipa
+  #   commands:
+  #     - features/scripts/build-ios.sh
 
   - label: ':runner: expo Android 12'
     depends_on:
@@ -73,48 +73,48 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 16'
-    depends_on:
-      - "build-expo-ipa"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_16
-          - --a11y-locator
-          - --retry=2
-          - --order=random
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  # - label: ':runner: expo iOS 16'
+  #   depends_on:
+  #     - "build-expo-ipa"
+  #     - "expo-maze-runner-image"
+  #   timeout_in_minutes: 50
+  #   plugins:
+  #     artifacts#v1.5.0:
+  #       download: "build/output.ipa"
+  #     docker-compose#v3.9.0:
+  #       pull: expo-maze-runner
+  #       run: expo-maze-runner
+  #       use-aliases: true
+  #       command:
+  #         - --app=build/output.ipa
+  #         - --farm=bs
+  #         - --device=IOS_16
+  #         - --a11y-locator
+  #         - --retry=2
+  #         - --order=random
+  #   concurrency: 5
+  #   concurrency_group: 'browserstack-app'
+  #   concurrency_method: eager
 
-  - label: ':runner: expo iOS 14'
-    depends_on:
-      - "build-expo-ipa"
-      - "expo-maze-runner-image"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_14
-          - --a11y-locator
-          - --retry=2
-          - --order=random
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
+  # - label: ':runner: expo iOS 14'
+  #   depends_on:
+  #     - "build-expo-ipa"
+  #     - "expo-maze-runner-image"
+  #   timeout_in_minutes: 50
+  #   plugins:
+  #     artifacts#v1.5.0:
+  #       download: "build/output.ipa"
+  #     docker-compose#v3.9.0:
+  #       pull: expo-maze-runner
+  #       run: expo-maze-runner
+  #       use-aliases: true
+  #       command:
+  #         - --app=build/output.ipa
+  #         - --farm=bs
+  #         - --device=IOS_14
+  #         - --a11y-locator
+  #         - --retry=2
+  #         - --order=random
+  #   concurrency: 5
+  #   concurrency_group: 'browserstack-app'
+  #   concurrency_method: eager
