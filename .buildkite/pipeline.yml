@@ -10,20 +10,6 @@ steps:
       DEVELOPER_DIR: "/Applications/Xcode13.app"
     command: scripts/license_finder.sh
 
-  - label: ':docker: Build expo maze runner image'
-    key: "expo-maze-runner-image"
-    timeout_in_minutes: 10
-    plugins:
-      - docker-compose#v3.9.0:
-          build: expo-maze-runner
-          image-repository: 855461928731.dkr.ecr.us-west-1.amazonaws.com/js
-          cache-from:
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
-      - docker-compose#v3.9.0:
-          push:
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-${BRANCH_NAME}
-            - expo-maze-runner:855461928731.dkr.ecr.us-west-1.amazonaws.com/js:ci-latest
-
   - label:  ':android: Build expo APK'
     key: "build-expo-apk"
     timeout_in_minutes: 20
@@ -51,7 +37,6 @@ steps:
   - label: ':runner: expo Android 12'
     depends_on:
       - "build-expo-apk"
-      - "expo-maze-runner-image"
     timeout_in_minutes: 50
     plugins:
       artifacts#v1.5.0:
@@ -74,7 +59,6 @@ steps:
   - label: ':runner: expo iOS 15'
     depends_on:
       - "build-expo-ipa"
-      - "expo-maze-runner-image"
     timeout_in_minutes: 50
     plugins:
       artifacts#v1.5.0:
@@ -97,7 +81,6 @@ steps:
   - label: ':runner: expo iOS 13'
     depends_on:
       - "build-expo-ipa"
-      - "expo-maze-runner-image"
     timeout_in_minutes: 50
     plugins:
       artifacts#v1.5.0:
