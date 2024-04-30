@@ -16,7 +16,7 @@ Then("the event does not have a {string} breadcrumb named {string}") do |type, n
 end
 
 Then("the event {string} equals the current OS name") do |field_path|
-  expected = Maze.driver.capabilities['os']
+  expected = Maze::Helper.get_current_platform
   key_path = "events.0.#{field_path}"
   actual_value = Maze::Helper.read_key_path(Maze::Server.errors.current[:body], key_path)
 

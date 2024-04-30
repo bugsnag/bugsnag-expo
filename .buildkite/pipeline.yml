@@ -48,7 +48,7 @@ steps:
         command:
           - --app=build/output.apk
           - --farm=bs
-          - --device=ANDROID_12_0
+          - --device=ANDROID_12
           - --a11y-locator
           - --fail-fast
           - --retry=2
