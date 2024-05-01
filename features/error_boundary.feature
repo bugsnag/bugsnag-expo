@@ -14,7 +14,6 @@ Scenario: A render error is captured by an error boundary
   And the event "metaData.react.componentStack" is not null
   And the error Bugsnag-Integrity header is valid
 
-@skip_android_7 @skip_android_8
 Scenario: When a render error occurs, a fallback is presented
   Given the element "errorBoundaryFallbackButton" is present
   When I click the element "errorBoundaryFallbackButton"
