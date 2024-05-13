@@ -4,7 +4,7 @@ set -e
 
 pushd features/fixtures/test-app
 
-npx eas-cli@latest build \
+eas build \
   --local \
   -p android \
   --output output.apk

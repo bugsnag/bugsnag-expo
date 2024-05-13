@@ -10,7 +10,14 @@ yarn cache clean --all
 # Install repo dependencies
 yarn install
 
+# clear bundler caches
+rm -fr $TMPDIR/haste-map-*
+rm -rf $TMPDIR/metro-cache
+
 cd features/fixtures/test-app
+
+echo "current package.json contents:"
+cat package.json
 
 # Set the api key via the CLI
 ./run-bugsnag-expo-cli
@@ -26,3 +33,6 @@ sed -i '' "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
 cp $EXPO_UNIVERSAL_CREDENTIALS_DIR/* .
 
 echo "Common setup complete"
+
+echo "new package.json contents:"
+cat package.json
