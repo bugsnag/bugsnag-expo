@@ -11,8 +11,7 @@ eas build \
   --local \
   -p ios \
   --output output.ipa \
-  --non-interactive \
-  --build-logger-level debug
+  --non-interactive
 
 popd
 
