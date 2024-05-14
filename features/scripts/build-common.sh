@@ -10,6 +10,11 @@ yarn cache clean --all
 # Install repo dependencies
 yarn install
 
+# reset watchman and clear bundler caches
+watchman watch-del-all
+rm -fr $TMPDIR/haste-map-*
+rm -rf $TMPDIR/metro-cache
+
 cd features/fixtures/test-app
 
 echo "current package.json contents:"
