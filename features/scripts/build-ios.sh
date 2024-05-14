@@ -8,7 +8,8 @@ npx eas-cli@latest build \
   --local \
   -p ios \
   --output output.ipa \
-  --non-interactive
+  --non-interactive \
+  --build-logger-level debug
 
 popd
 
