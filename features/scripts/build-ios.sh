@@ -2,8 +2,7 @@ set -e
 
 ./features/scripts/build-common.sh
 
-echo "directory contents:"
-ls -la
+eas -v
 
 pushd features/fixtures/test-app
 
