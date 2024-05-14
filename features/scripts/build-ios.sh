@@ -7,7 +7,7 @@ ls -la
 
 pushd features/fixtures/test-app
 
-npx eas-cli@latest build \
+eas build \
   --local \
   -p ios \
   --output output.ipa \
