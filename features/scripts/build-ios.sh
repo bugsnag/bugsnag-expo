@@ -2,11 +2,9 @@ set -e
 
 ./features/scripts/build-common.sh
 
-eas -v
-
 pushd features/fixtures/test-app
 
-npx eas-cli@latest build \
+npx eas-cli@8.0.0 build \
   --local \
   -p ios \
   --output output.ipa \
