@@ -2,6 +2,9 @@ set -e
 
 ./features/scripts/build-common.sh
 
+echo "directory contents:"
+ls -la
+
 pushd features/fixtures/test-app
 
 npx eas-cli@latest build \
