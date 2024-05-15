@@ -11,10 +11,7 @@ Scenario: Device data is included by default
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "DeviceDefaultError"
-
-  # Skipped pending PLAT-12140
-  # And the event "device.id" is not null
-
+  And the event "device.id" is not null
   And the event "device.manufacturer" is not null
   And the event "device.osName" equals the current OS name
   And the event "device.osVersion" is not null
@@ -32,10 +29,7 @@ Scenario: Device data can be modified by a callback
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "DeviceCallbackError"
-
-  # Skipped pending PLAT-12140
-  # And the event "device.id" is not null
-  
+  And the event "device.id" is not null
   And the event "device.manufacturer" is not null
   And the event "device.osVersion" is not null
   And the event "device.osName" equals the current OS name
@@ -48,3 +42,19 @@ Scenario: Device data can be modified by a callback
   And the event "device.totalMemory" is not null
   And the event "metaData.device.isDevice" is true
   And the error Bugsnag-Integrity header is valid
+
+Scenario: Device id is persisted across app starts
+  Given the element "deviceDefaultButton" is present
+  When I click the element "deviceDefaultButton"
+  Then I wait to receive an error
+  And the event "device.id" is not null
+  And the error payload field "events.0.device.id" is stored as the value "device_id"
+  And I discard the oldest error
+
+  When I close and relaunch the app
+  And the element "deviceFeature" is present
+  And I click the element "deviceFeature"
+  And the element "deviceDefaultButton" is present
+  And I click the element "deviceDefaultButton"
+  And I wait to receive an error
+  Then the error payload field "events.0.device.id" equals the stored value "device_id"

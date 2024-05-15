@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased]
+
+## Breaking Changes
+
+This release contains an additional peer dependency on `expo-secure-store`. Run the bugsnag-expo-cli to add this dependency to your project:
+
+```sh
+npx bugsnag-expo-cli install
+```
+
+Alternatively, you can use `expo install`:
+
+```sh
+expo install expo-secure-store
+```
+
+## Changed
+
+- (plugin-expo-device) Replace `Constants.installationId` with a generated device id [#181](https://github.com/bugsnag/bugsnag-expo/pull/181)
+
 ## v50.0.0 (2024-02-07)
 
 This release adds support for expo 50

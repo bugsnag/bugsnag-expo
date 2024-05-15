@@ -14,7 +14,6 @@ describe('plugin: expo device', () => {
 
     jest.doMock('expo-constants', () => ({
       default: {
-        installationId: '123',
         platform: { android: {} },
         expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
@@ -37,6 +36,10 @@ describe('plugin: expo device', () => {
       Platform: { OS: 'android', Version: ANDROID_API_LEVEL }
     }))
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+    jest.doMock('expo-secure-store', () => ({
+      getItem: () => 'c0123456789abcdef0123456789',
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
 
     const plugin = require('..')
 
@@ -64,8 +67,8 @@ describe('plugin: expo device', () => {
         })
         expect(r.events[0].metaData.device.isDevice).toBe(true)
         expect(r.events[0].metaData.device.appOwnership).toBe('standalone')
-        expect(r.events[0].device.id).toBe('123')
-        expect(r.events[0].user.id).toBe('123')
+        expect(r.events[0].device.id).toBe('c0123456789abcdef0123456789')
+        expect(r.events[0].user.id).toBe('c0123456789abcdef0123456789')
         done()
       },
       sendSession: () => {}
@@ -106,6 +109,10 @@ describe('plugin: expo device', () => {
       Platform: { OS: 'ios' }
     }))
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+    jest.doMock('expo-secure-store', () => ({
+      getItem: () => 'c0123456789abcdef0123456789',
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
 
     const plugin = require('..')
 
@@ -167,6 +174,10 @@ describe('plugin: expo device', () => {
       Platform: { OS: 'ios' }
     }))
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+    jest.doMock('expo-secure-store', () => ({
+      getItem: () => 'c0123456789abcdef0123456789',
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
 
     const plugin = require('..')
 
@@ -193,7 +204,6 @@ describe('plugin: expo device', () => {
 
     jest.doMock('expo-constants', () => ({
       default: {
-        installationId: '123',
         platform: { ios: {} },
         expoConfig: { sdkVersion: SDK_VERSION },
         expoVersion: EXPO_VERSION,
@@ -214,6 +224,10 @@ describe('plugin: expo device', () => {
       Platform: { OS: 'ios' }
     }))
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+    jest.doMock('expo-secure-store', () => ({
+      getItem: () => 'c0123456789abcdef0123456789',
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
 
     const plugin = require('..')
 
@@ -282,6 +296,10 @@ describe('plugin: expo device', () => {
     }))
 
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+    jest.doMock('expo-secure-store', () => ({
+      getItem: () => 'c0123456789abcdef0123456789',
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
 
     const plugin = require('..')
 
@@ -308,6 +326,185 @@ describe('plugin: expo device', () => {
     d._set(1024, 100)
     c.notify(new Error('device testing'))
     d._set(100, 100)
+    c.notify(new Error('device testing'))
+  })
+
+  it('uses the stored device id if it exists', done => {
+    const REACT_NATIVE_VERSION = '0.57.1'
+    const SDK_VERSION = '32.3.0'
+    const EXPO_VERSION = '2.10.4'
+
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: { ios: {} },
+        expoConfig: { sdkVersion: SDK_VERSION },
+        expoVersion: EXPO_VERSION,
+        appOwnership: 'expo'
+      }
+    }))
+    jest.doMock('expo-device', () => ({
+      manufacturer: 'Apple',
+      isDevice: true
+    }))
+    jest.doMock('react-native', () => ({
+      Dimensions: {
+        addEventListener: function () {},
+        get: function () {
+          return { width: 1024, height: 768 }
+        }
+      },
+      Platform: { OS: 'ios' }
+    }))
+    jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+
+    const getItem = jest.fn(() => 'c0123456789abcdef0123456789')
+    const setItem = jest.fn()
+    jest.doMock('expo-secure-store', () => ({
+      getItem,
+      setItem,
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
+
+    const plugin = require('..')
+
+    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+
+    expect(getItem).toHaveBeenCalledTimes(1)
+    expect(getItem).toHaveBeenCalledWith('bugsnag-anonymous-id', { keychainAccessible: 4, requireAuthentication: false })
+
+    expect(setItem).not.toHaveBeenCalled()
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].device).toBeTruthy()
+        expect(r.events[0].device.id).toEqual('c0123456789abcdef0123456789')
+        done()
+      },
+      sendSession: () => {}
+
+    }))
+    c.notify(new Error('device testing'))
+  })
+
+  it('generates a new device id if none exists in storage', done => {
+    const REACT_NATIVE_VERSION = '0.57.1'
+    const SDK_VERSION = '32.3.0'
+    const EXPO_VERSION = '2.10.4'
+
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: { ios: {} },
+        expoConfig: { sdkVersion: SDK_VERSION },
+        expoVersion: EXPO_VERSION,
+        appOwnership: 'expo'
+      }
+    }))
+    jest.doMock('expo-device', () => ({
+      manufacturer: 'Apple',
+      isDevice: true
+    }))
+    jest.doMock('react-native', () => ({
+      Dimensions: {
+        addEventListener: function () {},
+        get: function () {
+          return { width: 1024, height: 768 }
+        }
+      },
+      Platform: { OS: 'ios' }
+    }))
+    jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+
+    const getItem = jest.fn(() => null)
+    const setItem = jest.fn()
+    jest.doMock('expo-secure-store', () => ({
+      getItem,
+      setItem,
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
+
+    const plugin = require('..')
+
+    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+
+    expect(getItem).toHaveBeenCalledTimes(1)
+    expect(getItem).toHaveBeenCalledWith('bugsnag-anonymous-id', { keychainAccessible: 4, requireAuthentication: false })
+
+    expect(setItem).toHaveBeenCalledTimes(1)
+    expect(setItem).toHaveBeenCalledWith('bugsnag-anonymous-id', expect.any(String), { keychainAccessible: 4, requireAuthentication: false })
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].device).toBeTruthy()
+        expect(r.events[0].device.id).toEqual(setItem.mock.calls[0][1])
+        done()
+      },
+      sendSession: () => {}
+
+    }))
+    c.notify(new Error('device testing'))
+  })
+
+  it('generates a new device id if the stored id is invalid', done => {
+    const REACT_NATIVE_VERSION = '0.57.1'
+    const SDK_VERSION = '32.3.0'
+    const EXPO_VERSION = '2.10.4'
+
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: { ios: {} },
+        expoConfig: { sdkVersion: SDK_VERSION },
+        expoVersion: EXPO_VERSION,
+        appOwnership: 'expo'
+      }
+    }))
+    jest.doMock('expo-device', () => ({
+      manufacturer: 'Apple',
+      isDevice: true
+    }))
+    jest.doMock('react-native', () => ({
+      Dimensions: {
+        addEventListener: function () {},
+        get: function () {
+          return { width: 1024, height: 768 }
+        }
+      },
+      Platform: { OS: 'ios' }
+    }))
+    jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+
+    const getItem = jest.fn(() => 'not a valid device id')
+    const setItem = jest.fn()
+    jest.doMock('expo-secure-store', () => ({
+      getItem,
+      setItem,
+      ALWAYS_THIS_DEVICE_ONLY: 4
+    }))
+
+    const plugin = require('..')
+
+    const c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+
+    expect(getItem).toHaveBeenCalledTimes(1)
+    expect(getItem).toHaveBeenCalledWith('bugsnag-anonymous-id', { keychainAccessible: 4, requireAuthentication: false })
+
+    expect(setItem).toHaveBeenCalledTimes(1)
+    expect(setItem).toHaveBeenCalledWith('bugsnag-anonymous-id', expect.any(String), { keychainAccessible: 4, requireAuthentication: false })
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].device).toBeTruthy()
+        expect(r.events[0].device.id).toEqual(setItem.mock.calls[0][1])
+        done()
+      },
+      sendSession: () => {}
+
+    }))
     c.notify(new Error('device testing'))
   })
 })
