@@ -14,7 +14,7 @@ steps:
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "macos-14-1"
+      queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "18.18"
@@ -27,7 +27,7 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "macos-14-1"
+      queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       XCODE_VERSION: "15.3.0"
