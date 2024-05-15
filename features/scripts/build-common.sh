@@ -1,23 +1,19 @@
 #!/bin/bash -e
 
-# Lets make sure the build folder was cleared out correctly
+# Lets make sure the build folders were cleared out correctly
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*
+rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/features/fixtures/build
+
 # And all previous packages are removed
 git clean -xfdf
+
 # And the yarn cache is clean
 yarn cache clean --all
 
 # Install repo dependencies
 yarn install
 
-# clear bundler caches
-rm -fr $TMPDIR/haste-map-*
-rm -rf $TMPDIR/metro-cache
-
 cd features/fixtures/test-app
-
-echo "current package.json contents:"
-cat package.json
 
 # Set the api key via the CLI
 ./run-bugsnag-expo-cli
@@ -34,5 +30,3 @@ cp $EXPO_UNIVERSAL_CREDENTIALS_DIR/* .
 
 echo "Common setup complete"
 
-echo "new package.json contents:"
-cat package.json
