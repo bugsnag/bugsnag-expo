@@ -10,8 +10,7 @@ yarn cache clean --all
 # Install repo dependencies
 yarn install
 
-# reset watchman and clear bundler caches
-watchman watch-del-all
+# clear bundler caches
 rm -fr $TMPDIR/haste-map-*
 rm -rf $TMPDIR/metro-cache
 
