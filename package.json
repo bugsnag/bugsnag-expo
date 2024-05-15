@@ -24,6 +24,7 @@
   },
   "private": true,
   "workspaces": [
-    "packages/*", "features/fixtures/test-app"
+    "packages/*",
+    "features/fixtures/test-app"
   ]
 }
