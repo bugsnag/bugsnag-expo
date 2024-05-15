@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -ex
 
 # Lets make sure the build folder was cleared out correctly
 rm -rf $BUILDKITE_BUILD_CHECKOUT_PATH/build/*

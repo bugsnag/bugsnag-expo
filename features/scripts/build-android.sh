@@ -1,4 +1,4 @@
-set -e
+set -ex
 
 ./features/scripts/build-common.sh
 
