@@ -17,7 +17,7 @@ steps:
       queue: "macos-14-5"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      NODE_VERSION: "18"
+      NODE_VERSION: "20"
       JAVA_VERSION: "17"
     artifact_paths: build/output.apk
     commands:
