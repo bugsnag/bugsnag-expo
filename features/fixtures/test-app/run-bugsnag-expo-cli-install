@@ -3,7 +3,7 @@
 set timeout -1
 
 # add-hook
-spawn npx bugsnag-expo-cli upload-sourcemaps
+spawn eas upload-sourcemaps
 
 expect "Do you want to automatically upload source maps to Bugsnag? (this will modify your app.json and package.json)"
 send -- "\r"
