@@ -87,6 +87,12 @@ jest.doMock('../../../node_modules/expo-device', () => ({
   modelName: 'Pixel 4'
 }))
 
+jest.doMock('expo-secure-store', () => ({
+  getItem: () => 'c0123456789abcdef0123456789',
+  setItem: () => {},
+  ALWAYS_THIS_DEVICE_ONLY: 4
+}))
+
 const networkBreadcrumbsPlugin = {
   load: () => () => {}
 }

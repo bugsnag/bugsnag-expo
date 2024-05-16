@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+## Breaking Changes
+
+This release contains an additional peer dependency on `expo-secure-store`. See the [upgrade guide](UPGRADING.md) for more information.
+
+## Changed
+
+- (plugin-expo-device) Replace `Constants.installationId` with a generated device id [#181](https://github.com/bugsnag/bugsnag-expo/pull/181)
+
 ## v50.0.0 (2024-02-07)
 
 This release adds support for expo 50

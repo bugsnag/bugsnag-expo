@@ -16,14 +16,19 @@
   ],
   "author": "Bugsnag",
   "license": "MIT",
+  "dependencies": {
+    "@bugsnag/cuid": "^3.1.1"
+  },
   "devDependencies": {
     "@bugsnag/core": "^7.16.0",
     "expo-constants": "~16.0.1",
-    "expo-device": "~6.0.2"
+    "expo-device": "~6.0.2",
+    "expo-secure-store": "~13.0.1"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.0.0",
     "expo-constants": "~16.0.1",
-    "expo-device": "~6.0.2"
+    "expo-device": "~6.0.2",
+    "expo-secure-store": "~13.0.1"
   }
 }
