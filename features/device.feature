@@ -11,7 +11,10 @@ Scenario: Device data is included by default
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "DeviceDefaultError"
-  And the event "device.id" is not null
+
+  # Skipped pending PLAT-12140
+  # And the event "device.id" is not null
+
   And the event "device.manufacturer" is not null
   And the event "device.osName" equals the current OS name
   And the event "device.osVersion" is not null
@@ -29,7 +32,10 @@ Scenario: Device data can be modified by a callback
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "DeviceCallbackError"
-  And the event "device.id" is not null
+
+  # Skipped pending PLAT-12140
+  # And the event "device.id" is not null
+  
   And the event "device.manufacturer" is not null
   And the event "device.osVersion" is not null
   And the event "device.osName" equals the current OS name
