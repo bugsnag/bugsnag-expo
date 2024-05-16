@@ -40,6 +40,7 @@ module.exports = {
     'expo-constants',
     'expo-crypto',
     'expo-device',
-    'expo-file-system'
+    'expo-file-system',
+    'expo-secure-store'
   ]
 }

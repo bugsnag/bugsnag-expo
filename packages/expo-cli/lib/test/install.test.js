@@ -19,7 +19,8 @@ describe('expo-cli: install', () => {
           'expo-constants',
           'expo-crypto',
           'expo-device',
-          'expo-file-system'
+          'expo-file-system',
+          'expo-secure-store'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
 
@@ -55,6 +56,7 @@ describe('expo-cli: install', () => {
           'expo-crypto',
           'expo-device',
           'expo-file-system',
+          'expo-secure-store',
           '--npm'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -91,6 +93,7 @@ describe('expo-cli: install', () => {
           'expo-crypto',
           'expo-device',
           'expo-file-system',
+          'expo-secure-store',
           '--yarn'
         ])
         expect(opts).toEqual({ cwd: projectRoot })
@@ -127,6 +130,7 @@ describe('expo-cli: install', () => {
           'expo-crypto',
           'expo-device',
           'expo-file-system',
+          'expo-secure-store',
           '--npm',
           '--yarn'
         ])
@@ -175,7 +179,7 @@ describe('expo-cli: install', () => {
     const install = require('../install')
 
     await withFixture('blank-js', async (projectRoot) => {
-      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo @react-native-community/netinfo expo-application expo-constants expo-crypto expo-device expo-file-system"
+      const expected = `Command exited with non-zero exit code (1) "expo install @bugsnag/expo @react-native-community/netinfo expo-application expo-constants expo-crypto expo-device expo-file-system expo-secure-store"
 stdout:
 some data on stdout
 

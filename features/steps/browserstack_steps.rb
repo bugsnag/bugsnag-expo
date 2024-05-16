@@ -42,3 +42,8 @@ When("I clear any error dialogue") do
                     click_if_present('android:id/aerr_restart')
   end
 end
+
+When("I close and relaunch the app") do
+  Maze.driver.terminate_app Maze.driver.app_id
+  Maze.driver.activate_app Maze.driver.app_id
+end

@@ -2,12 +2,17 @@
 
 Thanks for stopping by! This document should cover most topics surrounding contributing to this repo.
 
-* [How to contribute](#how-to-contribute)
-  * [Reporting issues](#reporting-issues)
-  * [Fixing issues](#fixing-issues)
-  * [Adding features](#adding-features)
-* [System requirements](#system-requirements)
-* [Testing](#testing)
+- [Contributing](#contributing)
+  - [Reporting issues](#reporting-issues)
+    - [Fixing issues](#fixing-issues)
+    - [Adding features](#adding-features)
+  - [System requirements](#system-requirements)
+  - [Testing](#testing)
+  - [CI](#ci)
+  - [Keeping dependencies in sync](#keeping-dependencies-in-sync)
+  - [Updating the CLI to install a compatible notifier version](#updating-the-cli-to-install-a-compatible-notifier-version)
+  - [Releases](#releases)
+    - [Prereleases](#prereleases)
 
 ## Reporting issues
 Are you having trouble getting started? Please [contact us directly](mailto:support@bugsnag.com?subject=%5BGitHub%5D%20bugsnag-expo%20-%20having%20trouble%20getting%20started%20with%20Bugsnag) for assistance with integrating Bugsnag into your application.
@@ -73,6 +78,7 @@ The following modules are currently used:
 - `expo-crypto` (`@bugsnag/delivery-expo`)
 - `expo-device` (`@bugsnag/plugin-expo-device`)
 - `expo-file-system` (`@bugsnag/delivery-expo`)
+- `expo-secure-store` (`@bugsnag/plugin-expo-device`)
 
 If you add a new dependency please add it to this list.
 
