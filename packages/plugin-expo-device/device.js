@@ -25,15 +25,18 @@ module.exports = {
     // get the initial orientation
     updateOrientation()
 
-    const storeOptions = {
-      requireAuthentication: false,
-      keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY
-    }
+    let deviceId
+    if (Platform.OS === 'android' || Platform.OS === 'ios') {
+      const storeOptions = {
+        requireAuthentication: false,
+        keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY
+      }
 
-    let deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)
-    if (!deviceId || !cuid.isCuid(deviceId)) {
-      deviceId = cuid()
-      SecureStore.setItem(DEVICE_ID_KEY, deviceId, storeOptions)
+      deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)
+      if (!deviceId || !cuid.isCuid(deviceId)) {
+        deviceId = cuid()
+        SecureStore.setItem(DEVICE_ID_KEY, deviceId, storeOptions)
+      }
     }
 
     const device = {
