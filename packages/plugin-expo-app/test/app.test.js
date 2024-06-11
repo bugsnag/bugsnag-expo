@@ -4,7 +4,8 @@ jest.mock('react-native', () => ({
   AppState: {
     addEventListener: jest.fn(),
     currentState: 'active'
-  }
+  },
+  Platform: { OS: 'android' }
 }))
 
 describe('plugin: expo app', () => {
@@ -66,6 +67,13 @@ describe('plugin: expo app', () => {
         appOwnership: null
       }
     }))
+    jest.doMock('react-native', () => ({
+      AppState: {
+        addEventListener: jest.fn(),
+        currentState: 'active'
+      },
+      Platform: { OS: 'ios' }
+    }))
 
     const plugin = require('..')
 
@@ -109,7 +117,8 @@ describe('plugin: expo app', () => {
     }))
 
     jest.doMock('react-native', () => ({
-      AppState
+      AppState,
+      Platform: { OS: 'ios' }
     }))
 
     const plugin = require('..')
