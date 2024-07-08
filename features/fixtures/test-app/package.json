@@ -11,7 +11,7 @@
   "dependencies": {
     "@bugsnag/expo": "*",
     "@react-native-community/netinfo": "11.3.1",
-    "expo": "~51.0.4",
+    "expo": "~51.0.15",
     "expo-application": "~5.9.1",
     "expo-constants": "~16.0.1",
     "expo-crypto": "~13.0.2",
@@ -21,7 +21,7 @@
     "expo-secure-store": "~13.0.1",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
-    "react-native": "0.74.1"
+    "react-native": "0.74.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
