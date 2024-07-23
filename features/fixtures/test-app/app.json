@@ -20,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bugsnag.expo.testfixture",
+      "bundleIdentifier": "com.bugsnag.expo.fixture",
       "buildNumber": "1",
       "infoPlist": {
         "NSAppTransportSecurity": {
