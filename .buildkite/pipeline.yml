@@ -6,8 +6,6 @@ steps:
     timeout_in_minutes: 20
     agents:
       queue: "macos-14"
-    env:
-      DEVELOPER_DIR: "/Applications/Xcode13.app"
     command: scripts/license_finder.sh
 
   - label:  ':android: Build expo APK'
@@ -28,7 +26,7 @@ steps:
       queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode14.app"
+      DEVELOPER_DIR: "/Applications/Xcode-15.app"
     artifact_paths: build/output.ipa
     commands:
       - bundle install
