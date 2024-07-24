@@ -20,7 +20,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bugsnag.expo.testfixture",
+      "bundleIdentifier": "com.bugsnag.expo.fixture",
       "buildNumber": "1",
       "infoPlist": {
         "NSAppTransportSecurity": {
@@ -33,7 +33,7 @@
       }
     },
     "android": {
-      "package": "com.bugsnag.expo.testfixture",
+      "package": "com.bugsnag.expo.fixture",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
