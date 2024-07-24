@@ -2,6 +2,12 @@ set -e
 
 ./features/scripts/build-common.sh
 
+if [[ -z ${EAS_LOCAL_BUILD_WORKINGDIR:-} ]]; then
+  EAS_LOCAL_BUILD_WORKINGDIR=$BUILDKITE_BUILD_CHECKOUT_PATH/features/fixtures/build
+  export EAS_LOCAL_BUILD_WORKINGDIR
+  export EAS_LOCAL_BUILD_SKIP_CLEANUP=1
+fi
+
 pushd features/fixtures/test-app
 
 eas build \

@@ -1,3 +1,6 @@
+agents:
+  queue: "opensource"
+
 steps:
   #
   # License audit
@@ -5,18 +8,18 @@ steps:
   - label: ':copyright: License Audit'
     timeout_in_minutes: 20
     agents:
-      queue: opensource-arm-mac-cocoa-12
-    env:
-      DEVELOPER_DIR: "/Applications/Xcode13.app"
+      queue: "macos-14"
     command: scripts/license_finder.sh
 
   - label:  ':android: Build expo APK'
     key: "build-expo-apk"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      NODE_VERSION: "18.18"
+      JAVA_VERSION: "17"
     artifact_paths: build/output.apk
     commands:
       - features/scripts/build-android.sh
@@ -25,10 +28,11 @@ steps:
     key: "build-expo-ipa"
     timeout_in_minutes: 20
     agents:
-      queue: "opensource-arm-mac-cocoa-12"
+      queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      DEVELOPER_DIR: "/Applications/Xcode14.app"
+      XCODE_VERSION: "15.3.0"
+      NODE_VERSION: "18.18"
     artifact_paths: build/output.ipa
     commands:
       - bundle install
