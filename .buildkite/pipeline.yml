@@ -33,6 +33,7 @@ steps:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "18.18"
       XCODE_VERSION: "15.3.0"
+      NODE_VERSION: "18.18"
     artifact_paths: build/output.ipa
     commands:
       - bundle install
