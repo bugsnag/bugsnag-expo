@@ -1,3 +1,6 @@
+agents:
+  queue: "opemnsource"
+
 steps:
   #
   # License audit
@@ -28,6 +31,7 @@ steps:
       queue: "macos-14"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+      NODE_VERSION: "18.18"
       XCODE_VERSION: "15.3.0"
     artifact_paths: build/output.ipa
     commands:
