@@ -26,7 +26,7 @@ sed -i '' "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
 
 ./run-bugsnag-expo-cli-install
 
-cp $EXPO_UNIVERSAL_CREDENTIALS_DIR/* .
+cp $EXPO_CREDENTIALS_DIR/* .
 
 echo "Common setup complete"
 

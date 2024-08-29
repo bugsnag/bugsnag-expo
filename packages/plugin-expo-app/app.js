@@ -1,6 +1,6 @@
 const Application = require('expo-application')
 const Constants = require('expo-constants').default
-const { AppState } = require('react-native')
+const { AppState, Platform } = require('react-native')
 
 const appStart = new Date()
 
@@ -19,9 +19,9 @@ module.exports = {
     let bundleVersion, versionCode
 
     if (Constants.appOwnership !== 'expo') {
-      if (Constants.platform.ios) {
+      if (Platform.OS === 'ios') {
         bundleVersion = Application.nativeBuildVersion
-      } else if (Constants.platform.android) {
+      } else if (Platform.OS === 'android') {
         versionCode = Application.nativeBuildVersion
       }
     }
