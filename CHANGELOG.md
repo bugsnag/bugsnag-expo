@@ -6,6 +6,13 @@
 
 - (delivery-expo) Changed "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
 
+## [51.0.1] - 2024-08-29
+
+### Fixed
+
+- (plugin-expo-device) Do not use expo-secure-store on unsupported platforms [#185](https://github.com/bugsnag/bugsnag-expo/pull/185)
+- (plugin-expo-device, plugin-expo-app) Replace Constants.platform usage with Platform API [#185](https://github.com/bugsnag/bugsnag-expo/pull/185)
+
 ## [51.0.0] - 2024-05-16
 
 This release adds support for Expo 51.
