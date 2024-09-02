@@ -116,7 +116,8 @@ const initRedelivery = (networkStatus, logger, send) => {
     session: new UndeliveredPayloadQueue('session', onQueueError)
   }
 
-  const onLoopError = e => logger.error('RedeliveryLoop error', e)
+  const onLoopError = (e) =>
+    logger.error('An error occurred attempting to redeliver a payload', e)
   const queueConsumers = {
     event: new RedeliveryLoop(send, queues.event, onLoopError),
     session: new RedeliveryLoop(send, queues.session, onLoopError)

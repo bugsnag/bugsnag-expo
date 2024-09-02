@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- (delivery-expo) Changed "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
+
 ## [51.0.1] - 2024-08-29
 
 ### Fixed
