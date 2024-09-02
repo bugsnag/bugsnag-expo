@@ -3,7 +3,6 @@ Feature: Automatically added breadcrumbs
 Background:
   Given I clear any error dialogue
 
-  @skip_android_5
 Scenario: App-state breadcrumbs are captured by default
   Given the element "appStateBreadcrumbs" is present
   And I click the element "appStateBreadcrumbs"
@@ -18,7 +17,6 @@ Scenario: App-state breadcrumbs are captured by default
   And the event has a "state" breadcrumb named "App state changed"
   And the error Bugsnag-Integrity header is valid
 
-@skip_android_5
 Scenario: App-state breadcrumbs can be disabled specifically
   Given the element "appStateBreadcrumbs" is present
   And I click the element "appStateBreadcrumbs"
@@ -33,7 +31,6 @@ Scenario: App-state breadcrumbs can be disabled specifically
   And the event does not have a "state" breadcrumb named "App state changed"
   And the error Bugsnag-Integrity header is valid
 
-@skip_android_5
 Scenario: App-state breadcrumbs are disabled with other auto-breadcrumbs
   Given the element "appStateBreadcrumbs" is present
   And I click the element "appStateBreadcrumbs"
@@ -48,7 +45,6 @@ Scenario: App-state breadcrumbs are disabled with other auto-breadcrumbs
   And the event does not have a "state" breadcrumb named "App state changed"
   And the error Bugsnag-Integrity header is valid
 
-@skip_android_5
 Scenario: App-state breadcrumbs overrides auto-breadcrumbs
   Given the element "appStateBreadcrumbs" is present
   And I click the element "appStateBreadcrumbs"
@@ -117,7 +113,7 @@ Scenario: Network breadcrumbs are captured by default
   And the exception "message" equals "defaultNetworkBreadcrumbsBehaviour"
   And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
   And the event "breadcrumbs.1.metaData.status" equals 200
-  And the event "breadcrumbs.1.metaData.request" equals "GET http://postman-echo.com/get"
+  And the event "breadcrumbs.1.metaData.request" equals "GET https://postman-echo.com/get"
   And the error Bugsnag-Integrity header is valid
 
 Scenario: Network breadcrumbs can be disabled explicitly
@@ -152,5 +148,5 @@ Scenario: Network breadcrumbs overrides auto-breadcrumbs
   And the exception "message" equals "overrideNetworkBreadcrumbsBehaviour"
   And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
   And the event "breadcrumbs.0.metaData.status" equals 200
-  And the event "breadcrumbs.0.metaData.request" equals "GET http://postman-echo.com/get"
+  And the event "breadcrumbs.0.metaData.request" equals "GET https://postman-echo.com/get"
   And the error Bugsnag-Integrity header is valid

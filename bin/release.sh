@@ -20,7 +20,6 @@ git clone --single-branch \
 cd /app/bugsnag-expo
 
 npm install --package-lock false
-npx lerna bootstrap -- --package-lock false
 
 if [ -v RETRY_PUBLISH ]; then
   npx lerna publish from-package

@@ -4,16 +4,10 @@ const { schema } = require('@bugsnag/core/config')
 const Constants = require('expo-constants').default
 const stringWithLength = require('@bugsnag/core/lib/validators/string-with-length')
 
-// If the developer property is not present in the manifest, it means the app is
+// If the developer property is not present it means the app is
 // not connected to a development tool and is either a published app running in
 // the Expo client, or a standalone app
-let IS_PRODUCTION = true
-
-if (Constants.manifest) {
-  IS_PRODUCTION = !Constants.manifest.developer
-} else if (Constants.manifest2) {
-  IS_PRODUCTION = !Constants.manifest2?.extra?.expoGo?.developer
-}
+const IS_PRODUCTION = !Constants.expoConfig?.developer && !Constants.expoGoConfig?.developer
 
 // The app can still run in production "mode" in development environments, in which
 // cases the global boolean __DEV__ will be set to true

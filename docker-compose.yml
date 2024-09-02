@@ -6,17 +6,14 @@ services:
       dockerfile: dockerfiles/Dockerfile.ci
 
   expo-maze-runner:
-    build:
-      context: .
-      dockerfile: dockerfiles/Dockerfile.expo
-      args:
-        - BUILDKITE_BUILD_NUMBER
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v8-cli
     environment:
       BUILDKITE:
       BUILDKITE_BRANCH:
       BUILDKITE_BUILD_CREATOR:
       BUILDKITE_BUILD_NUMBER:
       BUILDKITE_BUILD_URL:
+      BUILDKITE_JOB_ID:
       BUILDKITE_LABEL:
       BUILDKITE_MESSAGE:
       BUILDKITE_PIPELINE_NAME:
@@ -33,6 +30,7 @@ services:
           - maze-runner
     volumes:
       - ./build:/app/build
+      - ./features:/app/features
 
   release:
     build:

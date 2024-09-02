@@ -16,7 +16,7 @@ Then("the event does not have a {string} breadcrumb named {string}") do |type, n
 end
 
 Then("the event {string} equals the current OS name") do |field_path|
-  expected = Maze.driver.capabilities['os']
+  expected = Maze::Helper.get_current_platform
   key_path = "events.0.#{field_path}"
   actual_value = Maze::Helper.read_key_path(Maze::Server.errors.current[:body], key_path)
 
@@ -41,4 +41,9 @@ When("I clear any error dialogue") do
                     click_if_present('android:id/aerr_close') ||
                     click_if_present('android:id/aerr_restart')
   end
+end
+
+When("I close and relaunch the app") do
+  Maze.driver.terminate_app Maze.driver.app_id
+  Maze.driver.activate_app Maze.driver.app_id
 end

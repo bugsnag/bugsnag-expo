@@ -64,6 +64,7 @@ The following modules are currently used:
 - `expo-crypto` (`@bugsnag/delivery-expo`)
 - `expo-device` (`@bugsnag/plugin-expo-device`)
 - `expo-file-system` (`@bugsnag/delivery-expo`)
+- `expo-secure-store` (`@bugsnag/plugin-expo-device`)
 
 If you add a new dependency please add it to this list.
 

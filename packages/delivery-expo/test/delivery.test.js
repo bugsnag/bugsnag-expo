@@ -71,6 +71,7 @@ describe('delivery: expo', () => {
   let enqueueSpy
 
   beforeEach(() => {
+    jest.clearAllMocks()
     enqueueSpy = jest.fn().mockResolvedValue(true)
 
     UndeliveredPayloadQueue.mockImplementation(() => ({
@@ -202,6 +203,43 @@ describe('delivery: expo', () => {
     })
   })
 
+  it('does not attempt to re-send oversized payloads', done => {
+    // A 401 is considered retryable but this will be overridden by the payload size check
+    const { requests, server } = mockServer(401)
+    server.listen(err => {
+      expect(err).toBeUndefined()
+
+      const lotsOfEvents = []
+      while (JSON.stringify(lotsOfEvents).length < 10e5) {
+        lotsOfEvents.push({ errors: [{ errorClass: 'Error', errorMessage: 'long repetitive string'.repeat(1000) }] })
+      }
+      const payload = {
+        events: lotsOfEvents
+      }
+
+      const config = {
+        apiKey: 'aaaaaaaa',
+        endpoints: { notify: `http://0.0.0.0:${server.address().port}/notify/` },
+        redactedKeys: []
+      }
+
+      const logger = {
+        info: jest.fn(),
+        warn: jest.fn(),
+        error: jest.fn()
+      }
+
+      delivery({ _config: config, _logger: logger }, fetch).sendEvent(payload, (err) => {
+        expect(logger.warn).toHaveBeenCalledWith('Discarding over-sized event (1.014603 MB) after failed delivery')
+        expect(enqueueSpy).not.toHaveBeenCalled()
+        expect(err).toBeTruthy()
+        expect(requests.length).toBe(0)
+        server.close()
+        done()
+      })
+    })
+  })
+
   it('handles errors gracefully for sessions (ECONNREFUSED)', done => {
     const payload = {
       events: [{ errors: [{ errorClass: 'Error', errorMessage: 'foo is not a function' }] }]
@@ -310,13 +348,34 @@ describe('delivery: expo', () => {
     })
   })
 
-  // eslint-disable-next-line jest/expect-expect
   it('starts the redelivery loop if there is a connection', done => {
+    const startSpy = jest.fn()
+    const stopSpy = jest.fn()
+
     RedeliveryLoop.mockImplementation(() => ({
-      start: done
+      start: startSpy,
+      stop: stopSpy
+    }))
+
+    let watcher
+
+    NetworkStatus.mockImplementation(() => ({
+      isConnected: false,
+      watch: fn => {
+        watcher = fn
+        onWatch()
+      }
     }))
 
     delivery({ _logger: noopLogger }, fetch)
+
+    const onWatch = () => {
+      expect(typeof watcher).toBe('function')
+      watcher(true)
+      expect(startSpy).toHaveBeenCalledTimes(2)
+      expect(stopSpy).not.toHaveBeenCalled()
+      done()
+    }
   })
 
   it('stops the redelivery loop if there is not a connection', done => {
@@ -343,10 +402,10 @@ describe('delivery: expo', () => {
     const onWatch = () => {
       expect(typeof watcher).toBe('function')
       watcher(true)
-      expect(startSpy).toHaveBeenCalled()
+      expect(startSpy).toHaveBeenCalledTimes(2)
       expect(stopSpy).not.toHaveBeenCalled()
       watcher(false)
-      expect(stopSpy).toHaveBeenCalled()
+      expect(stopSpy).toHaveBeenCalledTimes(2)
       done()
     }
   })

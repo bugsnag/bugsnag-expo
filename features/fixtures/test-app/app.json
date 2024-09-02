@@ -20,8 +20,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.bugsnag.expo.testfixture",
-      "buildNumber": "1"
+      "bundleIdentifier": "com.bugsnag.expo.fixture",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+            "NSExceptionDomains": {
+              "bs-local.com": {
+                "NSExceptionAllowsInsecureHTTPLoads": true
+              }
+          }
+        }
+      }
     },
     "android": {
       "package": "com.bugsnag.expo.testfixture",
@@ -34,7 +43,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement"],
+    "plugins": ["./config-plugins/withRemoveiOSNotificationEntitlement", "./config-plugins/withAddClearTextTrafficAndroid"],
     "extra": {
       "eas": {
         "projectId": "EXPO_EAS_PROJECT_ID"

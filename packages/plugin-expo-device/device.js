@@ -2,6 +2,10 @@ const Device = require('expo-device')
 const Constants = require('expo-constants').default
 const { Dimensions, Platform } = require('react-native')
 const rnVersion = require('react-native/package.json').version
+const cuid = require('@bugsnag/cuid')
+const SecureStore = require('expo-secure-store')
+
+const DEVICE_ID_KEY = 'bugsnag-anonymous-id'
 
 module.exports = {
   load: client => {
@@ -21,8 +25,22 @@ module.exports = {
     // get the initial orientation
     updateOrientation()
 
+    let deviceId
+    if (Platform.OS === 'android' || Platform.OS === 'ios') {
+      const storeOptions = {
+        requireAuthentication: false,
+        keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY
+      }
+
+      deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)
+      if (!deviceId || !cuid.isCuid(deviceId)) {
+        deviceId = cuid()
+        SecureStore.setItem(DEVICE_ID_KEY, deviceId, storeOptions)
+      }
+    }
+
     const device = {
-      id: Constants.installationId,
+      id: deviceId,
       manufacturer: Device.manufacturer,
       model: Device.modelName,
       modelNumber: Device.modelId || undefined,
@@ -31,8 +49,8 @@ module.exports = {
       runtimeVersions: {
         reactNative: rnVersion,
         expoApp: Constants.expoVersion,
-        expoSdk: Constants.expoConfig.sdkVersion,
-        androidApiLevel: Constants.platform.android ? String(Platform.Version) : undefined
+        expoSdk: Constants.expoConfig?.sdkVersion,
+        androidApiLevel: Platform.OS === 'android' ? String(Platform.Version) : undefined
       },
       totalMemory: Device.totalMemory
     }

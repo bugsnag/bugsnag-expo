@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-app",
-  "version": "48.0.0",
+  "version": "51.0.1",
   "main": "app.js",
   "description": "@bugsnag/expo plugin to provide information about an Expo app",
   "homepage": "https://www.bugsnag.com/",
@@ -17,13 +17,13 @@
   "author": "Bugsnag",
   "license": "MIT",
   "devDependencies": {
-    "@bugsnag/core": "^7.16.0",
-    "expo-application": "~5.1.1",
-    "expo-constants": "~14.2.1"
+    "@bugsnag/core": "^7.19.0",
+    "expo-application": "~5.9.1",
+    "expo-constants": "~16.0.1"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.0.0",
-    "expo-application": "~5.1.1",
-    "expo-constants": "~14.2.1"
+    "expo-application": "~5.9.1",
+    "expo-constants": "~16.0.1"
   }
 }

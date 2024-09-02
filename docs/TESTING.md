@@ -15,12 +15,6 @@ Install top level dependencies:
 npm i
 ```
 
-Bootstrap all of the individual packages:
-
-```sh
-npm run bootstrap
-```
-
 ## Unit tests
 
 Runs the unit tests for each package.
