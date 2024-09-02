@@ -22,8 +22,10 @@ When a new Expo SDK is released, we should also publish a matching major version
 - create a feature branch from which the changes to support the new version are to be made (e.g. `PLAT-1234-support-v48`)
 - make the required dependency and CLI changes for the latest Expo version (see [Keeping dependencies in sync](#keeping-dependencies-in-sync)) 
 - regenerate the e2e test fixture using the `create-expo-app` cli
+- make a PR from the feature branch targeting the new **next** branch (e.g. `PLAT-1234-support-v48` to `v48/next`)
+- create a release branch from **next** (e.g. `release/v48.0.0`) 
 - update the version number and release date in the changelog
-- make a PR from your release branch (e.g. `PLAT-1234-support-v48` to `v48/main`) entitled `Release v48.0.0`
+- make a PR from your release branch targeting the new **main** branch (e.g. `release/v48.0.0` to `v48/main`) entitled `Release v48.0.0`
 - get the release PR reviewed
 - merge the PR
 
