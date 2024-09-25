@@ -6,7 +6,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.ci
 
   expo-maze-runner:
-    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v8-cli
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
     environment:
       BUILDKITE:
       BUILDKITE_BRANCH:
