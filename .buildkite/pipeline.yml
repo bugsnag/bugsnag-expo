@@ -55,6 +55,9 @@ steps:
           - --app=build/output.apk
           - --farm=bs
           - --device=ANDROID_12
+          - --a11y-locator
+          - --retry=2
+          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -78,6 +81,9 @@ steps:
           - --app=build/output.ipa
           - --farm=bs
           - --device=IOS_16
+          - --a11y-locator
+          - --retry=2
+          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -101,6 +107,9 @@ steps:
           - --app=build/output.ipa
           - --farm=bs
           - --device=IOS_14
+          - --a11y-locator
+          - --retry=2
+          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
