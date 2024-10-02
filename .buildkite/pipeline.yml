@@ -56,8 +56,11 @@ steps:
           - --farm=bs
           - --device=ANDROID_12
           - --a11y-locator
-          - --fail-fast
           - --retry=2
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^v50/main|v50/next$$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
@@ -80,6 +83,10 @@ steps:
           - --a11y-locator
           - --retry=2
           - --order=random
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^v50/main|v50/next$$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
@@ -102,6 +109,10 @@ steps:
           - --a11y-locator
           - --retry=2
           - --order=random
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^v50/main|v50/next$$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager

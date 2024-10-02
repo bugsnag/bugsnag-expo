@@ -6,7 +6,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.ci
 
   expo-maze-runner:
-    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v8-cli
+    image: 855461928731.dkr.ecr.us-west-1.amazonaws.com/maze-runner-releases:latest-v9-cli
     environment:
       BUILDKITE:
       BUILDKITE_BRANCH:
@@ -20,10 +20,12 @@ services:
       BUILDKITE_REPO:
       BUILDKITE_RETRY_COUNT:
       BUILDKITE_STEP_KEY:
+      BUILDKITE_ANALYTICS_TOKEN:
       MAZE_BUGSNAG_API_KEY:
       DEBUG:
       BROWSER_STACK_USERNAME:
       BROWSER_STACK_ACCESS_KEY:
+      MAZE_NO_FAIL_FAST:
     networks:
       default:
         aliases:
@@ -31,6 +33,7 @@ services:
     volumes:
       - ./build:/app/build
       - ./features:/app/features
+      - ./reports/:/app/reports/
 
   release:
     build:
