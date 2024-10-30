@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'cocoapods', '~> 1.14.3'
 gem 'fastlane'
+gem 'xcodeproj', '< 1.26.0'
 
 gem 'bugsnag-maze-runner', '~>9.0'
 
