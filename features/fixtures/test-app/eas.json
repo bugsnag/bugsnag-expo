@@ -10,7 +10,8 @@
           "buildType": "apk"
         },
         "ios": {
-          "enterpriseProvisioning": "universal"
+          "enterpriseProvisioning": "universal",
+          "cocoapods": "1.16.0"
         }
       }
     },
