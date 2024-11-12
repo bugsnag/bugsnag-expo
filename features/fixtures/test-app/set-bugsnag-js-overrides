@@ -30,7 +30,7 @@ version = Dir.mktmpdir("bugsnag-js") do |directory|
     }
 
     Tempfile.create(["get-bugsnag-js-version", ".js"], directory) do |file|
-      file.write("console.log(require('./scripts/common').determineVersion())")
+      file.write("console.log(require('./scripts/common').getCommitId())")
       file.close # close the file to flush our changes to disk
 
       output, status = Open3.capture2(env, "node #{file.path}", unsetenv_others: true)
