@@ -13,7 +13,7 @@
     "@react-native-community/netinfo": "11.4.1",
     "expo": "^52.0.0",
     "expo-application": "~6.0.1",
-    "expo-constants": "~16.0.1",
+    "expo-constants": "~17.0.3",
     "expo-crypto": "~14.0.1",
     "expo-device": "~7.0.1",
     "expo-file-system": "~18.0.4",
