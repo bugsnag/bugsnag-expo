@@ -24,7 +24,7 @@
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.22.7",
-    "@react-native-community/netinfo": "11.3.1",
+    "@react-native-community/netinfo": "11.4.1",
     "expo-crypto": "~14.0.1",
     "expo-file-system": "~18.0.4"
   }
