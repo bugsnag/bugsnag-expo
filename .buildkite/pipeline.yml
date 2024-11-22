@@ -62,7 +62,7 @@ steps:
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
-        branch: "^v51$"
+        branch: "^v52$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
@@ -89,7 +89,7 @@ steps:
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
-        branch: "^v51$"
+        branch: "^v52$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
@@ -116,7 +116,7 @@ steps:
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
-        branch: "^v51$"
+        branch: "^v52$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
