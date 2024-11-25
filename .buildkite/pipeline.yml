@@ -67,7 +67,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 16'
+  - label: ':runner: expo iOS 18'
     depends_on:
       - "build-expo-ipa"
     timeout_in_minutes: 50
@@ -81,7 +81,7 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_16
+          - --device=IOS_18
           - --a11y-locator
           - --fail-fast
           - --retry=2
@@ -94,7 +94,7 @@ steps:
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
 
-  - label: ':runner: expo iOS 14'
+  - label: ':runner: expo iOS 15'
     depends_on:
       - "build-expo-ipa"
     timeout_in_minutes: 50
@@ -108,7 +108,7 @@ steps:
         command:
           - --app=build/output.ipa
           - --farm=bs
-          - --device=IOS_14
+          - --device=IOS_15
           - --a11y-locator
           - --fail-fast
           - --retry=2
