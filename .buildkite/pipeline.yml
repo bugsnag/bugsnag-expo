@@ -37,11 +37,11 @@ steps:
       NODE_VERSION: "18.18"
     artifact_paths:
       - build/output.ipa
-      - build/bb_ipa_url.txt
+      - features/fixtures/ios/output/bb_ipa_url.txt
     commands:
       - bundle install
       - features/scripts/build-ios.sh
-      - bundle exec upload-app --farm=bb --app=./build/output.ipa --app-id-file=./build/bb_ipa_url.txt
+      - bundle exec upload-app --farm=bb --app=./build/output.ipa --app-id-file=./features/fixtures/ios/output/bb_ipa_url.txt
 
   - label: ':runner: expo Android 12'
     depends_on:
@@ -105,7 +105,7 @@ steps:
       queue: opensource
     plugins:
       artifacts#v1.9.3:
-        download: "build/bb_ipa_url.txt"
+        download: "features/fixtures/ios/output/bb_ipa_url.txt"
         upload:
           - "maze_output/failed/**/*"
           - "maze_output/metrics.csv"
