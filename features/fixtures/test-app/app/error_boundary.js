@@ -9,7 +9,7 @@ const onError = (event) => {
   // callback will only run for errors caught by boundary
 }
 
-const ErrorBoundaryFallback = ({ clearError }) => {
+const ErrorBoundaryFallback = () => {
   return (
     <View accessibilityLabel="errorBoundaryFallback">
       <Text>Error Boundary Fallback</Text>
@@ -17,7 +17,7 @@ const ErrorBoundaryFallback = ({ clearError }) => {
   )
 }
 
-const text = function () { throw new Error("An error has occurred in Buggy component!") }
+const text = () => { throw new Error("An error has occurred in Buggy component!") }
 
 const App = () => {
   return (
