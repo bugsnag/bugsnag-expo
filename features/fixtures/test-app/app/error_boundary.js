@@ -11,19 +11,19 @@ const onError = (event) => {
 
 const ErrorBoundaryFallback = () => {
   return (
-    <View accessibilityLabel="errorBoundaryFallback">
+    <View id='errorBoundaryFallback' accessibilityLabel='errorBoundaryFallback'>
       <Text>Error Boundary Fallback</Text>
     </View>
   )
 }
 
-const text = () => { throw new Error("An error has occurred in Buggy component!") }
+const throwError = () => { throw new Error('An error has occurred in Buggy component!') }
 
 const App = () => {
   return (
     <View>
       <Text>Main Application</Text>
-      <Text>{text()}</Text>
+      <Text>{throwError()}</Text>
     </View>
   )
 }
