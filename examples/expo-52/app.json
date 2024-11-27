@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "expo-example-52",
+    "slug": "expo-example-52",
+    "version": "1.0.0",
+    "newArchEnabled": true,
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "extra": {
+      "bugsnag": {
+        "apiKey": "API_KEY"
+      }
+    }
+  }
+}
