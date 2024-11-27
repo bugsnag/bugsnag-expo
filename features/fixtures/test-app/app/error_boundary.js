@@ -1,96 +1,37 @@
-import React, { Component } from 'react'
-import { View, Button, Text } from 'react-native'
+import React from 'react'
+import { View, Text } from 'react-native'
 import { bugsnagClient } from './bugsnag'
 
 // Create the error boundary...
-const ErrorBound = bugsnagClient.getPlugin('react').createErrorBoundary(React)
+const ErrorBoundary = bugsnagClient.getPlugin('react').createErrorBoundary(React)
 
-export default class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      ebTrigger: false,
-      fallbackTrigger: false
-    }
-  }
-
-  triggerErrorBoundary = () => {
-    this.setState(previous => (
-      {
-        ebTrigger: true,
-        fallbackTrigger: false
-      }
-    ))
-  }
-
-  renderErrorBoundary = () => {
-    if (this.state.ebTrigger) {
-      return (
-        <Buggy />
-      )
-    } else {
-      return null;
-    }
-  }
-
-  triggerFallback = () => {
-    this.setState(previous => (
-      {
-        ebTrigger: false,
-        fallbackTrigger: true
-      }
-    ))
-  }
-
-  renderFallback = () => {
-    if (this.state.fallbackTrigger) {
-      return (
-        <Buggy />
-      )
-    } else {
-      return null;
-    }
-  }
-
-  render() {
-    return (
-      <View>
-        <Button accessibilityLabel="errorBoundaryButton"
-          title="errorBoundary"
-          onPress={this.triggerErrorBoundary}/>
-        <Button accessibilityLabel="errorBoundaryFallbackButton"
-          title="errorBoundaryFallback"
-          onPress={this.triggerFallback}/>
-        <ErrorBound>
-          { this.renderErrorBoundary() }
-        </ErrorBound>
-        <ErrorBound FallbackComponent={Fallback}>
-          { this.renderFallback() }
-        </ErrorBound>
-      </View>
-    )
-  }
+const onError = (event) => {
+  // callback will only run for errors caught by boundary
 }
 
-class Fallback extends Component {
-  render() {
-    return (
-      <View accessibilityLabel="errorBoundaryFallback">
-        <Text>Buggy!</Text>
-      </View>
-    )
-  }
+const ErrorBoundaryFallback = ({ clearError }) => {
+  return (
+    <View accessibilityLabel="errorBoundaryFallback">
+      <Text>Error Boundary Fallback</Text>
+    </View>
+  )
 }
 
-class Buggy extends Component {
-  componentDidMount() {
-    throw new Error("An error has occurred in Buggy component!");
-  }
+const text = function () { throw new Error("An error has occurred in Buggy component!") }
 
-  render() {
-    return (
-      <View></View>
-    )
-  }
+const App = () => {
+  return (
+    <View>
+      <Text>Main Application</Text>
+      <Text>{text()}</Text>
+    </View>
+  )
 }
 
+export default () => {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorBoundaryFallback} onError={onError}>
+      <App />
+    </ErrorBoundary>
+  )
+}
