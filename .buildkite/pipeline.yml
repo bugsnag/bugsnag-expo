@@ -40,6 +40,33 @@ steps:
       - bundle install
       - features/scripts/build-ios.sh
 
+  - label: ':runner: expo Android 15'
+    depends_on:
+      - "build-expo-apk"
+    timeout_in_minutes: 50
+    plugins:
+      artifacts#v1.5.0:
+        download: "build/output.apk"
+      docker-compose#v3.9.0:
+        pull: expo-maze-runner
+        run: expo-maze-runner
+        use-aliases: true
+        command:
+          - --app=build/output.apk
+          - --farm=bs
+          - --device=ANDROID_15
+          - --a11y-locator
+          - --fail-fast
+          - --retry=2
+          - --order=random
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^v52$"
+    concurrency: 5
+    concurrency_group: 'browserstack-app'
+    concurrency_method: eager
+
   - label: ':runner: expo Android 12'
     depends_on:
       - "build-expo-apk"
@@ -62,7 +89,34 @@ steps:
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
-        branch: "^v51$"
+        branch: "^v52$"
+    concurrency: 5
+    concurrency_group: 'browserstack-app'
+    concurrency_method: eager
+
+  - label: ':runner: expo iOS 18'
+    depends_on:
+      - "build-expo-ipa"
+    timeout_in_minutes: 50
+    plugins:
+      artifacts#v1.5.0:
+        download: "build/output.ipa"
+      docker-compose#v3.9.0:
+        pull: expo-maze-runner
+        run: expo-maze-runner
+        use-aliases: true
+        command:
+          - --app=build/output.ipa
+          - --farm=bs
+          - --device=IOS_18
+          - --a11y-locator
+          - --fail-fast
+          - --retry=2
+          - --order=random
+      test-collector#v1.10.2:
+        files: "reports/TEST-*.xml"
+        format: "junit"
+        branch: "^v52$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
@@ -89,34 +143,7 @@ steps:
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
-        branch: "^v51$"
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
-
-  - label: ':runner: expo iOS 14'
-    depends_on:
-      - "build-expo-ipa"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_14
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-          - --order=random
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^v51$"
+        branch: "^v52$"
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
