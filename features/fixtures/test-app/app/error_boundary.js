@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { View, Button, Text } from 'react-native'
 import { bugsnagClient } from './bugsnag'
 
-const ErrorBound = bugsnagClient.getPlugin('react')
+// Create the error boundary...
+const ErrorBound = bugsnagClient.getPlugin('react').createErrorBoundary(React)
 
 export default class ErrorBoundary extends Component {
   constructor(props) {
