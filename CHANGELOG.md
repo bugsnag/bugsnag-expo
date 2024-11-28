@@ -1,10 +1,13 @@
 # Changelog
 
-## [Unreleased]
+## [52.0.0] - 2024-11-28
+
+This release adds support for Expo 52
 
 ### Changed
 
-- (delivery-expo) Changed "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
+- (delivery-expo) Change "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
+- (plugin-expo-app) Remove duplicate `nativeBundleVersion` and `nativeVersionCode` app metadata [#204](https://github.com/bugsnag/bugsnag-expo/pull/204)
 
 ## [51.0.1] - 2024-08-29
 
@@ -15,7 +18,7 @@
 
 ## [51.0.0] - 2024-05-16
 
-This release adds support for Expo 51.
+This release adds support for Expo 51
 
 ### Breaking Changes
 

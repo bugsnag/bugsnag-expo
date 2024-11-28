@@ -2,11 +2,11 @@
   "expo": {
     "name": "test-fixture",
     "slug": "test-fixture",
-    "privacy": "unlisted",
     "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
