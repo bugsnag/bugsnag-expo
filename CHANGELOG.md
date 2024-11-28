@@ -1,6 +1,8 @@
 # Changelog
 
-## [Unreleased]
+## [52.0.0] - 2024-11-28
+
+This release adds support for Expo 52
 
 ### Changed
 
@@ -16,7 +18,7 @@
 
 ## [51.0.0] - 2024-05-16
 
-This release adds support for Expo 51.
+This release adds support for Expo 51
 
 ### Breaking Changes
 
