@@ -52,8 +52,6 @@ module.exports = {
 
       event.app.versionCode = versionCode
       event.app.bundleVersion = bundleVersion
-
-      event.addMetadata('app', { nativeBundleVersion: bundleVersion, nativeVersionCode: versionCode })
     }, true)
   }
 }
