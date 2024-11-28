@@ -4,7 +4,8 @@
 
 ### Changed
 
-- (delivery-expo) Changed "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
+- (delivery-expo) Change "Redeliveryloop error" message to "An error occurred attempting to redeliver a payload" [#193](https://github.com/bugsnag/bugsnag-expo/pull/193)
+- (plugin-expo-app) Remove duplicate `nativeBundleVersion` and `nativeVersionCode` app metadata [#204](https://github.com/bugsnag/bugsnag-expo/pull/204)
 
 ## [51.0.1] - 2024-08-29
 
