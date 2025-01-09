@@ -26,6 +26,16 @@ describe('expo-cli: insert', () => {
     })
   })
 
+  it('should work on a fresh .tsx project', async () => {
+    await withFixture('blank-tsx', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/App.tsx`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
+    })
+  })
+
   it('shouldn’t insert if @bugsnag/expo is already imported (import, js)', async () => {
     await withFixture('already-configured-js-import', async (projectRoot) => {
       const appJsBefore = await readFile(`${projectRoot}/App.js`, 'utf8')
@@ -69,20 +79,20 @@ describe('expo-cli: insert', () => {
       expect(appTsAfter).toBe(appTsBefore)
     })
   })
-  
+
   it('shouldn’t insert if @bugsnag/expo is already imported (import, tsx)', async () => {
-    await withFixture('already-configured-ts-import', async (projectRoot) => {
+    await withFixture('already-configured-tsx-import', async (projectRoot) => {
       const appTsBefore = await readFile(`${projectRoot}/App.tsx`, 'utf8')
       const msg = await insert(projectRoot)
       expect(msg).toMatch(/already/)
 
-      const appTsAfter = await readFile(`${projectRoot}/App.txs`, 'utf8')
+      const appTsAfter = await readFile(`${projectRoot}/App.tsx`, 'utf8')
       expect(appTsAfter).toBe(appTsBefore)
     })
   })
 
   it('shouldn’t insert if @bugsnag/expo is already imported (require, tsx)', async () => {
-    await withFixture('already-configured-ts-require', async (projectRoot) => {
+    await withFixture('already-configured-tsx-require', async (projectRoot) => {
       const appTsBefore = await readFile(`${projectRoot}/App.tsx`, 'utf8')
       const msg = await insert(projectRoot)
       expect(msg).toMatch(/already/)
