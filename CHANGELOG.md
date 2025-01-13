@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- (expo-cli) Support App.tsx files in `bugsnag-expo-cli` [#206](https://github.com/bugsnag/bugsnag-expo/pull/206)
+
 ## [52.0.0] - 2024-11-28
 
 This release adds support for Expo 52
