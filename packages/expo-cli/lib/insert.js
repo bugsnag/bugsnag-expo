@@ -31,7 +31,7 @@ module.exports = async (projectRoot) => {
   } else if (checkFileExists('App.js')) {
     return await writeBugsnagImport('App.js')
   } else {
-    throw new Error(`Couldn’t find App.js or App.ts/tsx in "${projectRoot}". Is this the root of your Expo project?`)
+    throw new Error(`Couldn’t find App.js or App.ts(x) in "${projectRoot}". Is this the root of your Expo project?`)
   }
 }
 
