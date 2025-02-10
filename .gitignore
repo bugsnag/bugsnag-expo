@@ -21,3 +21,4 @@ compile_commands.json
 package-lock.json
 yarn.lock
 /config
+.yarn
