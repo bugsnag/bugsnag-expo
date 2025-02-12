@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- (plugin-expo-eas-sourcemaps) Update `@expo/config` peer dependency to `~10.0.2` [#209](https://github.com/bugsnag/bugsnag-expo/pull/209)
+
 ### Fixed
 
 - (expo-cli) Support App.tsx files in `bugsnag-expo-cli` [#206](https://github.com/bugsnag/bugsnag-expo/pull/206)
