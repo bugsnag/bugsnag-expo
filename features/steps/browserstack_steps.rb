@@ -24,9 +24,10 @@ Then("the event {string} equals the current OS name") do |field_path|
 end
 
 def click_if_present(element)
-  return false unless Maze.driver.wait_for_element(element, 1)
+  manager = Maze::Api::Appium::UiManager.new
+  return false unless manager.wait_for_element(element, 1)
 
-  Maze.driver.click_element_if_present(element)
+  manager.click_element_if_present(element)
 rescue Selenium::WebDriver::Error::UnknownError
   # Ignore Appium errors (e.g. during an ANR)
   return false
@@ -44,6 +45,7 @@ When("I clear any error dialogue") do
 end
 
 When("I close and relaunch the app") do
-  Maze.driver.terminate_app Maze.driver.app_id
-  Maze.driver.activate_app Maze.driver.app_id
+  manager = Maze::Api::Appium::AppManager.new
+  manager.terminate
+  manager.activate
 end
