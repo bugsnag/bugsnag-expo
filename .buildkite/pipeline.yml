@@ -56,6 +56,7 @@ steps:
           - --farm=bs
           - --device=ANDROID_15
           - --a11y-locator
+          - --appium-version=1.22.0
           - --fail-fast
           - --retry=2
           - --order=random
