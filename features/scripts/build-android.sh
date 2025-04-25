@@ -4,6 +4,9 @@ set -e
 
 pushd features/fixtures/test-app
 
+npm config get registry --no-workspaces
+npm config ls -l --no-workspaces
+
 eas build \
   --local \
   -p android \
