@@ -21,14 +21,14 @@
   },
   "devDependencies": {
     "@bugsnag/core": "^8.2.0",
-    "expo-constants": "~17.0.3",
-    "expo-device": "~7.0.1",
-    "expo-secure-store": "~14.0.0"
+    "expo-constants": "~17.1.6",
+    "expo-device": "~7.1.4",
+    "expo-secure-store": "~14.2.3"
   },
   "peerDependencies": {
     "@bugsnag/core": "^8.0.0",
-    "expo-constants": "~17.0.3",
-    "expo-device": "~7.0.1",
-    "expo-secure-store": "~14.0.0"
+    "expo-constants": "~17.1.6",
+    "expo-device": "~7.1.4",
+    "expo-secure-store": "~14.2.3"
   }
 }
