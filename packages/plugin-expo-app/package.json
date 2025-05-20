@@ -17,12 +17,12 @@
   "author": "Bugsnag",
   "license": "MIT",
   "devDependencies": {
-    "@bugsnag/core": "^7.19.0",
+    "@bugsnag/core": "^8.2.0",
     "expo-application": "~6.0.1",
     "expo-constants": "~17.0.3"
   },
   "peerDependencies": {
-    "@bugsnag/core": "^7.0.0",
+    "@bugsnag/core": "^8.0.0",
     "expo-application": "~6.0.1",
     "expo-constants": "~17.0.3"
   }
