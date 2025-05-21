@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [53.0.0] - 2025-05-21
 
 This release adds support for Expo 53
 
