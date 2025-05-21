@@ -17,15 +17,15 @@
   "author": "Bugsnag",
   "license": "MIT",
   "devDependencies": {
-    "@bugsnag/core": "^7.22.7",
+    "@bugsnag/core": "^8.2.0",
     "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~14.0.1",
-    "expo-file-system": "~18.0.4"
+    "expo-crypto": "~14.1.4",
+    "expo-file-system": "~18.1.10"
   },
   "peerDependencies": {
-    "@bugsnag/core": "^7.22.7",
+    "@bugsnag/core": "^8.2.0",
     "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~14.0.1",
-    "expo-file-system": "~18.0.4"
+    "expo-crypto": "~14.1.4",
+    "expo-file-system": "~18.1.10"
   }
 }

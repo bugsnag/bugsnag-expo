@@ -1,5 +1,13 @@
 # Changelog
 
+## [53.0.0] - 2025-05-21
+
+This release adds support for Expo 53
+
+### Breaking Changes
+
+`@bugsnag/core` and internal plugins have been updated from v7.x to v8.x. See the [upgrade guide](UPGRADING.md) for more information.
+
 ## [52.0.1] - 2025-02-20
 
 ### Changed
