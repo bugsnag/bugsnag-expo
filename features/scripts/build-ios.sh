@@ -11,7 +11,7 @@ fi
 
 pushd features/fixtures/test-app
 
-eas build \
+npx eas-cli@latest build \
   --local \
   -p ios \
   --output output.ipa \
