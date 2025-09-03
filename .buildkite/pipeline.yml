@@ -67,6 +67,10 @@ steps:
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: 103  # Appium session failed
+          limit: 2
 
   - label: ':runner: expo Android 12'
     depends_on:
@@ -94,6 +98,10 @@ steps:
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: 103  # Appium session failed
+          limit: 2
 
   - label: ':runner: expo iOS 18'
     depends_on:
@@ -121,6 +129,10 @@ steps:
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: 103  # Appium session failed
+          limit: 2
 
   - label: ':runner: expo iOS 16'
     depends_on:
@@ -148,3 +160,7 @@ steps:
     concurrency: 5
     concurrency_group: 'browserstack-app'
     concurrency_method: eager
+    retry:
+      automatic:
+        - exit_status: 103  # Appium session failed
+          limit: 2
