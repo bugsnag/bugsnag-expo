@@ -8,12 +8,12 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-standard": "^4.0.1",
-    "expo": "^53.0.0",
+    "expo": "^54.0.1",
     "jest": "^29.3.1",
-    "jest-expo": "~53.0.5",
+    "jest-expo": "~54.0.10",
     "lerna": "^8.0.2",
-    "react": "19.0.0",
-    "react-native": "0.79.2",
+    "react": "19.1.0",
+    "react-native": "0.81.4",
     "verdaccio": "^5.10.2"
   },
   "scripts": {

@@ -19,13 +19,13 @@
   "devDependencies": {
     "@bugsnag/core": "^8.2.0",
     "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~14.1.4",
-    "expo-file-system": "~18.1.10"
+    "expo-crypto": "~15.0.6",
+    "expo-file-system": "~19.0.11"
   },
   "peerDependencies": {
     "@bugsnag/core": "^8.2.0",
     "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~14.1.4",
-    "expo-file-system": "~18.1.10"
+    "expo-crypto": "~15.0.6",
+    "expo-file-system": "~19.0.11"
   }
 }

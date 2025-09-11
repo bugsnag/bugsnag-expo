@@ -10,17 +10,17 @@
   "dependencies": {
     "@bugsnag/expo": "*",
     "@react-native-community/netinfo": "11.4.1",
-    "expo": "^53.0.9",
-    "expo-application": "~6.1.4",
-    "expo-constants": "~17.1.6",
-    "expo-crypto": "~14.1.4",
-    "expo-device": "~7.1.4",
-    "expo-file-system": "~18.1.10",
-    "expo-screen-orientation": "~8.1.6",
-    "expo-secure-store": "~14.2.3",
-    "expo-status-bar": "~2.2.3",
-    "react": "19.0.0",
-    "react-native": "0.79.2"
+    "expo": "^54.0.1",
+    "expo-application": "~7.0.6",
+    "expo-constants": "~18.0.8",
+    "expo-crypto": "~15.0.6",
+    "expo-device": "~8.0.6",
+    "expo-file-system": "~19.0.11",
+    "expo-screen-orientation": "~9.0.6",
+    "expo-secure-store": "~15.0.6",
+    "expo-status-bar": "~3.0.7",
+    "react": "19.1.0",
+    "react-native": "0.81.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
