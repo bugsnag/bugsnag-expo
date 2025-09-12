@@ -5,7 +5,7 @@ import Bugsnag from '@bugsnag/expo'
 
 export default class AppFeature extends Component {
   defaultApp = () => {
-    bugsnagClient = Bugsnag.createClient({
+    const bugsnagClient = Bugsnag.createClient({
       endpoints: endpoints,
       autoTrackSessions: false,
       codeBundleId: '691f4728-4bf5-4da3-a954-ea9a10fa17d2'
@@ -14,7 +14,7 @@ export default class AppFeature extends Component {
   }
 
   enhancedApp = () => {
-    bugsnagClient = Bugsnag.createClient({
+    const bugsnagClient = Bugsnag.createClient({
       endpoints: endpoints,
       autoTrackSessions: false,
       codeBundleId: '691f4728-4bf5-4da3-a954-ea9a10fa17d2'

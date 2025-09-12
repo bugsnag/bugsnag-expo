@@ -20,7 +20,6 @@ steps:
       queue: "macos-15"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      NODE_VERSION: "18.18"
       JAVA_VERSION: "17"
     artifact_paths: build/output.apk
     commands:
@@ -34,7 +33,6 @@ steps:
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       XCODE_VERSION: "16.3.0"
-      NODE_VERSION: "18.18"
     artifact_paths: build/output.ipa
     commands:
       - bundle install
