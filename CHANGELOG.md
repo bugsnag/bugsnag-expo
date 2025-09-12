@@ -1,5 +1,11 @@
 # Changelog
 
+This release adds support for Expo 54
+
+## [Unreleased]
+
+- (delivery-expo) Fix import for legacy FileSystem API [#231](https://github.com/bugsnag/bugsnag-expo/pull/231)
+
 ## [53.0.0] - 2025-05-21
 
 This release adds support for Expo 53
