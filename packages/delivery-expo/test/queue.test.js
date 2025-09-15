@@ -1,7 +1,7 @@
 const Queue = require('../queue')
-const FileSystem = require('expo-file-system')
+const FileSystem = require('expo-file-system/legacy')
 
-jest.mock('expo-file-system', () => ({
+jest.mock('expo-file-system/legacy', () => ({
   cacheDirectory: 'file://var/data/foo.bar.app/',
   downloadAsync: jest.fn(() => Promise.resolve({ md5: 'md5', uri: 'uri' })),
   getInfoAsync: jest.fn(() => Promise.resolve({ exists: true, md5: 'md5', uri: 'uri' })),

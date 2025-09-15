@@ -58,7 +58,7 @@ jest.mock('react-native', () => ({
   }
 }))
 
-jest.mock('../../../node_modules/expo-file-system', () => ({
+jest.mock('../../../node_modules/expo-file-system/legacy', () => ({
   cacheDirectory: 'file://var/data/foo.bar.app/',
   downloadAsync: jest.fn(() => Promise.resolve({ md5: 'md5', uri: 'uri' })),
   getInfoAsync: jest.fn(() => Promise.resolve({ exists: true, md5: 'md5', uri: 'uri' })),

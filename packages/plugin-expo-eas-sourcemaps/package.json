@@ -24,7 +24,7 @@
   },
   "peerDependencies": {
     "@bugsnag/source-maps": "^2.3.3",
-    "@expo/config": "~11.0.10"
+    "@expo/config": "~12.0.8"
   },
   "author": "Bugsnag",
   "license": "MIT"
