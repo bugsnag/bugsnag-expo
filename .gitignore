@@ -22,3 +22,5 @@ package-lock.json
 yarn.lock
 /config
 .yarn
+.idea/
+bugsnag-expo-v54.iml
