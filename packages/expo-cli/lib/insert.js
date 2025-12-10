@@ -1,38 +1,36 @@
 const { join } = require('path')
-const { readFile, writeFile, existsSync } = require('fs')
+const { readFile, writeFile } = require('fs')
 const { promisify } = require('util')
 const { detectInstalledVersion } = require('./detect-installed')
+const { findAppEntry } = require('./utils')
 const semver = require('semver')
 
 const importRe = /from ["']@bugsnag\/expo["']/
 const requireRe = /require\(["']@bugsnag\/expo["']\)/
+const entrypoints = ['App.ts',
+  'App.tsx',
+  'App.js',
+  'App.jsx',
+  join('src', 'App.ts'),
+  join('src', 'App.tsx'),
+  join('src', 'App.js'),
+  join('src', 'App.jsx'),
+  join('app', '_layout.tsx')
+]
 
 module.exports = async (projectRoot) => {
-  function checkFileExists (filename) {
-    const appPath = join(projectRoot, filename)
-    return existsSync(appPath)
+  // find app entry file
+  const appPath = findAppEntry(projectRoot, entrypoints)
+  if (!appPath) {
+    throw new Error(`Could not find app entry file. Searched: ${entrypoints.join(', ')}`)
   }
-
-  const writeBugsnagImport = async (filename) => {
-    // check if import statement has already been added and return
-    const appPath = join(projectRoot, filename)
-    const app = await promisify(readFile)(appPath, 'utf8')
-    if (importRe.test(app) || requireRe.test(app)) {
-      return `@bugsnag/expo is already imported in ${filename}`
-    }
-    // write to file
-    await promisify(writeFile)(appPath, `${await getCode(projectRoot)}\n${app}`, 'utf8')
+  // check if import statement has already been added and return
+  const app = await promisify(readFile)(appPath, 'utf8')
+  if (importRe.test(app) || requireRe.test(app)) {
+    return `@bugsnag/expo is already imported in ${appPath}`
   }
-
-  if (checkFileExists('App.ts')) {
-    return await writeBugsnagImport('App.ts')
-  } else if (checkFileExists('App.tsx')) {
-    return await writeBugsnagImport('App.tsx')
-  } else if (checkFileExists('App.js')) {
-    return await writeBugsnagImport('App.js')
-  } else {
-    throw new Error(`Couldn’t find App.js or App.ts(x) in "${projectRoot}". Is this the root of your Expo project?`)
-  }
+  // write to file
+  await promisify(writeFile)(appPath, `${await getCode(projectRoot)}\n${app}`, 'utf8')
 }
 
 const code = {
