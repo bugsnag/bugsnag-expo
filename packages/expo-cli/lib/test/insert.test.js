@@ -104,7 +104,7 @@ describe('expo-cli: insert', () => {
 
   it('should provide a reasonable error when there is no App.js or App.ts/tsx', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js or App\.ts\(x\) in/)
+      await expect(insert(projectRoot)).rejects.toThrow(/^Could not find app entry file\. Searched:.*/)
     })
   })
 
