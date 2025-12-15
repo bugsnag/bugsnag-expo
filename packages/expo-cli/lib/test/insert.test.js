@@ -151,4 +151,24 @@ describe('expo-cli: insert', () => {
       expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag\.start\(\);\s/)
     })
   })
+
+  it('detects the entrypoint in an Expo Router `app` directory', async () => {
+    await withFixture('app-dir-entry', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/app/_layout.tsx`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
+    })
+  })
+
+  it('detects the entrypoint in an React Navigation `src` directory', async () => {
+    await withFixture('src-dir-entry', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/src/App.tsx`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
+    })
+  })
 })
