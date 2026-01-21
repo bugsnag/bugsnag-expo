@@ -65,6 +65,7 @@ final_json = File.open("package.json") do |file|
     "@bugsnag/plugin-react-native-global-error-handler" => version,
     "@bugsnag/plugin-react-native-orientation-breadcrumbs" => version,
     "@bugsnag/plugin-react-native-unhandled-rejection" => version,
+    "@bugsnag/request-tracker" => version,
   })
 
   JSON.pretty_generate(package_json)
