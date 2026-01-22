@@ -10,6 +10,9 @@ git clean -xfdf
 # And the yarn cache is clean
 yarn cache clean --all
 
+# set bugsnag-js override versions if this build was triggered from the bugsnag-js repo
+./features/scripts/set-bugsnag-js-overrides $BUGSNAG_JS_BRANCH $BUGSNAG_JS_COMMIT
+
 # Install repo dependencies
 yarn install
 
@@ -20,9 +23,6 @@ cd features/fixtures/test-app
 
 # Set EAS Project ID
 sed -i '' "s/EXPO_EAS_PROJECT_ID/$EXPO_EAS_PROJECT_ID/g" app.json
-
-# set bugsnag-js override versions if this build was triggered from the bugsnag-js repo
-./set-bugsnag-js-overrides $BUGSNAG_JS_BRANCH $BUGSNAG_JS_COMMIT
 
 ./run-bugsnag-expo-cli-install
 
