@@ -59,7 +59,6 @@ steps:
           - --appium-version=1.22.0
           - --fail-fast
           - --retry=2
-          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -90,7 +89,6 @@ steps:
           - --a11y-locator
           - --fail-fast
           - --retry=2
-          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -121,7 +119,6 @@ steps:
           - --a11y-locator
           - --fail-fast
           - --retry=2
-          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
@@ -152,7 +149,6 @@ steps:
           - --a11y-locator
           - --fail-fast
           - --retry=2
-          - --order=random
       test-collector#v1.10.2:
         files: "reports/TEST-*.xml"
         format: "junit"
