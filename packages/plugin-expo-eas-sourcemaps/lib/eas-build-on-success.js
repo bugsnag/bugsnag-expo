@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { access } = require('fs').promises
-const { reactNative } = require('@bugsnag/source-maps')
+const BugsnagCLI = require('@bugsnag/cli')
 const { exit } = require('process')
 const { getConfig } = require('@expo/config')
 
@@ -43,14 +43,13 @@ const uploadSourceMaps = async () => {
   }
 
   console.log('Uploading Android source map to Bugsnag...')
-  await reactNative.uploadOne({
-    apiKey,
-    bundle,
-    sourceMap,
-    platform: 'android',
-    appVersion: appConfig?.exp?.version,
-    appVersionCode: appConfig?.exp?.android?.versionCode?.toString()
-  }).then(() => {
+  await BugsnagCLI.Upload.ReactNative.Android(
+    {
+      apiKey: apiKey,
+      projectRoot: PROJECT_ROOT
+    }
+    , PROJECT_ROOT
+  ).then(() => {
     console.log(`Successfully uploaded the following files:\n${[bundle, sourceMap].join('\n')}`)
   }).catch(error => {
     console.error(`Error uploading source map: ${error}`)

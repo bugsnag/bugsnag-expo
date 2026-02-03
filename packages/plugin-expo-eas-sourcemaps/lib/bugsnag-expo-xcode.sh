@@ -41,10 +41,9 @@ PROJECT_ROOT=${PWD%\/ios}
 
 ARGS=(
     "--api-key" "$API_KEY"
-    "--app-version" "$APP_VERSION"
-    "--app-bundle-version" "$BUNDLE_VERSION"
+    "--version-name" "$APP_VERSION"
+    "--bundle-version" "$BUNDLE_VERSION"
     "--bundle" "$BUNDLE_FILE"
-    "--platform" "ios"
     "--source-map" "$SOURCE_MAP"
     "--project-root" "$PROJECT_ROOT"
     )
@@ -60,4 +59,4 @@ if [ ! -z "$ENDPOINT" ]; then
   ARGS+=("$ENDPOINT")
 fi
 
-../node_modules/.bin/bugsnag-source-maps upload-react-native "${ARGS[@]}"
+../node_modules/.bin/bugsnag-cli upload react-native-ios "${ARGS[@]}"
