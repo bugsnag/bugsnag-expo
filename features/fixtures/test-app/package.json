@@ -25,7 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@bugsnag/plugin-expo-eas-sourcemaps": "*",
-    "@bugsnag/source-maps": "^2.3.3",
+    "@bugsnag/cli": "^3.7.0",
     "bugsnag-expo-cli": "*"
   },
   "private": true
