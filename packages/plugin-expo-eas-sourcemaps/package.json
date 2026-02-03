@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/plugin-expo-eas-sourcemaps",
-  "version": "53.0.0",
+  "version": "52.0.1",
   "description": "Plugin to handle uploading sourcemaps to bugsnag when using the EAS build system",
   "main": "index.js",
   "bin": {
@@ -24,7 +24,7 @@
   },
   "peerDependencies": {
     "@bugsnag/cli": "^3.7.0",
-    "@expo/config": "~11.0.10"
+    "@expo/config": "~10.0.2"
   },
   "author": "Bugsnag",
   "license": "MIT"
