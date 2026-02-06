@@ -1,9 +1,8 @@
-const sourceMaps = require('@bugsnag/source-maps').reactNative
-const logger = require('@bugsnag/source-maps/dist/Logger').default
 const { promisify } = require('util')
 const { tmpdir } = require('os')
 const { sep, join } = require('path')
 const { mkdtemp, writeFile } = require('fs')
+const BugsnagCLI = require('@bugsnag/cli')
 
 const writeFileAsync = promisify(writeFile)
 
@@ -35,29 +34,29 @@ module.exports = async (
   const opts = { apiKey }
   if (endpoint) opts.endpoint = endpoint
 
-  logger.info('Uploading source maps to Bugsnag')
+  console.log('Uploading source map to Bugsnag...')
 
   // android
-  await sourceMaps.uploadOne({
-    ...opts,
-    appVersion: androidManifest.version,
-    codeBundleId: androidManifest.revisionId,
-    bundle: androidBundlePath,
-    sourceMap: androidSourceMapPath,
-    platform: 'android',
-    logger
-  })
+  await BugsnagCLI.Upload.ReactNative.Android(
+    {
+      apiKey: apiKey,
+      versionName: androidManifest.version,
+      codeBundleId: androidManifest.revisionId,
+      bundle: androidBundlePath,
+      sourceMap: androidSourceMapPath
+    }
+  )
 
   // ios
-  await sourceMaps.uploadOne({
-    ...opts,
-    appVersion: iosManifest.version,
-    codeBundleId: iosManifest.revisionId,
-    bundle: iosBundlePath,
-    sourceMap: iosSourceMapPath,
-    platform: 'ios',
-    logger
-  })
+  await BugsnagCLI.Upload.ReactNative.iOS(
+    {
+      apiKey: apiKey,
+      versionName: androidManifest.version,
+      codeBundleId: androidManifest.revisionId,
+      bundle: androidBundlePath,
+      sourceMap: androidSourceMapPath
+    }
+  )
 }
 
 const makeTmpDir = async () => promisify(mkdtemp)(`${tmpdir()}${sep}bugsnag-expo-`)
