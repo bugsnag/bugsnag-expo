@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### Added
+
+- Migrate from the `@bugsnag/source-map` tool over to `@bugsnag/cli` for the EAS sourcemap plugin [#247](https://github.com/bugsnag/bugsnag-expo/pull/247)
+
 ## [54.0.0] - 2025-09-15
 
 This release adds support for Expo 54
