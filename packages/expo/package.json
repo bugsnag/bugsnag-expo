@@ -45,7 +45,7 @@
     "@bugsnag/plugin-react-native-global-error-handler": "^8.2.0",
     "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^8.2.0",
     "@bugsnag/plugin-react-native-unhandled-rejection": "^8.2.0",
-    "@bugsnag/source-maps": "^2.3.3",
+    "@bugsnag/cli": "^3.7.0",
     "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
