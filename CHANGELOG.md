@@ -1,5 +1,11 @@
 # Changelog
 
+## unreleased
+
+### Added
+
+- Migrate from the `@bugsnag/source-map` tool over to `@bugsnag/cli` for the EAS sourcemap plugin [#249](https://github.com/bugsnag/bugsnag-expo/pull/249)
+
 ## [52.0.1] - 2025-02-20
 
 ### Changed
