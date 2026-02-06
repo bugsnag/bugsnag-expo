@@ -9,7 +9,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
           return Promise.resolve()
         }
       }
@@ -32,7 +32,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
           return Promise.resolve()
         }
       }
@@ -55,7 +55,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
           return Promise.resolve()
         }
       }
@@ -79,7 +79,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
           return Promise.resolve()
         }
       }
@@ -102,7 +102,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps@^48.0.0', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps@^48.0.0', '@bugsnag/cli'])
           return Promise.resolve()
         }
       }
@@ -124,7 +124,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
     await withFixture('blank-js', async (projectRoot) => {
       const packageManager = {
         addDevAsync: async (packages) => {
-          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+          expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
           return Promise.reject(new Error('floop'))
         }
       }
@@ -144,7 +144,7 @@ describe('expo-cli: upload-sourcemaps install plugin', () => {
   it('should add stderr/stdout output onto error if there is one', async () => {
     const packageManager = {
       addDevAsync: async (packages) => {
-        expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/source-maps'])
+        expect(packages).toEqual(['@bugsnag/plugin-expo-eas-sourcemaps', '@bugsnag/cli'])
         const error = new Error('floop')
         error.stdout = 'some data on stdout'
         error.stderr = 'some data on stderr'
