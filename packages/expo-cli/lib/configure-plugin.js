@@ -90,7 +90,7 @@ module.exports = async (projectRoot) => {
     if (addMonorepoConfig) {
       console.log(blue('> yarn workspaces detected, updating config'))
 
-      const sourceMaps = '@bugsnag/source-maps'
+      const sourceMaps = '@bugsnag/cli'
 
       if (withYarnClassic) {
         packageJson.workspaces = packageJson.workspaces || {}

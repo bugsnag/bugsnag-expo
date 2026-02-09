@@ -2,7 +2,7 @@ const { createForProject } = require('@expo/package-manager')
 const { resolvePackageName } = require('./utils')
 
 module.exports = (version, projectRoot, options) => {
-  const packages = [resolvePackageName('@bugsnag/plugin-expo-eas-sourcemaps', version), '@bugsnag/source-maps']
+  const packages = [resolvePackageName('@bugsnag/plugin-expo-eas-sourcemaps', version), '@bugsnag/cli']
 
   // Expo's package manager will reject with an error if the child process exits with a non-zero code
   // it also buffers the output and attaches it to any errors - https://github.com/expo/spawn-async/blob/main/src/spawnAsync.ts
