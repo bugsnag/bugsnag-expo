@@ -45,15 +45,15 @@
     "@bugsnag/plugin-react-native-global-error-handler": "^7.22.7",
     "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^7.22.7",
     "@bugsnag/plugin-react-native-unhandled-rejection": "^7.22.7",
-    "@bugsnag/source-maps": "^2.3.3",
+    "@bugsnag/cli": "^3.7.0",
     "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
-    "expo-constants": "~17.0.3"
+    "expo-constants": "~17.0.8"
   },
   "peerDependencies": {
     "expo": "^52.0.0",
-    "expo-constants": "~17.0.3",
+    "expo-constants": "~17.0.8",
     "promise": "^8.3.0",
     "react": "*"
   }
