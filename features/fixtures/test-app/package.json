@@ -20,12 +20,12 @@
     "expo-secure-store": "~14.0.0",
     "expo-status-bar": "~2.0.0",
     "react": "18.3.1",
-    "react-native": "0.76.9"
+    "react-native": "0.76.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@bugsnag/cli": "^3.7.0",
     "@bugsnag/plugin-expo-eas-sourcemaps": "*",
+    "@bugsnag/cli": "^3.7.0",
     "bugsnag-expo-cli": "*"
   },
   "private": true
