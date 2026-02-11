@@ -4,7 +4,7 @@ gem 'cocoapods', '~> 1.14.3'
 gem 'fastlane'
 gem 'xcpretty', '~> 0.4.1'
 
-gem 'bugsnag-maze-runner', '~>10.0'
+gem 'bugsnag-maze-runner', '~>11.0'
 
 # Use a branch of Maze Runner
 #gem 'bugsnag-maze-runner', git: 'https://github.com/bugsnag/maze-runner', branch: 'tms/use-maze-check'
