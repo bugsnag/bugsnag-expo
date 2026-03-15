@@ -38,7 +38,7 @@ describe('plugin: expo device', () => {
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
     jest.doMock('expo-secure-store', () => ({
       getItem: () => 'c0123456789abcdef0123456789',
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -111,7 +111,7 @@ describe('plugin: expo device', () => {
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
     jest.doMock('expo-secure-store', () => ({
       getItem: () => 'c0123456789abcdef0123456789',
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -176,7 +176,7 @@ describe('plugin: expo device', () => {
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
     jest.doMock('expo-secure-store', () => ({
       getItem: () => 'c0123456789abcdef0123456789',
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -226,7 +226,7 @@ describe('plugin: expo device', () => {
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
     jest.doMock('expo-secure-store', () => ({
       getItem: () => 'c0123456789abcdef0123456789',
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -298,7 +298,7 @@ describe('plugin: expo device', () => {
     jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
     jest.doMock('expo-secure-store', () => ({
       getItem: () => 'c0123456789abcdef0123456789',
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -362,7 +362,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-secure-store', () => ({
       getItem,
       setItem,
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -421,7 +421,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-secure-store', () => ({
       getItem,
       setItem,
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
@@ -481,7 +481,7 @@ describe('plugin: expo device', () => {
     jest.doMock('expo-secure-store', () => ({
       getItem,
       setItem,
-      ALWAYS_THIS_DEVICE_ONLY: 4
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
     }))
 
     const plugin = require('..')
