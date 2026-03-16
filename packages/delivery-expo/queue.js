@@ -1,7 +1,7 @@
-const FileSystem = require('expo-file-system/legacy')
+const { File, Directory, Paths } = require('expo-file-system')
 
 const MAX_ITEMS = 64
-const PAYLOAD_PATH = `${FileSystem.cacheDirectory}bugsnag`
+const PAYLOAD_PATH = `${Paths.cache.uri}/bugsnag`
 const filenameRe = /^bugsnag-.*\.json$/
 
 /*
@@ -37,18 +37,19 @@ module.exports = class UndeliveredPayloadQueue {
    * Ensure the persistent cache directory exists
    */
   async _init () {
-    if (await this._checkCacheDirExists()) return
+    if (this._checkCacheDirExists()) return
     try {
-      await FileSystem.makeDirectoryAsync(this._path, { intermediates: true })
+      const dir = new Directory(this._path)
+      dir.create({ intermediates: true })
     } catch (e) {
-      // Expo has a bug where `makeDirectoryAsync` can error, even though it succesfully
+      // Expo has a bug where directory creation can error, even though it succesfully
       // created the directory. See:
       //   https://github.com/expo/expo/issues/2050
       //   https://forums.expo.io/t/makedirectoryasync-error-could-not-be-created/11916
       //
       // To tolerate this, after getting an error, we check whether the directory
       // now exist, swallowing the error if so, rethrowing if not.
-      if (await this._checkCacheDirExists()) return
+      if (this._checkCacheDirExists()) return
       throw e
     }
   }
@@ -56,9 +57,9 @@ module.exports = class UndeliveredPayloadQueue {
   /*
    * Check if the cache directory exists
    */
-  async _checkCacheDirExists () {
-    const { exists, isDirectory } = await FileSystem.getInfoAsync(this._path)
-    return exists && isDirectory
+  _checkCacheDirExists () {
+    const dir = new Directory(this._path)
+    return dir.exists
   }
 
   /*
@@ -71,8 +72,12 @@ module.exports = class UndeliveredPayloadQueue {
 
     try {
       // list the payloads in order
-      const payloads = (await FileSystem.readDirectoryAsync(this._path))
-        .filter(f => filenameRe.test(f)).sort()
+      const dir = new Directory(this._path)
+      const entries = dir.list()
+      const payloads = entries
+        .filter(entry => entry instanceof File && filenameRe.test(entry.name))
+        .map(entry => entry.name)
+        .sort()
 
       // figure out how many over MAX_ITEMS we are
       const diff = payloads.length - MAX_ITEMS
@@ -103,10 +108,8 @@ module.exports = class UndeliveredPayloadQueue {
   async enqueue (req) {
     try {
       await this.init()
-      await FileSystem.writeAsStringAsync(
-        `${this._path}/${generateFilename(this._resource)}`,
-        JSON.stringify({ ...req, retries: 0 })
-      )
+      const file = new File(this._path, generateFilename(this._resource))
+      file.write(JSON.stringify({ ...req, retries: 0 }))
       this._truncate()
     } catch (e) {
       this._onerror(e)
@@ -118,13 +121,18 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async peek () {
     try {
-      const payloads = await FileSystem.readDirectoryAsync(this._path)
-      const payloadFileName = payloads.filter(f => filenameRe.test(f)).sort()[0]
+      const dir = new Directory(this._path)
+      const entries = dir.list()
+      const payloadFileName = entries
+        .filter(entry => entry instanceof File && filenameRe.test(entry.name))
+        .map(entry => entry.name)
+        .sort()[0]
       if (!payloadFileName) return null
       const id = `${this._path}/${payloadFileName}`
 
       try {
-        const payloadJson = await FileSystem.readAsStringAsync(id)
+        const file = new File(id)
+        const payloadJson = file.textSync()
         const payload = JSON.parse(payloadJson)
         return { id, payload }
       } catch (e) {
@@ -147,7 +155,8 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async remove (id) {
     try {
-      await FileSystem.deleteAsync(id)
+      const file = new File(id)
+      file.delete()
     } catch (e) {
       this._onerror(e)
     }
@@ -159,10 +168,11 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async update (id, updates) {
     try {
-      const payloadJson = await FileSystem.readAsStringAsync(id)
+      const file = new File(id)
+      const payloadJson = file.textSync()
       const payload = JSON.parse(payloadJson)
       const updatedPayload = { ...payload, ...updates }
-      await FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload))
+      file.write(JSON.stringify(updatedPayload))
     } catch (e) {
       this._onerror(e)
     }
