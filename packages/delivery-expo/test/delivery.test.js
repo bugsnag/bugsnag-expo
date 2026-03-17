@@ -14,14 +14,12 @@ const noopLogger = {
 
 jest.mock('expo-file-system', () => ({
   File: class MockFile {
-    constructor () {}
     write () {}
     textSync () { return '{}' }
     delete () {}
     get name () { return '' }
   },
   Directory: class MockDirectory {
-    constructor () {}
     create () {}
     get exists () { return true }
     list () { return [] }
