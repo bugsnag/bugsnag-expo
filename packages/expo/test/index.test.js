@@ -90,7 +90,7 @@ jest.doMock('../../../node_modules/expo-device', () => ({
 jest.doMock('expo-secure-store', () => ({
   getItem: () => 'c0123456789abcdef0123456789',
   setItem: () => {},
-  ALWAYS_THIS_DEVICE_ONLY: 4
+  AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
 }))
 
 const networkBreadcrumbsPlugin = {
