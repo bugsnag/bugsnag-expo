@@ -40,8 +40,13 @@ module.exports = class RedeliveryLoop {
   _schedule (t) {
     if (this._stopped) return
     if (t === 0) {
-      // run immediately for synchronous queue processing
-      this._redeliver().catch(e => this._onerror(e))
+      // run soon for synchronous queue processing but avoid immediate recursion
+      // which can blow the stack when _redeliver schedules another immediate run.
+      if (typeof setImmediate === 'function') {
+        setImmediate(() => { this._redeliver().catch(e => this._onerror(e)) })
+      } else {
+        setTimeout(() => { this._redeliver().catch(e => this._onerror(e)) }, 0)
+      }
       return
     }
     this._timer = setTimeout(this._redeliver.bind(this), t)
