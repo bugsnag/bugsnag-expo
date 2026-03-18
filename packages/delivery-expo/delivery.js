@@ -21,9 +21,9 @@ module.exports = (client, fetch = global.fetch) => {
 
   const logError = e => client._logger.error('Error redelivering payload', e)
 
-  const enqueue = async (payloadKind, failedPayload) => {
+  const enqueue = (payloadKind, failedPayload) => {
     client._logger.info(`Writing ${payloadKind} payload to cache`)
-    await queues[payloadKind].enqueue(failedPayload, logError)
+    queues[payloadKind].enqueue(failedPayload, logError)
     if (networkStatus.isConnected) queueConsumers[payloadKind].start()
   }
 
