@@ -42,10 +42,10 @@ module.exports = class RedeliveryLoop {
     this._timer = setTimeout(this._redeliver.bind(this), t)
   }
 
-  async _redeliver () {
+  _redeliver () {
     try {
       // pop a failed request off of the queue
-      const res = await this._queue.peek()
+      const res = this._queue.peek()
 
       // if there isn't anything on the queue, stop the loop
       if (!res) {
@@ -56,22 +56,22 @@ module.exports = class RedeliveryLoop {
       const { id, payload } = res
 
       // if there is, attempt to deliver it
-      this._send(payload.url, payload.opts, async (err) => {
+      this._send(payload.url, payload.opts, (err) => {
         try {
           if (err) {
             this._onerror(err)
 
             if (err.isRetryable === false) {
-              await this._queue.remove(id)
+              this._queue.remove(id)
               return this._schedule(0)
             }
 
             if (payload.retries >= this._maxRetries) {
-              await this._queue.remove(id)
+              this._queue.remove(id)
             } else {
               // increment the retry count and save it
               const updates = { retries: payload.retries + 1 }
-              await this._queue.update(id, updates)
+              this._queue.update(id, updates)
             }
 
             // this request failed so wait a while before retrying
@@ -79,7 +79,7 @@ module.exports = class RedeliveryLoop {
           }
 
           // this request succeeded, grab another immediately after we delete this one
-          await this._queue.remove(id)
+          this._queue.remove(id)
           this._schedule(0)
         } catch (e) {
           this._onerror(e)

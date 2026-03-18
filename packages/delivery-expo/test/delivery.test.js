@@ -73,10 +73,10 @@ describe('delivery: expo', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    enqueueSpy = jest.fn().mockResolvedValue(true)
+    enqueueSpy = jest.fn()
 
     UndeliveredPayloadQueue.mockImplementation(() => ({
-      init: () => Promise.resolve(true),
+      init: jest.fn(),
       enqueue: enqueueSpy
     }))
 
@@ -349,7 +349,7 @@ describe('delivery: expo', () => {
     })
   })
 
-  it('starts the redelivery loop if there is a connection', done => {
+  it('starts the redelivery loop if there is a connection', () => {
     const startSpy = jest.fn()
     const stopSpy = jest.fn()
 
@@ -362,24 +362,18 @@ describe('delivery: expo', () => {
 
     NetworkStatus.mockImplementation(() => ({
       isConnected: false,
-      watch: fn => {
-        watcher = fn
-        onWatch()
-      }
+      watch: fn => { watcher = fn }
     }))
 
     delivery({ _logger: noopLogger }, fetch)
 
-    const onWatch = () => {
-      expect(typeof watcher).toBe('function')
-      watcher(true)
-      expect(startSpy).toHaveBeenCalledTimes(2)
-      expect(stopSpy).not.toHaveBeenCalled()
-      done()
-    }
+    expect(typeof watcher).toBe('function')
+    watcher(true)
+    expect(startSpy).toHaveBeenCalledTimes(2)
+    expect(stopSpy).not.toHaveBeenCalled()
   })
 
-  it('stops the redelivery loop if there is not a connection', done => {
+  it('stops the redelivery loop if there is not a connection', () => {
     const startSpy = jest.fn()
     const stopSpy = jest.fn()
 
@@ -392,23 +386,17 @@ describe('delivery: expo', () => {
 
     NetworkStatus.mockImplementation(() => ({
       isConnected: false,
-      watch: fn => {
-        watcher = fn
-        onWatch()
-      }
+      watch: fn => { watcher = fn }
     }))
 
     delivery({ _logger: noopLogger }, fetch)
 
-    const onWatch = () => {
-      expect(typeof watcher).toBe('function')
-      watcher(true)
-      expect(startSpy).toHaveBeenCalledTimes(2)
-      expect(stopSpy).not.toHaveBeenCalled()
-      watcher(false)
-      expect(stopSpy).toHaveBeenCalledTimes(2)
-      done()
-    }
+    expect(typeof watcher).toBe('function')
+    watcher(true)
+    expect(startSpy).toHaveBeenCalledTimes(2)
+    expect(stopSpy).not.toHaveBeenCalled()
+    watcher(false)
+    expect(stopSpy).toHaveBeenCalledTimes(2)
   })
 
   it('doesn’t attempt to send when not connected', done => {

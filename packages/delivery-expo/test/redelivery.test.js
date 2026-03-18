@@ -9,18 +9,16 @@ describe('delivery: expo -> redelivery', () => {
       done()
     }
     const queue = {
-      remove: async () => {},
-      peek: async () => {
-        return Promise.resolve({
-          id: '/path/to/payload.json',
-          payload: {
-            url: 'https://notify.bugsnag.com',
-            opts: {},
-            retries: 0
-          }
-        })
-      },
-      enqueue: async () => {}
+      remove: () => {},
+      peek: () => ({
+        id: '/path/to/payload.json',
+        payload: {
+          url: 'https://notify.bugsnag.com',
+          opts: {},
+          retries: 0
+        }
+      }),
+      enqueue: () => {}
     }
     const consumer = new Redelivery(send, queue, () => {}, 1, 5)
     consumer.start()
@@ -35,25 +33,25 @@ describe('delivery: expo -> redelivery', () => {
     }
     let nCalls = 0
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
-      peek: async () => {
+      remove: () => {},
+      enqueue: () => {},
+      peek: () => {
         nCalls++
         if (nCalls < 5) {
           setTimeout(() => {
             expect(stopSpy).toHaveBeenCalled()
             done()
           }, 0)
-          return Promise.resolve(null)
+          return null
         }
-        return Promise.resolve({
+        return {
           id: '/path/to/payload.json',
           payload: {
             url: 'https://notify.bugsnag.com',
             opts: {},
             retries: 0
           }
-        })
+        }
       }
     }
     const consumer = new Redelivery(send, queue, () => {}, 1, 5)
@@ -76,11 +74,9 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      enqueue: () => {},
+      peek: () => req
     }
 
     const removeSpy = jest.spyOn(queue, 'remove')
@@ -109,11 +105,9 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      enqueue: () => {},
+      peek: () => req
     }
 
     const removeSpy = jest.spyOn(queue, 'remove')
@@ -142,10 +136,8 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      peek: () => req
     }
 
     const removeSpy = jest.spyOn(queue, 'remove')
