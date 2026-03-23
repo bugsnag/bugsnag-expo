@@ -84,7 +84,7 @@ module.exports = class UndeliveredPayloadQueue {
   async peek () {
     try {
       const dir = new Directory(this._path)
-      const entries = await dir.list()
+      const entries = dir.list()
       const payloadFileName = entries
         .filter(entry => entry instanceof File && filenameRe.test(entry.name))
         .map(entry => entry.name)
