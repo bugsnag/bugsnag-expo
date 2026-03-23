@@ -28,8 +28,14 @@ jest.mock('expo-file-system', () => {
 
     get name () { return this._name }
 
-    write (data) {
+    async write (data) {
       mockFiles[this._path] = data
+    }
+
+    async text () {
+      const content = mockFiles[this._path]
+      if (content === undefined) throw new Error('File not found: ' + this._path)
+      return content
     }
 
     textSync () {
@@ -61,7 +67,7 @@ jest.mock('expo-file-system', () => {
       mockDirExists[this._path] = true
     }
 
-    list () {
+    async list () {
       const entries = mockDirEntries[this._path] || []
       return entries.map(name => new MockFile(`${this._path}/${name}`))
     }
@@ -85,20 +91,20 @@ describe('delivery: expo -> queue', () => {
   })
 
   describe('peek()', () => {
-    it('returns null if there are no files', () => {
+    it('returns null if there are no files', async () => {
       mockDirEntries[QUEUE_PATH] = []
       const q = new Queue('stuff')
-      expect(q.peek()).toBe(null)
+      expect(await q.peek()).toBe(null)
     })
 
-    it('returns null if there are only files that don\'t match the expected pattern', () => {
+    it('returns null if there are only files that don\'t match the expected pattern', async () => {
       mockDirEntries[QUEUE_PATH] = ['.DS_Store', '.meta', 'something_else']
 
       const q = new Queue('stuff')
-      expect(q.peek()).toBe(null)
+      expect(await q.peek()).toBe(null)
     })
 
-    it('parses an existing file into JSON', () => {
+    it('parses an existing file into JSON', async () => {
       const filename = Queue.generateFilename('stuff')
       mockDirEntries[QUEUE_PATH] = [filename]
       mockFiles[`${QUEUE_PATH}/${filename}`] = JSON.stringify({
@@ -108,57 +114,57 @@ describe('delivery: expo -> queue', () => {
       })
 
       const q = new Queue('stuff')
-      const req = q.peek()
+      const req = await q.peek()
       expect(req).not.toBe(null)
       expect(req?.payload.url).toBe('https://notify.bugsnag.com/')
       expect(req?.id).toBe(`${QUEUE_PATH}/${filename}`)
     })
 
-    it('calls the onerror callback and returns null if there is an error', () => {
+    it('calls the onerror callback and returns null if there is an error', async () => {
       const origList = Directory.prototype.list
       Directory.prototype.list = function () { throw new Error('beep') }
 
       const onerror = jest.fn()
       const q = new Queue('stuff', onerror)
-      const result = q.peek()
+      const result = await q.peek()
       expect(result).toBe(null)
       expect(onerror).toHaveBeenCalled()
 
       Directory.prototype.list = origList
     })
 
-    it('removes a file if it\'s not valid json', () => {
+    it('removes a file if it\'s not valid json', async () => {
       const filename = Queue.generateFilename('stuff')
       mockDirEntries[QUEUE_PATH] = [filename]
       mockFiles[`${QUEUE_PATH}/${filename}`] = '{ not valid json'
 
       const q = new Queue('stuff')
-      const req = q.peek()
+      const req = await q.peek()
       expect(req).toBe(null)
       expect(mockDirEntries[QUEUE_PATH]).toEqual([])
     })
   })
 
   describe('enqueue()', () => {
-    it('ensures the directory exists first', () => {
+    it('ensures the directory exists first', async () => {
       mockDirExists[QUEUE_PATH] = true
       mockDirEntries[QUEUE_PATH] = []
 
       const q = new Queue('stuff', err => expect(err).toBe(null))
-      q.enqueue()
+      await q.enqueue()
     })
 
-    it('creates the directory if it does not exist', () => {
+    it('creates the directory if it does not exist', async () => {
       mockDirExists[QUEUE_PATH] = false
       mockDirEntries[QUEUE_PATH] = []
 
       const q = new Queue('stuff', err => expect(err).toBe(null))
-      q.enqueue({})
+      await q.enqueue({})
 
       expect(mockDirExists[QUEUE_PATH]).toBe(true)
     })
 
-    it('calls the onerror callback if there is an error', () => {
+    it('calls the onerror callback if there is an error', async () => {
       mockDirExists[QUEUE_PATH] = true
 
       const origList = Directory.prototype.list
@@ -166,20 +172,20 @@ describe('delivery: expo -> queue', () => {
 
       const onerror = jest.fn()
       const q = new Queue('stuff', onerror)
-      q.enqueue({})
+      await q.enqueue({})
 
       Directory.prototype.list = origList
       expect(onerror).toHaveBeenCalled()
     })
 
-    it('should purge items that are over the limit', () => {
+    it('should purge items that are over the limit', async () => {
       mockDirExists[QUEUE_PATH] = true
       const files = Array(70).fill(1).map(() => Queue.generateFilename('stuff'))
       mockDirEntries[QUEUE_PATH] = [...files]
       files.forEach(f => { mockFiles[`${QUEUE_PATH}/${f}`] = '{}' })
 
       const q = new Queue('stuff')
-      q.enqueue({})
+      await q.enqueue({})
 
       const remaining = mockDirEntries[QUEUE_PATH].filter(f => /^bugsnag-.*\.json$/.test(f)).length
       expect(remaining).toBeLessThanOrEqual(64)
@@ -187,12 +193,12 @@ describe('delivery: expo -> queue', () => {
   })
 
   describe('update()', () => {
-    it('should merge the updates with the existing object', () => {
+    it('should merge the updates with the existing object', async () => {
       const filePath = `${QUEUE_PATH}/bugsnag-stuff-1234.json`
       mockFiles[filePath] = JSON.stringify({ retries: 2 })
 
       const q = new Queue('stuff')
-      q.update(filePath, { retries: 3 })
+      await q.update(filePath, { retries: 3 })
 
       const updated = JSON.parse(mockFiles[filePath])
       expect(updated.retries).toBe(3)

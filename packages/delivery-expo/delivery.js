@@ -19,8 +19,6 @@ module.exports = (client, fetch = global.fetch) => {
       .catch(err => cb(err))
   }
 
-  // log errors from redelivery loops
-
   const enqueue = (payloadKind, failedPayload) => {
     client._logger.info(`Writing ${payloadKind} payload to cache`)
     queues[payloadKind].enqueue(failedPayload)

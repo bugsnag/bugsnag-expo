@@ -17,7 +17,7 @@ describe('delivery: expo -> redelivery', () => {
     }
     const queue = {
       remove: () => {},
-      peek: () => {
+      peek: async () => {
         return {
           id: '/path/to/payload.json',
           payload: {
@@ -45,7 +45,7 @@ describe('delivery: expo -> redelivery', () => {
     const queue = {
       remove: () => {},
       enqueue: () => {},
-      peek: () => {
+      peek: async () => {
         nCalls++
         if (nCalls < 5) {
           setTimeout(() => {
@@ -86,7 +86,7 @@ describe('delivery: expo -> redelivery', () => {
     const queue = {
       remove: () => {},
       enqueue: () => {},
-      peek: () => req
+      peek: async () => req
     }
 
     const removeSpy = jest.spyOn(queue, 'remove')
@@ -119,7 +119,7 @@ describe('delivery: expo -> redelivery', () => {
     const queue = {
       remove: () => {},
       enqueue: () => {},
-      peek: () => req
+      peek: async () => req
     }
 
     let removedWith = null
@@ -151,7 +151,7 @@ describe('delivery: expo -> redelivery', () => {
 
     const queue = {
       remove: () => {},
-      peek: () => req
+      peek: async () => req
     }
 
     let removedWith = null
