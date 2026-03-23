@@ -55,8 +55,8 @@ module.exports = class UndeliveredPayloadQueue {
         this._truncating = false
         return
       }
-      await Promise.all(payloads.slice(0, diff)
-        .map(f => this.remove(`${this._path}/${f}`)))
+      payloads.slice(0, diff)
+        .forEach(f => this.remove(`${this._path}/${f}`))
       this._truncating = false
     } catch (e) {
       this._truncating = false
