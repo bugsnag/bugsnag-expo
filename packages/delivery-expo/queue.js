@@ -45,7 +45,7 @@ module.exports = class UndeliveredPayloadQueue {
     this._truncating = true
     try {
       const dir = new Directory(this._path)
-      const entries = await dir.list()
+      const entries = dir.list() // removed 'await'
       const payloads = entries
         .filter(entry => entry instanceof File && filenameRe.test(entry.name))
         .map(entry => entry.name)
@@ -102,7 +102,7 @@ module.exports = class UndeliveredPayloadQueue {
         // a) JSON.parse failed or
         // b) the file can no longer be read (maybe it was truncated?)
         // in both cases we want to speculatively remove it and try peeking again
-        await this.remove(id)
+        this.remove(id)
         return await this.peek()
       }
     } catch (e) {

@@ -67,7 +67,8 @@ jest.mock('expo-file-system', () => {
       mockDirExists[this._path] = true
     }
 
-    async list () {
+    // Synchronous list to match implementation
+    list () {
       const entries = mockDirEntries[this._path] || []
       return entries.map(name => new MockFile(`${this._path}/${name}`))
     }
@@ -94,14 +95,16 @@ describe('delivery: expo -> queue', () => {
     it('returns null if there are no files', async () => {
       mockDirEntries[QUEUE_PATH] = []
       const q = new Queue('stuff')
-      expect(await q.peek()).toBe(null)
+      const result = await q.peek()
+      expect(result).toBe(null)
     })
 
     it('returns null if there are only files that don\'t match the expected pattern', async () => {
       mockDirEntries[QUEUE_PATH] = ['.DS_Store', '.meta', 'something_else']
 
       const q = new Queue('stuff')
-      expect(await q.peek()).toBe(null)
+      const result = await q.peek()
+      expect(result).toBe(null)
     })
 
     it('parses an existing file into JSON', async () => {
@@ -139,6 +142,7 @@ describe('delivery: expo -> queue', () => {
       mockFiles[`${QUEUE_PATH}/${filename}`] = '{ not valid json'
 
       const q = new Queue('stuff')
+      // Should return null after removing invalid file
       const req = await q.peek()
       expect(req).toBe(null)
       expect(mockDirEntries[QUEUE_PATH]).toEqual([])
@@ -151,7 +155,7 @@ describe('delivery: expo -> queue', () => {
       mockDirEntries[QUEUE_PATH] = []
 
       const q = new Queue('stuff', err => expect(err).toBe(null))
-      await q.enqueue()
+      await q.enqueue({})
     })
 
     it('creates the directory if it does not exist', async () => {
@@ -187,6 +191,7 @@ describe('delivery: expo -> queue', () => {
       const q = new Queue('stuff')
       await q.enqueue({})
 
+      // After truncation, only MAX_ITEMS should remain
       const remaining = mockDirEntries[QUEUE_PATH].filter(f => /^bugsnag-.*\.json$/.test(f)).length
       expect(remaining).toBeLessThanOrEqual(64)
     })
