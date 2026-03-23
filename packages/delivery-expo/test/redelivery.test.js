@@ -30,8 +30,7 @@ describe('delivery: expo -> redelivery', () => {
       enqueue: () => {}
     }
     consumer = new Redelivery(send, queue, () => {}, 1, 5)
-    // call _redeliver directly to avoid timer scheduling issues in tests
-    consumer._redeliver().catch(() => {})
+    consumer.start()
   })
 
   it('should clear the timeout if nothing is found on the queue', done => {

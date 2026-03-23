@@ -360,16 +360,6 @@ describe('delivery: expo', () => {
 
     let watcher
 
-    NetworkStatus.mockImplementation(() => ({
-      isConnected: false,
-      watch: fn => {
-        watcher = fn
-        onWatch()
-      }
-    }))
-
-    delivery({ _logger: noopLogger }, fetch)
-
     const onWatch = () => {
       expect(typeof watcher).toBe('function')
       watcher(true)
@@ -377,11 +367,29 @@ describe('delivery: expo', () => {
       expect(stopSpy).not.toHaveBeenCalled()
       done()
     }
+    NetworkStatus.mockImplementation(() => ({
+      isConnected: false,
+      watch: fn => {
+        watcher = fn
+        onWatch()
+      }
+    }))
+    delivery({ _logger: noopLogger }, fetch)
   })
 
   it('stops the redelivery loop if there is not a connection', done => {
     const startSpy = jest.fn()
     const stopSpy = jest.fn()
+
+    const onWatch = () => {
+      expect(typeof watcher).toBe('function')
+      watcher(true)
+      expect(startSpy).toHaveBeenCalledTimes(2)
+      expect(stopSpy).not.toHaveBeenCalled()
+      watcher(false)
+      expect(stopSpy).toHaveBeenCalledTimes(2)
+      done()
+    }
 
     RedeliveryLoop.mockImplementation(() => ({
       start: startSpy,
@@ -399,16 +407,6 @@ describe('delivery: expo', () => {
     }))
 
     delivery({ _logger: noopLogger }, fetch)
-
-    const onWatch = () => {
-      expect(typeof watcher).toBe('function')
-      watcher(true)
-      expect(startSpy).toHaveBeenCalledTimes(2)
-      expect(stopSpy).not.toHaveBeenCalled()
-      watcher(false)
-      expect(stopSpy).toHaveBeenCalledTimes(2)
-      done()
-    }
   })
 
   it('doesn’t attempt to send when not connected', done => {

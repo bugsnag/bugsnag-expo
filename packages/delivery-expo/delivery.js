@@ -121,21 +121,22 @@ const initRedelivery = (networkStatus, logger, send) => {
     session: new RedeliveryLoop(send, queues.session, onLoopError)
   }
 
-  // ensure synchronous init() errors are captured by the promise chain
-  Promise.resolve()
-    .then(() => Promise.all([queues.event.init(), queues.session.init()]))
-    .then(() => {
-      networkStatus.watch(isConnected => {
-        if (isConnected) {
-          queueConsumers.event.start()
-          queueConsumers.session.start()
-        } else {
-          queueConsumers.event.stop()
-          queueConsumers.session.stop()
-        }
-      })
-    })
-    .catch(onQueueError)
+  // ensure synchronous init() errors are captured
+  try {
+    queues.event.init()
+    queues.session.init()
+  } catch (e) {
+    onQueueError(e)
+  }
+  networkStatus.watch(isConnected => {
+    if (isConnected) {
+      queueConsumers.event.start()
+      queueConsumers.session.start()
+    } else {
+      queueConsumers.event.stop()
+      queueConsumers.session.stop()
+    }
+  })
 
   return { queues, queueConsumers }
 }
