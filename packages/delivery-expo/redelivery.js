@@ -39,23 +39,13 @@ module.exports = class RedeliveryLoop {
 
   _schedule (t) {
     if (this._stopped) return
-    if (t === 0) {
-      // run soon for synchronous queue processing but avoid immediate recursion
-      // which can blow the stack when _redeliver schedules another immediate run.
-      if (typeof setImmediate === 'function') {
-        setImmediate(() => { this._redeliver().catch(e => this._onerror(e)) })
-      } else {
-        setTimeout(() => { this._redeliver().catch(e => this._onerror(e)) }, 0)
-      }
-      return
-    }
     this._timer = setTimeout(this._redeliver.bind(this), t)
   }
 
   async _redeliver () {
     try {
       // pop a failed request off of the queue
-      const res = this._queue.peek()
+      const res = await this._queue.peek()
 
       // if there isn't anything on the queue, stop the loop
       if (!res) {
@@ -66,7 +56,7 @@ module.exports = class RedeliveryLoop {
       const { id, payload } = res
 
       // if there is, attempt to deliver it
-      this._send(payload.url, payload.opts, (err) => {
+      this._send(payload.url, payload.opts, async (err) => {
         try {
           if (err) {
             this._onerror(err)
@@ -81,7 +71,7 @@ module.exports = class RedeliveryLoop {
             } else {
               // increment the retry count and save it
               const updates = { retries: payload.retries + 1 }
-              this._queue.update(id, updates)
+              await this._queue.update(id, updates)
             }
 
             // this request failed so wait a while before retrying

@@ -13,42 +13,17 @@ module.exports = class UndeliveredPayloadQueue {
     this._path = `${PAYLOAD_PATH}/${this._resource}`
     this._onerror = onerror
     this._truncating = false
-    this._initCall = null
-  }
-
-  /*
-   * Calls _init(), ensuring it only does that task once returning
-   * the same promise to each concurrent caller
-   */
-  init () {
-    // we don't want multiple calls to init() to incur multiple attempts at creating
-    // the directory, so we assign the existing _init() call
-    if (this._initCall) return this._initCall
-    try {
-      this._init()
-      this._initCall = null
-    } catch (e) {
-      this._initCall = null
-      throw e
-    }
   }
 
   /*
    * Ensure the persistent cache directory exists
    */
-  _init () {
+  init () {
     if (this._checkCacheDirExists()) return
     try {
       const dir = new Directory(this._path)
-      dir.create({ intermediates: true })
+      dir.create({ intermediates: true, idempotent: true })
     } catch (e) {
-      // Expo has a bug where directory creation can error, even though it succesfully
-      // created the directory. See:
-      //   https://github.com/expo/expo/issues/2050
-      //   https://forums.expo.io/t/makedirectoryasync-error-could-not-be-created/11916
-      //
-      // To tolerate this, after getting an error, we check whether the directory
-      // now exist, swallowing the error if so, rethrowing if not.
       if (this._checkCacheDirExists()) return
       throw e
     }
@@ -65,34 +40,23 @@ module.exports = class UndeliveredPayloadQueue {
   /*
    * Keeps the queue size bounded by MAX_LENGTH
    */
-  _truncate () {
-    // this isn't atomic so only enter this method once at any time
+  async _truncate () {
     if (this._truncating) return
     this._truncating = true
-
     try {
-      // list the payloads in order
       const dir = new Directory(this._path)
-      const entries = dir.list()
+      const entries = await dir.list()
       const payloads = entries
         .filter(entry => entry instanceof File && filenameRe.test(entry.name))
         .map(entry => entry.name)
         .sort()
-
-      // figure out how many over MAX_ITEMS we are
       const diff = payloads.length - MAX_ITEMS
-
-      // do nothing if within the limit
       if (diff < 0) {
         this._truncating = false
         return
       }
-
-      // remove each of the items over the limit
-      payloads.slice(0, diff)
-        .forEach(f => this.remove(`${this._path}/${f}`))
-
-      // done
+      await Promise.all(payloads.slice(0, diff)
+        .map(f => this.remove(`${this._path}/${f}`)))
       this._truncating = false
     } catch (e) {
       this._truncating = false
@@ -103,12 +67,12 @@ module.exports = class UndeliveredPayloadQueue {
   /*
    * Adds an item to the end of the queue
    */
-  enqueue (req) {
+  async enqueue (req) {
     try {
       this.init()
       const file = new File(this._path, generateFilename(this._resource))
-      file.write(JSON.stringify({ ...req, retries: 0 }))
-      this._truncate()
+      await file.write(JSON.stringify({ ...req, retries: 0 }))
+      await this._truncate()
     } catch (e) {
       this._onerror(e)
     }
@@ -117,10 +81,10 @@ module.exports = class UndeliveredPayloadQueue {
   /*
    * Returns the oldest item in the queue without removing it
    */
-  peek () {
+  async peek () {
     try {
       const dir = new Directory(this._path)
-      const entries = dir.list()
+      const entries = await dir.list()
       const payloadFileName = entries
         .filter(entry => entry instanceof File && filenameRe.test(entry.name))
         .map(entry => entry.name)
@@ -130,7 +94,7 @@ module.exports = class UndeliveredPayloadQueue {
 
       try {
         const file = new File(id)
-        const payloadJson = file.textSync()
+        const payloadJson = await file.text()
         const payload = JSON.parse(payloadJson)
         return { id, payload }
       } catch (e) {
@@ -138,8 +102,8 @@ module.exports = class UndeliveredPayloadQueue {
         // a) JSON.parse failed or
         // b) the file can no longer be read (maybe it was truncated?)
         // in both cases we want to speculatively remove it and try peeking again
-        this.remove(id)
-        return this.peek()
+        await this.remove(id)
+        return await this.peek()
       }
     } catch (e) {
       this._onerror(e)
@@ -164,13 +128,13 @@ module.exports = class UndeliveredPayloadQueue {
    * Applies the provided updates to an item. This does a 1-level shallow merge on
    * an object, i.e. it replaces top level keys
    */
-  update (id, updates) {
+  async update (id, updates) {
     try {
       const file = new File(id)
-      const payloadJson = file.textSync()
+      const payloadJson = await file.text()
       const payload = JSON.parse(payloadJson)
       const updatedPayload = { ...payload, ...updates }
-      file.write(JSON.stringify(updatedPayload))
+      await file.write(JSON.stringify(updatedPayload))
     } catch (e) {
       this._onerror(e)
     }
