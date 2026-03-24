@@ -19,11 +19,9 @@ module.exports = (client, fetch = global.fetch) => {
       .catch(err => cb(err))
   }
 
-  const logError = e => client._logger.error('Error redelivering payload', e)
-
-  const enqueue = async (payloadKind, failedPayload) => {
+  const enqueue = (payloadKind, failedPayload) => {
     client._logger.info(`Writing ${payloadKind} payload to cache`)
-    await queues[payloadKind].enqueue(failedPayload, logError)
+    queues[payloadKind].enqueue(failedPayload)
     if (networkStatus.isConnected) queueConsumers[payloadKind].start()
   }
 
@@ -123,19 +121,22 @@ const initRedelivery = (networkStatus, logger, send) => {
     session: new RedeliveryLoop(send, queues.session, onLoopError)
   }
 
-  Promise.all([queues.event.init(), queues.session.init()])
-    .then(() => {
-      networkStatus.watch(isConnected => {
-        if (isConnected) {
-          queueConsumers.event.start()
-          queueConsumers.session.start()
-        } else {
-          queueConsumers.event.stop()
-          queueConsumers.session.stop()
-        }
-      })
-    })
-    .catch(onQueueError)
+  // ensure synchronous init() errors are captured
+  try {
+    queues.event.init()
+    queues.session.init()
+  } catch (e) {
+    onQueueError(e)
+  }
+  networkStatus.watch(isConnected => {
+    if (isConnected) {
+      queueConsumers.event.start()
+      queueConsumers.session.start()
+    } else {
+      queueConsumers.event.stop()
+      queueConsumers.session.stop()
+    }
+  })
 
   return { queues, queueConsumers }
 }

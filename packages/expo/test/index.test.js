@@ -58,18 +58,19 @@ jest.mock('react-native', () => ({
   }
 }))
 
-jest.mock('../../../node_modules/expo-file-system/legacy', () => ({
-  cacheDirectory: 'file://var/data/foo.bar.app/',
-  downloadAsync: jest.fn(() => Promise.resolve({ md5: 'md5', uri: 'uri' })),
-  getInfoAsync: jest.fn(() => Promise.resolve({ exists: true, md5: 'md5', uri: 'uri' })),
-  readAsStringAsync: jest.fn(() => Promise.resolve()),
-  writeAsStringAsync: jest.fn(() => Promise.resolve()),
-  deleteAsync: jest.fn(() => Promise.resolve()),
-  moveAsync: jest.fn(() => Promise.resolve()),
-  copyAsync: jest.fn(() => Promise.resolve()),
-  makeDirectoryAsync: jest.fn(() => Promise.resolve()),
-  readDirectoryAsync: jest.fn(() => Promise.resolve()),
-  createDownloadResumable: jest.fn(() => Promise.resolve())
+jest.mock('expo-file-system', () => ({
+  File: class MockFile {
+    write () {}
+    textSync () { return '{}' }
+    delete () {}
+    get name () { return '' }
+  },
+  Directory: class MockDirectory {
+    create () {}
+    get exists () { return true }
+    list () { return [] }
+  },
+  Paths: { cache: { uri: 'file://var/data/foo.bar.app' } }
 }))
 
 jest.mock('../../../node_modules/@react-native-community/netinfo', () => ({

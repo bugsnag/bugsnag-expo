@@ -1,6 +1,13 @@
 const Redelivery = require('../redelivery')
 
 describe('delivery: expo -> redelivery', () => {
+  let consumer
+
+  afterEach(() => {
+    if (consumer && typeof consumer.stop === 'function') consumer.stop()
+    consumer = undefined
+  })
+
   it('should attempt to dequeue (almost) immediately', done => {
     const send = (url, opts, cb) => {
       expect(url).toBe('https://notify.bugsnag.com')
@@ -9,20 +16,20 @@ describe('delivery: expo -> redelivery', () => {
       done()
     }
     const queue = {
-      remove: async () => {},
+      remove: () => {},
       peek: async () => {
-        return Promise.resolve({
+        return {
           id: '/path/to/payload.json',
           payload: {
             url: 'https://notify.bugsnag.com',
             opts: {},
             retries: 0
           }
-        })
+        }
       },
-      enqueue: async () => {}
+      enqueue: () => {}
     }
-    const consumer = new Redelivery(send, queue, () => {}, 1, 5)
+    consumer = new Redelivery(send, queue, () => {}, 1, 5)
     consumer.start()
   })
 
@@ -35,8 +42,8 @@ describe('delivery: expo -> redelivery', () => {
     }
     let nCalls = 0
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
+      remove: () => {},
+      enqueue: () => {},
       peek: async () => {
         nCalls++
         if (nCalls < 5) {
@@ -44,19 +51,19 @@ describe('delivery: expo -> redelivery', () => {
             expect(stopSpy).toHaveBeenCalled()
             done()
           }, 0)
-          return Promise.resolve(null)
+          return null
         }
-        return Promise.resolve({
+        return {
           id: '/path/to/payload.json',
           payload: {
             url: 'https://notify.bugsnag.com',
             opts: {},
             retries: 0
           }
-        })
+        }
       }
     }
-    const consumer = new Redelivery(send, queue, () => {}, 1, 5)
+    consumer = new Redelivery(send, queue, () => {}, 1, 5)
     const stopSpy = jest.spyOn(consumer, 'stop')
     consumer.start()
   })
@@ -76,15 +83,13 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      enqueue: () => {},
+      peek: async () => req
     }
 
     const removeSpy = jest.spyOn(queue, 'remove')
-    const consumer = new Redelivery(send, queue, () => {}, 1, 5)
+    consumer = new Redelivery(send, queue, () => {}, 1, 5)
     consumer.start()
     setTimeout(() => {
       expect(removeSpy).not.toHaveBeenCalled()
@@ -93,7 +98,9 @@ describe('delivery: expo -> redelivery', () => {
   })
 
   it('removes something from the queue if it fails in a non-retryable way', done => {
+    let sendCalled = false
     const send = (url, opts, cb) => {
+      sendCalled = true
       const err = new Error('derp')
       err.isRetryable = false
       cb(err)
@@ -109,18 +116,18 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      enqueue: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      enqueue: () => {},
+      peek: async () => req
     }
 
-    const removeSpy = jest.spyOn(queue, 'remove')
-    const consumer = new Redelivery(send, queue, () => {}, 1, 5)
+    let removedWith = null
+    queue.remove = (id) => { removedWith = id }
+    consumer = new Redelivery(send, queue, () => {}, 1, 5)
     consumer.start()
     setTimeout(() => {
-      expect(removeSpy).toHaveBeenCalledWith('/path/to/payload.json')
+      expect(sendCalled).toBe(true)
+      expect(removedWith).toBe('/path/to/payload.json')
       consumer.stop()
       done()
     }, 5)
@@ -142,17 +149,16 @@ describe('delivery: expo -> redelivery', () => {
     }
 
     const queue = {
-      remove: async () => {},
-      peek: async () => {
-        return Promise.resolve(req)
-      }
+      remove: () => {},
+      peek: async () => req
     }
 
-    const removeSpy = jest.spyOn(queue, 'remove')
-    const consumer = new Redelivery(send, queue, () => {}, 1, 5)
+    let removedWith = null
+    queue.remove = (id) => { removedWith = id }
+    consumer = new Redelivery(send, queue, () => {}, 1, 5)
     consumer.start()
     setTimeout(() => {
-      expect(removeSpy).toHaveBeenCalledWith('/path/to/payload.json')
+      expect(removedWith).toBe('/path/to/payload.json')
       consumer.stop()
       done()
     }, 5)

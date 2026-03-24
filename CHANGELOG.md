@@ -2,7 +2,9 @@
 
 ## unreleased
 
-### Added
+### Changed
+
+- (delivery-expo) Migrate from legacy Expo FileSystem API to new API [#257](https://github.com/bugsnag/bugsnag-expo/pull/257)
 
 - Migrate from the `@bugsnag/source-map` tool over to `@bugsnag/cli` for the EAS sourcemap plugin [#247](https://github.com/bugsnag/bugsnag-expo/pull/247)
 
