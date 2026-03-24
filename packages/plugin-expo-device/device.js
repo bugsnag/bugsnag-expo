@@ -29,7 +29,7 @@ module.exports = {
     if (Platform.OS === 'android' || Platform.OS === 'ios') {
       const storeOptions = {
         requireAuthentication: false,
-        keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY
+        keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY
       }
 
       deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)

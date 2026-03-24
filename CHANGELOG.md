@@ -1,5 +1,17 @@
 # Changelog
 
+## [54.1.0] - 2026-03-24
+
+### Changed
+
+- (delivery-expo) Migrate from legacy Expo FileSystem API to new API [#257](https://github.com/bugsnag/bugsnag-expo/pull/257)
+
+- Migrate from the `@bugsnag/source-map` tool over to `@bugsnag/cli` for the EAS sourcemap plugin [#247](https://github.com/bugsnag/bugsnag-expo/pull/247)
+
+### Fixed
+
+- (plugin-expo-device) Use `AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY` keychain accessibility for SecureStore so that Bugsnag works during background tasks [#256](https://github.com/bugsnag/bugsnag-expo/pull/256)
+
 ## [54.0.0] - 2025-09-15
 
 This release adds support for Expo 54

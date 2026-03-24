@@ -62,12 +62,12 @@ module.exports = class RedeliveryLoop {
             this._onerror(err)
 
             if (err.isRetryable === false) {
-              await this._queue.remove(id)
+              this._queue.remove(id)
               return this._schedule(0)
             }
 
             if (payload.retries >= this._maxRetries) {
-              await this._queue.remove(id)
+              this._queue.remove(id)
             } else {
               // increment the retry count and save it
               const updates = { retries: payload.retries + 1 }
@@ -79,7 +79,7 @@ module.exports = class RedeliveryLoop {
           }
 
           // this request succeeded, grab another immediately after we delete this one
-          await this._queue.remove(id)
+          this._queue.remove(id)
           this._schedule(0)
         } catch (e) {
           this._onerror(e)

@@ -1,7 +1,7 @@
-const FileSystem = require('expo-file-system/legacy')
+const { File, Directory, Paths } = require('expo-file-system')
 
 const MAX_ITEMS = 64
-const PAYLOAD_PATH = `${FileSystem.cacheDirectory}bugsnag`
+const PAYLOAD_PATH = `${Paths.cache.uri}/bugsnag`
 const filenameRe = /^bugsnag-.*\.json$/
 
 /*
@@ -13,42 +13,18 @@ module.exports = class UndeliveredPayloadQueue {
     this._path = `${PAYLOAD_PATH}/${this._resource}`
     this._onerror = onerror
     this._truncating = false
-    this._initCall = null
-  }
-
-  /*
-   * Calls _init(), ensuring it only does that task once returning
-   * the same promise to each concurrent caller
-   */
-  async init () {
-    // we don't want multiple calls to init() to incur multiple attempts at creating
-    // the directory, so we assign the existing _init() call
-    if (this._initCall) return this._initCall
-    this._initCall = this._init()
-      .then(() => { this._initCall = null })
-      .catch(e => {
-        this._initCall = null
-        throw e
-      })
-    return this._initCall
   }
 
   /*
    * Ensure the persistent cache directory exists
    */
-  async _init () {
-    if (await this._checkCacheDirExists()) return
+  init () {
+    if (this._checkCacheDirExists()) return
     try {
-      await FileSystem.makeDirectoryAsync(this._path, { intermediates: true })
+      const dir = new Directory(this._path)
+      dir.create({ intermediates: true, idempotent: true })
     } catch (e) {
-      // Expo has a bug where `makeDirectoryAsync` can error, even though it succesfully
-      // created the directory. See:
-      //   https://github.com/expo/expo/issues/2050
-      //   https://forums.expo.io/t/makedirectoryasync-error-could-not-be-created/11916
-      //
-      // To tolerate this, after getting an error, we check whether the directory
-      // now exist, swallowing the error if so, rethrowing if not.
-      if (await this._checkCacheDirExists()) return
+      if (this._checkCacheDirExists()) return
       throw e
     }
   }
@@ -56,40 +32,31 @@ module.exports = class UndeliveredPayloadQueue {
   /*
    * Check if the cache directory exists
    */
-  async _checkCacheDirExists () {
-    const { exists, isDirectory } = await FileSystem.getInfoAsync(this._path)
-    return exists && isDirectory
+  _checkCacheDirExists () {
+    const dir = new Directory(this._path)
+    return dir.exists
   }
 
   /*
    * Keeps the queue size bounded by MAX_LENGTH
    */
   async _truncate () {
-    // this isn't atomic so only enter this method once at any time
     if (this._truncating) return
     this._truncating = true
-
     try {
-      // list the payloads in order
-      const payloads = (await FileSystem.readDirectoryAsync(this._path))
-        .filter(f => filenameRe.test(f)).sort()
-
-      // figure out how many over MAX_ITEMS we are
+      const dir = new Directory(this._path)
+      const entries = dir.list() // removed 'await'
+      const payloads = entries
+        .filter(entry => entry instanceof File && filenameRe.test(entry.name))
+        .map(entry => entry.name)
+        .sort()
       const diff = payloads.length - MAX_ITEMS
-
-      // do nothing if within the limit
       if (diff < 0) {
         this._truncating = false
         return
       }
-
-      // wait for each of the items over the limit to be removed
-      await Promise.all(
-        payloads.slice(0, diff)
-          .map(f => this.remove(`${this._path}/${f}`))
-      )
-
-      // done
+      payloads.slice(0, diff)
+        .forEach(f => this.remove(`${this._path}/${f}`))
       this._truncating = false
     } catch (e) {
       this._truncating = false
@@ -102,12 +69,10 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async enqueue (req) {
     try {
-      await this.init()
-      await FileSystem.writeAsStringAsync(
-        `${this._path}/${generateFilename(this._resource)}`,
-        JSON.stringify({ ...req, retries: 0 })
-      )
-      this._truncate()
+      this.init()
+      const file = new File(this._path, generateFilename(this._resource))
+      await file.write(JSON.stringify({ ...req, retries: 0 }))
+      await this._truncate()
     } catch (e) {
       this._onerror(e)
     }
@@ -118,13 +83,18 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async peek () {
     try {
-      const payloads = await FileSystem.readDirectoryAsync(this._path)
-      const payloadFileName = payloads.filter(f => filenameRe.test(f)).sort()[0]
+      const dir = new Directory(this._path)
+      const entries = dir.list()
+      const payloadFileName = entries
+        .filter(entry => entry instanceof File && filenameRe.test(entry.name))
+        .map(entry => entry.name)
+        .sort()[0]
       if (!payloadFileName) return null
       const id = `${this._path}/${payloadFileName}`
 
       try {
-        const payloadJson = await FileSystem.readAsStringAsync(id)
+        const file = new File(id)
+        const payloadJson = await file.text()
         const payload = JSON.parse(payloadJson)
         return { id, payload }
       } catch (e) {
@@ -132,8 +102,8 @@ module.exports = class UndeliveredPayloadQueue {
         // a) JSON.parse failed or
         // b) the file can no longer be read (maybe it was truncated?)
         // in both cases we want to speculatively remove it and try peeking again
-        await this.remove(id)
-        return this.peek()
+        this.remove(id)
+        return await this.peek()
       }
     } catch (e) {
       this._onerror(e)
@@ -145,9 +115,10 @@ module.exports = class UndeliveredPayloadQueue {
    * Removes an item from the queue by its id (full path).
    * Tolerant of errors while removing.
    */
-  async remove (id) {
+  remove (id) {
     try {
-      await FileSystem.deleteAsync(id)
+      const file = new File(id)
+      file.delete()
     } catch (e) {
       this._onerror(e)
     }
@@ -159,10 +130,11 @@ module.exports = class UndeliveredPayloadQueue {
    */
   async update (id, updates) {
     try {
-      const payloadJson = await FileSystem.readAsStringAsync(id)
+      const file = new File(id)
+      const payloadJson = await file.text()
       const payload = JSON.parse(payloadJson)
       const updatedPayload = { ...payload, ...updates }
-      await FileSystem.writeAsStringAsync(id, JSON.stringify(updatedPayload))
+      await file.write(JSON.stringify(updatedPayload))
     } catch (e) {
       this._onerror(e)
     }

@@ -30,7 +30,7 @@ version = Dir.mktmpdir("bugsnag-js") do |directory|
     }
 
     Tempfile.create(["get-bugsnag-js-version", ".js"], directory) do |file|
-      file.write("console.log(require('./scripts/common').getCommitId())")
+      file.write("console.log(require('./scripts/common').determineVersion())")
       file.close # close the file to flush our changes to disk
 
       output, status = Open3.capture2(env, "node #{file.path}", unsetenv_others: true)
@@ -65,6 +65,20 @@ final_json = File.open("package.json") do |file|
     "@bugsnag/plugin-react-native-global-error-handler" => version,
     "@bugsnag/plugin-react-native-orientation-breadcrumbs" => version,
     "@bugsnag/plugin-react-native-unhandled-rejection" => version,
+    "@bugsnag/request-tracker" => version,
+  })
+
+  package_json["resolutions"] ||= {}
+  package_json["resolutions"].merge!({
+    "@bugsnag/core" => version,
+    "@bugsnag/plugin-browser-session" => version,
+    "@bugsnag/plugin-console-breadcrumbs" => version,
+    "@bugsnag/plugin-network-breadcrumbs" => version,
+    "@bugsnag/plugin-react" => version,
+    "@bugsnag/plugin-react-native-global-error-handler" => version,
+    "@bugsnag/plugin-react-native-orientation-breadcrumbs" => version,
+    "@bugsnag/plugin-react-native-unhandled-rejection" => version,
+    "@bugsnag/request-tracker" => version,
   })
 
   JSON.pretty_generate(package_json)
