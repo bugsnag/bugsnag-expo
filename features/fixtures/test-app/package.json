@@ -10,7 +10,7 @@
   "dependencies": {
     "@bugsnag/expo": "*",
     "@react-native-community/netinfo": "11.4.1",
-    "expo": "^54.0.1",
+    "expo": "^55.0.8",
     "expo-application": "~7.0.6",
     "expo-constants": "~18.0.8",
     "expo-crypto": "~15.0.6",
