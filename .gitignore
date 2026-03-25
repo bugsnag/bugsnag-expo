@@ -24,3 +24,4 @@ yarn.lock
 .yarn
 .idea/
 bugsnag-expo-v54.iml
+zscaler-root-ca.crt

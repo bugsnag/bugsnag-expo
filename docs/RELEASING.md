@@ -1,5 +1,9 @@
 # Releasing
 
+### Prerequisites
+
+- Add the `zscaler-root-ca.crt` certificate to the root of the repository (see Zscaler documentation for details)
+
 ## Create a release branch
 
 ### Enhancements and bug fixes
@@ -84,12 +88,7 @@ After publishing the release, the following steps must also be completed:
 - use the tag vX.Y.Z as the name of the release
 - copy the release notes from `CHANGELOG.md`
 - publish the release
-- update and push `vX/next`:
-    ```sh
-    git checkout v48/next
-    git merge v48/main
-    git push
-    ```
+- create a PR from `vX/main` to `vX/next` to keep the branches in sync
 - for new major versions:
     - change the default branch on GitHub to the new `vX/next` branch
     - update the `@bugsnag/js` pipeline on Buildkite so that it always triggers the latest 3 expo versions
