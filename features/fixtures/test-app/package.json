@@ -1,6 +1,6 @@
 {
   "name": "test-fixture",
-  "version": "53.0.0",
+  "version": "55.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
