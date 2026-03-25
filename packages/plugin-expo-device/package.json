@@ -21,9 +21,9 @@
   },
   "devDependencies": {
     "@bugsnag/core": "^8.2.0",
-    "expo-constants": "~18.0.8",
-    "expo-device": "~8.0.6",
-    "expo-secure-store": "~15.0.6"
+    "expo-constants": "~55.0.9",
+    "expo-device": "~55.0.10",
+    "expo-secure-store": "~55.0.9"
   },
   "peerDependencies": {
     "@bugsnag/core": "^8.0.0",
