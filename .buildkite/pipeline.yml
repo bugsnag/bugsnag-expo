@@ -19,6 +19,7 @@ steps:
     agents:
       queue: "macos-15"
     env:
+      EAS_BUILD_NO_EXPO_GO_WARNING: true
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       NODE_VERSION: "20"
       JAVA_VERSION: "17"
@@ -32,6 +33,7 @@ steps:
     agents:
       queue: "macos-15"
     env:
+      EAS_BUILD_NO_EXPO_GO_WARNING: true
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
       XCODE_VERSION: "16.3.0"
       NODE_VERSION: "20"
