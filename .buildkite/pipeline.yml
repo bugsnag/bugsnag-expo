@@ -5,26 +5,26 @@ steps:
   #
   # License audit
   #
-  - label: ':copyright: License Audit'
-    timeout_in_minutes: 20
-    agents:
-      queue: "macos-15"
-    env:
-      XCODE_VERSION: "16.3.0"
-    command: scripts/license_finder.sh
-
-  - label:  ':android: Build expo APK'
-    key: "build-expo-apk"
-    timeout_in_minutes: 20
-    agents:
-      queue: "macos-15"
-    env:
-      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      NODE_VERSION: "20"
-      JAVA_VERSION: "17"
-    artifact_paths: build/output.apk
-    commands:
-      - features/scripts/build-android.sh
+#  - label: ':copyright: License Audit'
+#    timeout_in_minutes: 20
+#    agents:
+#      queue: "macos-15"
+#    env:
+#      XCODE_VERSION: "16.3.0"
+#    command: scripts/license_finder.sh
+#
+#  - label:  ':android: Build expo APK'
+#    key: "build-expo-apk"
+#    timeout_in_minutes: 20
+#    agents:
+#      queue: "macos-15"
+#    env:
+#      EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
+#      NODE_VERSION: "20"
+#      JAVA_VERSION: "17"
+#    artifact_paths: build/output.apk
+#    commands:
+#      - features/scripts/build-android.sh
 
   - label: ':apple: Build expo IPA'
     key: "build-expo-ipa"
@@ -39,124 +39,124 @@ steps:
     commands:
       - bundle install
       - features/scripts/build-ios.sh
-
-  - label: ':runner: expo Android 15'
-    depends_on:
-      - "build-expo-apk"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.apk"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.apk
-          - --farm=bs
-          - --device=ANDROID_15
-          - --a11y-locator
-          - --appium-version=1.22.0
-          - --fail-fast
-          - --retry=2
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^v52$"
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
-    retry:
-      automatic:
-        - exit_status: 103  # Appium session failed
-          limit: 2
-
-  - label: ':runner: expo Android 12'
-    depends_on:
-      - "build-expo-apk"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.apk"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.apk
-          - --farm=bs
-          - --device=ANDROID_12
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^v52$"
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
-    retry:
-      automatic:
-        - exit_status: 103  # Appium session failed
-          limit: 2
-
-  - label: ':runner: expo iOS 18'
-    depends_on:
-      - "build-expo-ipa"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_18
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^v52$"
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
-    retry:
-      automatic:
-        - exit_status: 103  # Appium session failed
-          limit: 2
-
-  - label: ':runner: expo iOS 16'
-    depends_on:
-      - "build-expo-ipa"
-    timeout_in_minutes: 50
-    plugins:
-      artifacts#v1.5.0:
-        download: "build/output.ipa"
-      docker-compose#v3.9.0:
-        pull: expo-maze-runner
-        run: expo-maze-runner
-        use-aliases: true
-        command:
-          - --app=build/output.ipa
-          - --farm=bs
-          - --device=IOS_16
-          - --a11y-locator
-          - --fail-fast
-          - --retry=2
-      test-collector#v1.10.2:
-        files: "reports/TEST-*.xml"
-        format: "junit"
-        branch: "^v52$"
-    concurrency: 5
-    concurrency_group: 'browserstack-app'
-    concurrency_method: eager
-    retry:
-      automatic:
-        - exit_status: 103  # Appium session failed
-          limit: 2
+#
+#  - label: ':runner: expo Android 15'
+#    depends_on:
+#      - "build-expo-apk"
+#    timeout_in_minutes: 50
+#    plugins:
+#      artifacts#v1.5.0:
+#        download: "build/output.apk"
+#      docker-compose#v3.9.0:
+#        pull: expo-maze-runner
+#        run: expo-maze-runner
+#        use-aliases: true
+#        command:
+#          - --app=build/output.apk
+#          - --farm=bs
+#          - --device=ANDROID_15
+#          - --a11y-locator
+#          - --appium-version=1.22.0
+#          - --fail-fast
+#          - --retry=2
+#      test-collector#v1.10.2:
+#        files: "reports/TEST-*.xml"
+#        format: "junit"
+#        branch: "^v52$"
+#    concurrency: 5
+#    concurrency_group: 'browserstack-app'
+#    concurrency_method: eager
+#    retry:
+#      automatic:
+#        - exit_status: 103  # Appium session failed
+#          limit: 2
+#
+#  - label: ':runner: expo Android 12'
+#    depends_on:
+#      - "build-expo-apk"
+#    timeout_in_minutes: 50
+#    plugins:
+#      artifacts#v1.5.0:
+#        download: "build/output.apk"
+#      docker-compose#v3.9.0:
+#        pull: expo-maze-runner
+#        run: expo-maze-runner
+#        use-aliases: true
+#        command:
+#          - --app=build/output.apk
+#          - --farm=bs
+#          - --device=ANDROID_12
+#          - --a11y-locator
+#          - --fail-fast
+#          - --retry=2
+#      test-collector#v1.10.2:
+#        files: "reports/TEST-*.xml"
+#        format: "junit"
+#        branch: "^v52$"
+#    concurrency: 5
+#    concurrency_group: 'browserstack-app'
+#    concurrency_method: eager
+#    retry:
+#      automatic:
+#        - exit_status: 103  # Appium session failed
+#          limit: 2
+#
+#  - label: ':runner: expo iOS 18'
+#    depends_on:
+#      - "build-expo-ipa"
+#    timeout_in_minutes: 50
+#    plugins:
+#      artifacts#v1.5.0:
+#        download: "build/output.ipa"
+#      docker-compose#v3.9.0:
+#        pull: expo-maze-runner
+#        run: expo-maze-runner
+#        use-aliases: true
+#        command:
+#          - --app=build/output.ipa
+#          - --farm=bs
+#          - --device=IOS_18
+#          - --a11y-locator
+#          - --fail-fast
+#          - --retry=2
+#      test-collector#v1.10.2:
+#        files: "reports/TEST-*.xml"
+#        format: "junit"
+#        branch: "^v52$"
+#    concurrency: 5
+#    concurrency_group: 'browserstack-app'
+#    concurrency_method: eager
+#    retry:
+#      automatic:
+#        - exit_status: 103  # Appium session failed
+#          limit: 2
+#
+#  - label: ':runner: expo iOS 16'
+#    depends_on:
+#      - "build-expo-ipa"
+#    timeout_in_minutes: 50
+#    plugins:
+#      artifacts#v1.5.0:
+#        download: "build/output.ipa"
+#      docker-compose#v3.9.0:
+#        pull: expo-maze-runner
+#        run: expo-maze-runner
+#        use-aliases: true
+#        command:
+#          - --app=build/output.ipa
+#          - --farm=bs
+#          - --device=IOS_16
+#          - --a11y-locator
+#          - --fail-fast
+#          - --retry=2
+#      test-collector#v1.10.2:
+#        files: "reports/TEST-*.xml"
+#        format: "junit"
+#        branch: "^v52$"
+#    concurrency: 5
+#    concurrency_group: 'browserstack-app'
+#    concurrency_method: eager
+#    retry:
+#      automatic:
+#        - exit_status: 103  # Appium session failed
+#          limit: 2

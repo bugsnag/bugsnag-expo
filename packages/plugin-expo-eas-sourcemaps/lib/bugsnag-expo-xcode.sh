@@ -59,4 +59,4 @@ if [ ! -z "$ENDPOINT" ]; then
   ARGS+=("$ENDPOINT")
 fi
 
-../node_modules/.bin/bugsnag-cli upload react-native-ios "${ARGS[@]}"
+../node_modules/.bin/bugsnag-cli upload react-native-ios "${ARGS[@]}" > /tmp/cli.txt
