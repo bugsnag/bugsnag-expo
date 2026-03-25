@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "54.0.0",
+  "version": "54.1.0",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -32,20 +32,20 @@
   "author": "Bugsnag",
   "license": "MIT",
   "dependencies": {
+    "@bugsnag/cli": "^3.7.0",
     "@bugsnag/core": "^8.2.0",
-    "@bugsnag/delivery-expo": "^54.0.0",
+    "@bugsnag/delivery-expo": "^54.1.0",
     "@bugsnag/plugin-browser-session": "^8.2.0",
     "@bugsnag/plugin-console-breadcrumbs": "^8.2.0",
     "@bugsnag/plugin-expo-app": "^54.0.0",
     "@bugsnag/plugin-expo-app-state-breadcrumbs": "^54.0.0",
     "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^54.0.0",
-    "@bugsnag/plugin-expo-device": "^54.0.0",
+    "@bugsnag/plugin-expo-device": "^54.1.0",
     "@bugsnag/plugin-network-breadcrumbs": "^8.2.0",
     "@bugsnag/plugin-react": "^8.2.0",
     "@bugsnag/plugin-react-native-global-error-handler": "^8.2.0",
     "@bugsnag/plugin-react-native-orientation-breadcrumbs": "^8.2.0",
     "@bugsnag/plugin-react-native-unhandled-rejection": "^8.2.0",
-    "@bugsnag/cli": "^3.7.0",
     "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
