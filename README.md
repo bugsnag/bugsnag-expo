@@ -33,19 +33,19 @@ git clone git@github.com:bugsnag/bugsnag-expo.git
 cd bugsnag-expo
 
 # Install top-level dependencies
-npm i
+yarn install
 
 # Run the unit tests
-npm run test:unit
+yarn run test:unit
 
 # Run tests for a specific package
-npm run test:unit -- --testPathPattern="packages/expo"
+yarn run test:unit -- --testPathPattern="packages/expo"
 
 # Generate a code coverage report
-npm run test:unit -- --coverage
+yarn run test:unit -- --coverage
 
 # Run the linter
-npm run test:lint
+yarn run test:lint
 ```
 
 See [contributing](CONTRIBUTING.md) for more information.
