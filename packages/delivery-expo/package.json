@@ -18,14 +18,14 @@
   "license": "MIT",
   "devDependencies": {
     "@bugsnag/core": "^8.2.0",
-    "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~15.0.6",
-    "expo-file-system": "~19.0.11"
+    "@react-native-community/netinfo": "11.5.2",
+    "expo-crypto": "~55.0.10",
+    "expo-file-system": "~55.0.11"
   },
   "peerDependencies": {
     "@bugsnag/core": "^8.2.0",
-    "@react-native-community/netinfo": "11.4.1",
-    "expo-crypto": "~15.0.6",
-    "expo-file-system": "~19.0.11"
+    "@react-native-community/netinfo": "11.5.2",
+    "expo-crypto": "~55.0.10",
+    "expo-file-system": "~55.0.11"
   }
 }

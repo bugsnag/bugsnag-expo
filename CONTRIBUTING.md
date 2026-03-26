@@ -72,16 +72,37 @@ To check what native module versions are bundled with Expo, check this file:
 
 https://github.com/expo/expo/blob/main/packages/expo/bundledNativeModules.json
 
-Additionally, `@bugsnag/expo` has a dependency on `promise` that must resolve to the same version used by `react-native` to ensure that we attach our unhandled rejection handler to the same instance of promise used by react-native.
+Additionally, `@bugsnag/expo` has a dependency on `promise` that must resolve to the same version used by `react-native` to ensure that we attach our unhandled rejection handler to the same instance of promise used by react-native. This should be checked against the `promise` version in React Native's `package.json` file
+
+### Upgrading Expo dependencies
+
+In order to upgrade the Expo dependencies for a new major Expo version, run the following steps from the repo root:
+
+1. Manually update the `expo` peer dependency in `packages/expo/package.json` to the new version, e.g. `"^55.0.0"`
+1. Run `yarn upgrade expo jest-expo --latest --caret` - this will update the root `expo` and `jest-expo` dev dependencies
+1. Run `yarn workspace test-fixture upgrade expo` - this will update the `expo` dependency for the test fixture
+1. Run `yarn run expo-install:fix` - this will update the various Expo dependencies within the packages and test fixture
+
+**NOTE** - `expo-install:fix` does NOT update peer dependencies in `package.json` files. These MUST be updated manually:
+- For each package in the `packages/` directory, update the Expo dependencies in the `devDependencies` section of the `package.json` to match the new versions
+
+### Updating CI pipelines
+
+Occasionally new Expo releases will introduce new minimum tool versions (e.g. Node, XCode, Java) - check the Expo release notes and update the tool versions for CI if required.
+
+### Updating the test fixture
+
+The commands listed above will also update the Expo version and associated dependencies for the test fixture, but it's also worth initializing a new project with `create-expo-app` and double-checking the dependencies against the test fixture. 
 
 ### Creating a new example app
 
-This repository includes an example app for each supported version in the `/examples` directory. Please initialise a barebones app in this directory using the official expo tools, and remove versions no longer supported. We support the current version of expo and the last 2 major versions.
+This repository includes an example app for the current supported Expo version in the `/examples` directory. Since this is not part of the workspace, it will need to be upgraded to the latest Expo version separately
 
 ## System requirements
 
 In order to develop on the project you’ll need to be on Mac/Linux٭. You’ll need:
-- [node](https://nodejs.org) `v8+` (which includes [npm](https://www.npmjs.com/get-npm) 5+)
+- [node](https://nodejs.org) `v22+`
+- [yarn 1](https://classic.yarnpkg.com/) (Classic)
 - [git](https://git-scm.com/)
 
 If you want to run the end-to-end tests locally you'll need [Docker](https://www.docker.com/products/docker-desktop) (including Docker Compose), and the [AWS CLI](https://aws.amazon.com/cli/). Note that you'll also need some BrowserStack and AWS credentials which are only available to Bugsnag employees.

@@ -1,5 +1,9 @@
 # Changelog
 
+## [55.0.0] - 2026-03-26
+
+This release adds support for Expo 55
+
 ## [54.1.0] - 2026-03-24
 
 ### Changed
