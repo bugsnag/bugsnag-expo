@@ -85,7 +85,7 @@ export default class App extends React.Component {
 
       return <Button accessibilityLabel={scenario}
                      key={index}
-                     title={'Scenario: ' + scenario}
+                     title={'Current Scenario: ' + scenario}
                      onPress={() => {
                        this.setState({ scenario })
                      }}/>
