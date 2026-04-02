@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const { access } = require('fs').promises
 const BugsnagCLI = require('@bugsnag/cli')
 const { exit } = require('process')
 const { getConfig } = require('@expo/config')
