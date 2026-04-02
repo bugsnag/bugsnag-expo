@@ -31,20 +31,18 @@ const uploadSourceMaps = async () => {
   }
 
   console.log('Uploading Android source map to Bugsnag...')
-  try {
-    const result = await BugsnagCLI.Upload.ReactNative.Android(
-      {
-        apiKey: apiKey,
-        projectRoot: PROJECT_ROOT
-      }
-      , PROJECT_ROOT
-    )
-    console.log(result)
+  await BugsnagCLI.Upload.ReactNative.Android(
+    {
+      apiKey: apiKey,
+      projectRoot: PROJECT_ROOT
+    }
+    , PROJECT_ROOT
+  ).then(() => {
     console.log('Successfully uploaded Android source map to Bugsnag')
-  } catch (error) {
+  }).catch(error => {
     console.error(`Error uploading source map: ${error}`)
     exit(1)
-  }
+  })
 }
 
 uploadSourceMaps()
