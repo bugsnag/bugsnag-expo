@@ -16,18 +16,6 @@ if (process.env.EAS_BUILD_PLATFORM !== 'android') {
 }
 
 const uploadSourceMaps = async () => {
-  const bundle = `${PROJECT_ROOT}/android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle`
-  await access(bundle).catch((error) => {
-    console.log(`Skipping Android source map upload: App bundle ${bundle} could not be found.\n${error}`)
-    exit(0)
-  })
-
-  const sourceMap = `${PROJECT_ROOT}/android/app/build/generated/sourcemaps/react/release/index.android.bundle.map`
-  await access(sourceMap).catch((error) => {
-    console.error(`Error: source map ${sourceMap} could not be found.\n${error}`)
-    exit(1)
-  })
-
   let appConfig, apiKey
   try {
     appConfig = getConfig(PROJECT_ROOT)
@@ -43,18 +31,20 @@ const uploadSourceMaps = async () => {
   }
 
   console.log('Uploading Android source map to Bugsnag...')
-  await BugsnagCLI.Upload.ReactNative.Android(
-    {
-      apiKey: apiKey,
-      projectRoot: PROJECT_ROOT
-    }
-    , PROJECT_ROOT
-  ).then(() => {
-    console.log(`Successfully uploaded the following files:\n${[bundle, sourceMap].join('\n')}`)
-  }).catch(error => {
+  try {
+    const result = await BugsnagCLI.Upload.ReactNative.Android(
+      {
+        apiKey: apiKey,
+        projectRoot: PROJECT_ROOT
+      }
+      , PROJECT_ROOT
+    )
+    console.log(result)
+    console.log('Successfully uploaded Android source map to Bugsnag')
+  } catch (error) {
     console.error(`Error uploading source map: ${error}`)
     exit(1)
-  })
+  }
 }
 
 uploadSourceMaps()
