@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Fixed
+
+- (expo-cli) Support Expo Router and React Navigation entryfiles [#239](https://github.com/bugsnag/bugsnag-expo/pull/239)
+
 ## [55.0.0] - 2026-03-26
 
 This release adds support for Expo 55
