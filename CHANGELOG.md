@@ -4,6 +4,10 @@
 
 This release adds support for Expo 55
 
+### Changed
+
+- (plugin-expo-eas-sourcemaps) Remove the path check for sourcemap and bundle file (now handled by the BugSnag CLI) [#265](https://github.com/bugsnag/bugsnag-expo/pull/265)
+
 ## [54.1.0] - 2026-03-24
 
 ### Changed
