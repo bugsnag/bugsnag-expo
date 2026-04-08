@@ -1,6 +1,6 @@
 const process = require('process')
 const { promisify } = require('util')
-const { readFile } = require('fs')
+const { readFile, existsSync } = require('fs')
 const { join } = require('path')
 
 // cache dependencies to avoid potentially parsing package.json multiple times
@@ -22,6 +22,21 @@ async function getDependencies (directory) {
   return cachedDependencies.get(directory)
 }
 
+function checkFileExists (projectRoot, filename) {
+  const appPath = join(projectRoot, filename)
+  return existsSync(appPath)
+}
+
+function findAppEntry (projectRoot, filenames) {
+  for (const filename of filenames) {
+    const appPath = join(projectRoot, filename)
+    if (existsSync(appPath)) {
+      return appPath
+    }
+  }
+  return null
+}
+
 function resolvePackageName (packageName, version) {
   if (version === 'latest') {
     return packageName
@@ -34,6 +49,8 @@ module.exports = {
   onCancel: () => process.exit(),
   getDependencies,
   resolvePackageName,
+  checkFileExists,
+  findAppEntry,
   DEPENDENCIES: [
     '@react-native-community/netinfo',
     'expo-application',

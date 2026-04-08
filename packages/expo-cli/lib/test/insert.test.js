@@ -104,7 +104,7 @@ describe('expo-cli: insert', () => {
 
   it('should provide a reasonable error when there is no App.js or App.ts/tsx', async () => {
     await withFixture('empty-00', async (projectRoot) => {
-      await expect(insert(projectRoot)).rejects.toThrow(/^Couldn’t find App\.js or App\.ts\(x\) in/)
+      await expect(insert(projectRoot)).rejects.toThrow(/^Could not find app entry file\. Searched:.*/)
     })
   })
 
@@ -149,6 +149,26 @@ describe('expo-cli: insert', () => {
 
       const appJs = await readFile(`${projectRoot}/App.ts`, 'utf8')
       expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag\.start\(\);\s/)
+    })
+  })
+
+  it('detects the entrypoint in an Expo Router `app` directory', async () => {
+    await withFixture('app-dir-entry', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/app/_layout.tsx`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
+    })
+  })
+
+  it('detects the entrypoint in an React Navigation `src` directory', async () => {
+    await withFixture('src-dir-entry', async (projectRoot) => {
+      const msg = await insert(projectRoot)
+      expect(msg).toBe(undefined)
+
+      const appJs = await readFile(`${projectRoot}/src/App.tsx`, 'utf8')
+      expect(appJs).toMatch(/^import Bugsnag from '@bugsnag\/expo';\sBugsnag.start\(\);\s/)
     })
   })
 })
