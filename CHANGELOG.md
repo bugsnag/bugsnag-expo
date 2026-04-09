@@ -3,9 +3,9 @@
 
 ## [55.0.1] - 2026-04-09
 
-- (expo-cli) Support Expo Router and React Navigation entryfiles [#239](https://github.com/bugsnag/bugsnag-expo/pull/239)
-
 ### Changed
+
+- (expo-cli) Support Expo Router and React Navigation entryfiles [#239](https://github.com/bugsnag/bugsnag-expo/pull/239)
 
 - (plugin-expo-eas-sourcemaps) Remove the path check for sourcemap and bundle file (now handled by the BugSnag CLI) [#265](https://github.com/bugsnag/bugsnag-expo/pull/265)
 
