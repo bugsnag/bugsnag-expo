@@ -1,10 +1,10 @@
+
 # Changelog
+
+- (expo-cli) Support Expo Router and React Navigation entryfiles [#239](https://github.com/bugsnag/bugsnag-expo/pull/239)
 
 ## [Unreleased]
 
-### Fixed
-
-- (expo-cli) Support Expo Router and React Navigation entryfiles [#239](https://github.com/bugsnag/bugsnag-expo/pull/239)
 
 ## [55.0.1] - 2026-04-09
 
