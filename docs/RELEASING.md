@@ -54,6 +54,7 @@ You are now ready to make the release. Releases are done using Docker. You do no
 - Ensure you are logged in to npm and that you have access to publish to the following on npm
   - any packages in the `@bugsnag` namespace
   - the `bugsnag-expo-cli` package
+- Generate a [granular access token](https://www.npmjs.com/settings/{username}/tokens/granular-access-tokens/new) on  NPM to bypass 2FA and store it somewhere secure
 - Ensure your `.gitconfig` file in your home directory is configured to contain your name and email address
 - Generate a [personal access token](https://github.com/settings/tokens/new) on GitHub and store it somewhere secure
 
@@ -70,12 +71,13 @@ You may want to consider shipping a [prerelease](#prerelease) to aid testing the
 ```sh
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
+NPM_TOKEN=<generate a personal granular access token> \
 RELEASE_BRANCH=<the branch to publish a new release from> \
 VERSION=[major | minor | patch] \
   docker-compose run release
 ```
 
-This process is interactive and will require you to confirm that you want to publish the changed packages. It will also prompt for 2FA.
+This process is interactive and will require you to confirm that you want to publish the changed packages.
 
 **Note**: if a prerelease was made, to graduate it into a normal release you will need to use `patch` as the version.
 
@@ -111,6 +113,7 @@ For example:
 ```
 GITHUB_USER=<your github username> \
 GITHUB_ACCESS_TOKEN=<generate a personal access token> \
+NPM_TOKEN=<generate a personal granular access token> \
 RELEASE_BRANCH=<the branch to publish a new release from> \
 VERSION=preminor \
   docker-compose run release
