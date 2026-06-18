@@ -42,6 +42,7 @@ services:
     environment:
       GITHUB_USER:
       GITHUB_ACCESS_TOKEN:
+      NPM_TOKEN:
       RELEASE_BRANCH:
       RETRY_PUBLISH:
       VERSION:
