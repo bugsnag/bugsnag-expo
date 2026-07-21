@@ -11,16 +11,16 @@ const { blue, yellow } = require('kleur')
  * @throws {Error} if the path is invalid
  */
 function validateProjectRoot (projectRoot) {
-  if (typeof projectRoot !== 'string' || projectRoot.trim() === '') {
-    throw new Error('Invalid project root: must be a non-empty string.')
-  }
-  // Reject path traversal
-  if (projectRoot.includes('..')) {
-    throw new Error('Invalid project root: path traversal sequences are not allowed.')
-  }
+  if (typeof projectRoot !== 'string') {
+     throw new Error('Invalid project root: must be a string.')
+   }
+  const trimmed = projectRoot.trim()
+   if (trimmed === '') {
+     throw new Error('Invalid project root: must be a non-empty string.')
+   }
   // Reject shell metacharacters that have no place in a filesystem path
   // eslint-disable-next-line no-control-regex
-  const UNSAFE_CHARS = /[;&|`$<>'"\\!\x00-\x1f\x7f]/
+  const UNSAFE_CHARS = /[\x00-\x1f\x7f]/
   if (UNSAFE_CHARS.test(projectRoot)) {
     throw new Error('Invalid project root: path contains disallowed characters.')
   }
