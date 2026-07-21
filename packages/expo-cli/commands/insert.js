@@ -12,12 +12,12 @@ const { blue, yellow } = require('kleur')
  */
 function validateProjectRoot (projectRoot) {
   if (typeof projectRoot !== 'string') {
-     throw new Error('Invalid project root: must be a string.')
-   }
+    throw new Error('Invalid project root: must be a string.')
+  }
   const trimmed = projectRoot.trim()
-   if (trimmed === '') {
-     throw new Error('Invalid project root: must be a non-empty string.')
-   }
+  if (trimmed === '') {
+    throw new Error('Invalid project root: must be a non-empty string.')
+  }
   // Reject shell metacharacters that have no place in a filesystem path
   // eslint-disable-next-line no-control-regex
   const UNSAFE_CHARS = /[\x00-\x1f\x7f]/
