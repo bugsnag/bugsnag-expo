@@ -47,7 +47,7 @@ module.exports = async (argv, globalOpts) => {
 
   const message = `The following Bugsnag initialization lines will be added to your application's entry file. Is this ok?
 
-  ${safeCode.replace('\n', '\n  ')}
+  ${safeCode.replace(/\n/g, '\n  ')}
   `
 
   const res = await prompts({
