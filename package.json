@@ -22,7 +22,8 @@
     "test:lint": "eslint --report-unused-disable-directives --max-warnings=0 .",
     "local-npm:start": "verdaccio --config ./verdaccio-config.yml",
     "local-npm:publish-all": "lerna publish --yes --force-publish --exact --no-push --no-git-reset --no-git-tag-version --registry 'http://localhost:4873'",
-    "expo-install:fix": "npx expo install --fix -- -W && npm exec --workspaces -- npx expo install --fix"
+    "expo-install:fix": "npx expo install --fix -- -W && npm exec --workspaces -- npx expo install --fix",
+    "postinstall": "node scripts/fix-swift-weak-let.js"
   },
   "private": true,
   "workspaces": [
