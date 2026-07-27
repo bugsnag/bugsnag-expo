@@ -16,34 +16,74 @@ const withFixSwiftWeakLet = (config) => {
 
       let podfile = fs.readFileSync(podfilePath, 'utf8')
 
-      const fixSnippet = `
-    # [Swift 6 Fix] Set minimal concurrency and fix 'weak let' in Pod sources
-    installer.pods_project.targets.each do |target|
-      target.build_configurations.each do |bc|
-        bc.build_settings['SWIFT_STRICT_CONCURRENCY'] = 'minimal'
-      end
-    end
-    Dir.glob(File.join(__dir__, "Pods", "**", "*.swift")).each do |f|
-      txt = File.read(f)
-      if txt.include?("weak let")
-        File.write(f, txt.gsub(/\\bweak\\s+let\\b/, "weak var"))
-        Pod::UI.puts "  [Swift6Fix] Patched: \#{f}"
-      end
-    end`
+      // Ruby code to inject into post_install
+      // This runs AFTER pod install resolves all pods into ios/Pods/
+      const rubyFixCode = [
+        '',
+        '    # [Swift 6 Fix] Force Swift 5 language mode for pods with weak let',
+        '    swift5_pods = ["ExpoModulesJSI", "ExpoModulesCore", "ExpoAppMetrics"]',
+        '    installer.pods_project.targets.each do |target|',
+        '      if swift5_pods.any? { |name| target.name.include?(name) }',
+        '        target.build_configurations.each do |bc|',
+        '          bc.build_settings["SWIFT_VERSION"] = "5.0"',
+        '        end',
+        '      end',
+        '    end',
+        '',
+        '    # [Swift 6 Fix] Patch weak let -> weak var in ALL pod Swift sources',
+        '    pods_root = installer.sandbox.root.to_s',
+        '    patched = 0',
+        '    Dir.glob(File.join(pods_root, "**", "*.swift")).each do |f|',
+        '      content = File.read(f)',
+        '      if content.include?("weak let")',
+        '        File.write(f, content.gsub(/weak\\s+let/, "weak var"))',
+        '        patched += 1',
+        '      end',
+        '    end',
+        '    Dir.glob(File.join(pods_root, "**", "*.swiftinterface")).each do |f|',
+        '      content = File.read(f)',
+        '      if content.include?("weak let")',
+        '        File.write(f, content.gsub(/weak\\s+let/, "weak var"))',
+        '        patched += 1',
+        '      end',
+        '    end',
+        '',
+        '    # Also patch in node_modules (for development pods)',
+        '    nm_path = File.expand_path("../node_modules", __dir__)',
+        '    if File.directory?(nm_path)',
+        '      Dir.glob(File.join(nm_path, "**", "*.swift")).each do |f|',
+        '        content = File.read(f)',
+        '        if content.include?("weak let")',
+        '          File.write(f, content.gsub(/weak\\s+let/, "weak var"))',
+        '          patched += 1',
+        '        end',
+        '      end',
+        '      Dir.glob(File.join(nm_path, "**", "*.swiftinterface")).each do |f|',
+        '        content = File.read(f)',
+        '        if content.include?("weak let")',
+        '          File.write(f, content.gsub(/weak\\s+let/, "weak var"))',
+        '          patched += 1',
+        '        end',
+        '      end',
+        '    end',
+        '    Pod::UI.puts "[Swift6Fix] Patched #{patched} file(s)"',
+        ''
+      ].join('\n')
 
-      if (podfile.includes('post_install')) {
-        // Inject after existing post_install opening
-        podfile = podfile.replace(
-          /post_install\s+do\s+\|installer\|/,
-          `post_install do |installer|${fixSnippet}`
-        )
+      // Find post_install block and inject after the opening line
+      const postInstallRegex = /post_install\s+do\s+\|(\w+)\|/
+      const match = podfile.match(postInstallRegex)
+
+      if (match) {
+        const insertPos = match.index + match[0].length
+        podfile = podfile.slice(0, insertPos) + rubyFixCode + podfile.slice(insertPos)
+        console.log('[withFixSwiftWeakLet] Injected fix into existing post_install block')
       } else {
-        // Add new post_install block before the final 'end' (end of target block)
-        podfile += `\npost_install do |installer|${fixSnippet}\nend\n`
+        podfile += '\npost_install do |installer|' + rubyFixCode + '\nend\n'
+        console.log('[withFixSwiftWeakLet] Added new post_install block with fix')
       }
 
       fs.writeFileSync(podfilePath, podfile)
-      console.log('[withFixSwiftWeakLet] Podfile patched with Swift 6 fixes')
       return config
     }
   ])

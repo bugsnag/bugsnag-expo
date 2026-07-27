@@ -1,12 +1,12 @@
 {
   "name": "test-fixture",
-  "version": "55.0.0",
+  "version": "57.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "postinstall": "bash ./eas-build-post-install.sh || true"
+    "postinstall": "bash ./eas-build-post-install.sh"
   },
   "dependencies": {
     "@bugsnag/expo": "*",
