@@ -1,20 +1,27 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Running Swift 5.9+ compatibility fixes (EAS build hook)..."
+echo "🔧 Running Swift 6 compatibility fixes..."
 
-# Find and fix ALL Swift files containing 'weak let' in node_modules
-# This handles any package that hasn't been updated for Swift 6 / Xcode 26
-FIXED_COUNT=0
+fix_weak_let() {
+  local search_dir="$1"
+  local count=0
 
-while IFS= read -r file; do
-  sed -i '' 's/weak let/weak var/g' "$file"
-  echo "✅ Fixed $file"
-  FIXED_COUNT=$((FIXED_COUNT + 1))
-done < <(find node_modules -name "*.swift" -exec grep -l "weak let" {} \; 2>/dev/null)
+  if [ ! -d "$search_dir" ]; then
+    echo "⏭️ Directory $search_dir not found, skipping"
+    return 0
+  fi
 
-if [ "$FIXED_COUNT" -eq 0 ]; then
-  echo "⏭️ No files needed fixing"
-fi
+  for file in $(grep -rl "weak let" "$search_dir" --include="*.swift" 2>/dev/null); do
+    sed -i '' 's/weak let/weak var/g' "$file"
+    echo "✅ Fixed $file"
+    count=$((count + 1))
+  done
 
-echo "✨ Done! Fixed $FIXED_COUNT file(s)"
+  echo "Fixed $count file(s) in $search_dir"
+}
+
+# Fix in node_modules (before prebuild copies them)
+fix_weak_let "node_modules"
+
+echo "✨ Swift compatibility fixes complete"

@@ -44,8 +44,9 @@
     "plugins": [
       "./config-plugins/withRemoveiOSNotificationEntitlement",
       "./config-plugins/withAddClearTextTrafficAndroid",
+      "./config-plugins/withFixSwiftWeakLet",
       "expo-secure-store"
-    ],
+   ],
     "extra": {
       "eas": {
         "projectId": "EXPO_EAS_PROJECT_ID"
