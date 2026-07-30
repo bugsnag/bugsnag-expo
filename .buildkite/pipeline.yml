@@ -32,7 +32,7 @@ steps:
       queue: "macos-26"
     env:
       EXPO_RELEASE_CHANNEL: ${BUILDKITE_BUILD_ID}
-      XCODE_VERSION: "26.4.1"
+      XCODE_VERSION: "26.6.0"
     artifact_paths: build/output.ipa
     commands:
       - bundle install
