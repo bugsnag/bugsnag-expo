@@ -16,7 +16,6 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.fixture",
       "buildNumber": "1",
-      "deploymentTarget": "16.0",
       "splash": {
         "image": "./assets/splash.png",
         "resizeMode": "contain",
