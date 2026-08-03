@@ -21,6 +21,5 @@
   },
   "peerDependencies": {
     "@bugsnag/core": "^8.0.0"
-  },
-  "gitHead": "49c4a619da382e03f91a1c425e6fd8da6d909cd6"
+  }
 }
