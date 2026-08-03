@@ -16,6 +16,11 @@ const withFixSwiftWeakLet = (config) => {
 
       let podfile = fs.readFileSync(podfilePath, 'utf8')
 
+      if (podfile.includes('# [Swift 6 Fix]')) {
+        console.log('[withFixSwiftWeakLet] Fix already present, skipping')
+        return config
+      }
+
       // Ruby code to inject into post_install
       // This runs AFTER pod install resolves all pods into ios/Pods/
       const rubyFixCode = [
