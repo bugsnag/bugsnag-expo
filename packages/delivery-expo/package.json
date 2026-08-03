@@ -27,6 +27,5 @@
     "@react-native-community/netinfo": "12.0.1",
     "expo-crypto": "~56.0.0 || ~57.0.0",
     "expo-file-system": "~56.0.0 || ~57.0.0"
-  },
-  "gitHead": "49c4a619da382e03f91a1c425e6fd8da6d909cd6"
+  }
 }
