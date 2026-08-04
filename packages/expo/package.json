@@ -1,6 +1,6 @@
 {
   "name": "@bugsnag/expo",
-  "version": "55.0.0",
+  "version": "57.0.0",
   "main": "src/notifier.js",
   "types": "types/bugsnag.d.ts",
   "description": "Bugsnag error reporter for Expo applications",
@@ -34,13 +34,13 @@
   "dependencies": {
     "@bugsnag/cli": "^3.7.0",
     "@bugsnag/core": "^8.2.0",
-    "@bugsnag/delivery-expo": "^55.0.0",
+    "@bugsnag/delivery-expo": "57.0.0",
     "@bugsnag/plugin-browser-session": "^8.2.0",
     "@bugsnag/plugin-console-breadcrumbs": "^8.2.0",
-    "@bugsnag/plugin-expo-app": "^55.0.0",
-    "@bugsnag/plugin-expo-app-state-breadcrumbs": "^55.0.0",
-    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "^55.0.0",
-    "@bugsnag/plugin-expo-device": "^55.0.0",
+    "@bugsnag/plugin-expo-app": "57.0.0",
+    "@bugsnag/plugin-expo-app-state-breadcrumbs": "57.0.0",
+    "@bugsnag/plugin-expo-connectivity-breadcrumbs": "57.0.0",
+    "@bugsnag/plugin-expo-device": "57.0.0",
     "@bugsnag/plugin-network-breadcrumbs": "^8.2.0",
     "@bugsnag/plugin-react": "^8.2.0",
     "@bugsnag/plugin-react-native-global-error-handler": "^8.2.0",
@@ -49,11 +49,11 @@
     "bugsnag-build-reporter": "^2.0.0"
   },
   "devDependencies": {
-    "expo-constants": "~55.0.9"
+    "expo-constants": "~57.0.0"
   },
   "peerDependencies": {
-    "expo": "^55.0.0",
-    "expo-constants": "~55.0.9",
+    "expo": "^56.0.0 || ^57.0.0",
+    "expo-constants": "~56.0.0 || ~57.0.0",
     "promise": "^8.3.0",
     "react": "*"
   }
