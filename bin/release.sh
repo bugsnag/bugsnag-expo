@@ -10,6 +10,7 @@ error_missing_field () {
 # Ensure all required variables are set before doing any work
 if [[ -z ${GITHUB_USER:-} ]]; then error_missing_field "GITHUB_USER"; fi
 if [[ -z ${GITHUB_ACCESS_TOKEN:-} ]]; then error_missing_field "GITHUB_ACCESS_TOKEN"; fi
+if [[ -z ${NPM_TOKEN:-} ]]; then error_missing_field "NPM_TOKEN"; fi
 if [[ -z ${RELEASE_BRANCH:-} ]]; then error_missing_field "RELEASE_BRANCH"; fi
 if [[ -z ${VERSION:-} ]]; then error_missing_field "VERSION"; fi
 
