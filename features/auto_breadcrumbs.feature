@@ -111,7 +111,7 @@ Scenario: Network breadcrumbs are captured by default
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "defaultNetworkBreadcrumbsBehaviour"
-  And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
+  And the event has a "request" breadcrumb named "fetch() succeeded"
   And the event "breadcrumbs.1.metaData.status" equals 200
   And the event "breadcrumbs.1.metaData.method" equals "GET"
   And the event "breadcrumbs.1.metaData.url" equals "https://postman-echo.com/get"
@@ -126,7 +126,7 @@ Scenario: Network breadcrumbs can be disabled explicitly
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "disabledNetworkBreadcrumbsBehaviour"
-  And the event does not have a "request" breadcrumb named "XMLHttpRequest succeeded"
+  And the event does not have a "request" breadcrumb named "fetch() succeeded"
   And the error Bugsnag-Integrity header is valid
 
 Scenario: Network breadcrumbs are disabled with other auto-breadcrumbs
@@ -137,7 +137,7 @@ Scenario: Network breadcrumbs are disabled with other auto-breadcrumbs
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "disabledAllNetworkBreadcrumbsBehaviour"
-  And the event does not have a "request" breadcrumb named "XMLHttpRequest succeeded"
+  And the event does not have a "request" breadcrumb named "fetch() succeeded"
   And the error Bugsnag-Integrity header is valid
 
 Scenario: Network breadcrumbs overrides auto-breadcrumbs
@@ -148,7 +148,7 @@ Scenario: Network breadcrumbs overrides auto-breadcrumbs
   Then I wait to receive an error
   And the exception "errorClass" equals "Error"
   And the exception "message" equals "overrideNetworkBreadcrumbsBehaviour"
-  And the event has a "request" breadcrumb named "XMLHttpRequest succeeded"
+  And the event has a "request" breadcrumb named "fetch() succeeded"
   And the event "breadcrumbs.0.metaData.status" equals 200
   And the event "breadcrumbs.0.metaData.method" equals "GET"
   And the event "breadcrumbs.0.metaData.url" equals "https://postman-echo.com/get"
