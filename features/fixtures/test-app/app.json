@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -21,6 +16,11 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.bugsnag.expo.fixture",
       "buildNumber": "1",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      },
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSExceptionDomains": {
@@ -37,7 +37,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "versionCode": 1
+      "versionCode": 1,
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -45,7 +50,9 @@
     "plugins": [
       "./config-plugins/withRemoveiOSNotificationEntitlement",
       "./config-plugins/withAddClearTextTrafficAndroid",
-      "expo-secure-store"
+      "./config-plugins/withFixSwiftWeakLet",
+      "expo-secure-store",
+      "expo-status-bar"
     ],
     "extra": {
       "eas": {
