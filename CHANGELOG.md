@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [57.0.0] - 2026-08-12
+## [57.0.0] - 2026-08-13
 
 This release adds support for Expo 56 and 57
 
