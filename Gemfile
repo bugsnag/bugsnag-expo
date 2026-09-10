@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'cocoapods', '~> 1.15.2'
-gem 'json', '< 2.7.0'
+gem 'json', '< 2.7.2'
 gem 'fastlane'
 gem 'xcpretty', '~> 0.4.1'
 
