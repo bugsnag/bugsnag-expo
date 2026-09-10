@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 
-gem 'cocoapods', '~> 1.15.2'
-gem 'json', '< 2.7.2'
+gem 'cocoapods', '~> 1.16.2'
+# json 3.0 raises ArgumentError on unknown options; activesupport (a cocoapods-core
+# dependency) still passes the long-removed `quirks_mode:` option. See PLAT-17253.
+gem 'json', '< 3.0'
 gem 'fastlane'
 gem 'xcpretty', '~> 0.4.1'
 
