@@ -507,4 +507,140 @@ describe('plugin: expo device', () => {
     }))
     c.notify(new Error('device testing'))
   })
+
+  it('generates a new device id if reading from storage throws', done => {
+    const REACT_NATIVE_VERSION = '0.57.1'
+    const SDK_VERSION = '32.3.0'
+    const EXPO_VERSION = '2.10.4'
+
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: { ios: {} },
+        expoConfig: { sdkVersion: SDK_VERSION },
+        expoVersion: EXPO_VERSION,
+        appOwnership: 'expo'
+      }
+    }))
+    jest.doMock('expo-device', () => ({
+      manufacturer: 'Apple',
+      isDevice: true
+    }))
+    jest.doMock('react-native', () => ({
+      Dimensions: {
+        addEventListener: function () {},
+        get: function () {
+          return { width: 1024, height: 768 }
+        }
+      },
+      Platform: { OS: 'ios' }
+    }))
+    jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+
+    const getItem = jest.fn(() => {
+      throw new Error('keystore unavailable')
+    })
+    const setItem = jest.fn()
+    jest.doMock('expo-secure-store', () => ({
+      getItem,
+      setItem,
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
+    }))
+
+    const plugin = require('..')
+
+    let c
+    expect(() => {
+      c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+    }).not.toThrow()
+
+    expect(getItem).toHaveBeenCalledTimes(1)
+    expect(getItem).toHaveBeenCalledWith('bugsnag-anonymous-id', { keychainAccessible: 4, requireAuthentication: false })
+
+    expect(setItem).toHaveBeenCalledTimes(1)
+    expect(setItem).toHaveBeenCalledWith('bugsnag-anonymous-id', expect.any(String), { keychainAccessible: 4, requireAuthentication: false })
+
+    const generatedDeviceId = setItem.mock.calls[0][1]
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].device).toBeTruthy()
+        expect(r.events[0].device.id).toEqual(generatedDeviceId)
+        expect(r.events[0].user.id).toEqual(generatedDeviceId)
+        done()
+      },
+      sendSession: () => {}
+
+    }))
+    c.notify(new Error('device testing'))
+  })
+
+  it('uses a generated device id for the current run if writing to storage throws', done => {
+    const REACT_NATIVE_VERSION = '0.57.1'
+    const SDK_VERSION = '32.3.0'
+    const EXPO_VERSION = '2.10.4'
+
+    jest.doMock('expo-constants', () => ({
+      default: {
+        platform: { ios: {} },
+        expoConfig: { sdkVersion: SDK_VERSION },
+        expoVersion: EXPO_VERSION,
+        appOwnership: 'expo'
+      }
+    }))
+    jest.doMock('expo-device', () => ({
+      manufacturer: 'Apple',
+      isDevice: true
+    }))
+    jest.doMock('react-native', () => ({
+      Dimensions: {
+        addEventListener: function () {},
+        get: function () {
+          return { width: 1024, height: 768 }
+        }
+      },
+      Platform: { OS: 'ios' }
+    }))
+    jest.doMock('react-native/package.json', () => ({ version: REACT_NATIVE_VERSION }))
+
+    const getItem = jest.fn(() => null)
+    const setItem = jest.fn(() => {
+      throw new Error('keystore unavailable')
+    })
+    jest.doMock('expo-secure-store', () => ({
+      getItem,
+      setItem,
+      AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY: 4
+    }))
+
+    const plugin = require('..')
+
+    let c
+    expect(() => {
+      c = new Client({ apiKey: 'api_key', plugins: [plugin] })
+    }).not.toThrow()
+
+    expect(getItem).toHaveBeenCalledTimes(1)
+    expect(getItem).toHaveBeenCalledWith('bugsnag-anonymous-id', { keychainAccessible: 4, requireAuthentication: false })
+
+    expect(setItem).toHaveBeenCalledTimes(1)
+    expect(setItem).toHaveBeenCalledWith('bugsnag-anonymous-id', expect.any(String), { keychainAccessible: 4, requireAuthentication: false })
+
+    const generatedDeviceId = setItem.mock.calls[0][1]
+
+    c._setDelivery(client => ({
+      sendEvent: (payload) => {
+        const r = JSON.parse(JSON.stringify(payload))
+        expect(r).toBeTruthy()
+        expect(r.events[0].device).toBeTruthy()
+        expect(r.events[0].device.id).toEqual(generatedDeviceId)
+        expect(r.events[0].user.id).toEqual(generatedDeviceId)
+        done()
+      },
+      sendSession: () => {}
+
+    }))
+    c.notify(new Error('device testing'))
+  })
 })

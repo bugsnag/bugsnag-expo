@@ -32,10 +32,19 @@ module.exports = {
         keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY
       }
 
-      deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)
+      try {
+        deviceId = SecureStore.getItem(DEVICE_ID_KEY, storeOptions)
+      } catch (e) {
+        client._logger.warn('Bugsnag: failed to read anonymous device ID from SecureStore', e)
+      }
+
       if (!deviceId || !cuid.isCuid(deviceId)) {
         deviceId = cuid()
-        SecureStore.setItem(DEVICE_ID_KEY, deviceId, storeOptions)
+        try {
+          SecureStore.setItem(DEVICE_ID_KEY, deviceId, storeOptions)
+        } catch (e) {
+          client._logger.warn('Bugsnag: failed to persist anonymous device ID to SecureStore — a non-persistent ID will be used for this session', e)
+        }
       }
     }
 
