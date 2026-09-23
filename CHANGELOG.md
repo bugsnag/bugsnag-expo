@@ -1,5 +1,10 @@
 # Changelog
 
+## [57.1.0] - 2026-09-23
+
+### Fixed
+
+- (plugin-expo-device) Handle `expo-secure-store` errors gracefully during initialization to prevent startup crashes when SecureStore is inaccessible [#290](https://github.com/bugsnag/bugsnag-expo/pull/290)
 
 ## [57.0.0] - 2026-08-13
 

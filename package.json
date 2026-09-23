@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@react-native/jest-preset": "^0.86.2",
+    "@react-native/jest-preset": "^0.86.3",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
@@ -14,7 +14,7 @@
     "jest-expo": "^57.0.0",
     "lerna": "^8.0.2",
     "react": "19.2.3",
-    "react-native": "0.86.2",
+    "react-native": "0.86.3",
     "verdaccio": "^5.10.2"
   },
   "engines": {
