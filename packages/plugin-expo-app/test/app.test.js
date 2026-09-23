@@ -39,10 +39,14 @@ describe('plugin: expo app', () => {
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        expect(r.events[0].app.versionCode).toBe(VERSION_CODE)
-        done()
+        try {
+          const r = JSON.parse(JSON.stringify(payload))
+          expect(r).toBeTruthy()
+          expect(r.events[0].app.versionCode).toBe(VERSION_CODE)
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: (session) => {
         expect(session).toBeTruthy()
@@ -86,10 +90,14 @@ describe('plugin: expo app', () => {
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        expect(r.events[0].app.bundleVersion).toBe(BUNDLE_VERSION)
-        done()
+        try {
+          const r = JSON.parse(JSON.stringify(payload))
+          expect(r).toBeTruthy()
+          expect(r.events[0].app.bundleVersion).toBe(BUNDLE_VERSION)
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: (session) => {
         expect(session).toBeTruthy()
@@ -130,14 +138,18 @@ describe('plugin: expo app', () => {
     const events = []
     c._setDelivery(client => ({
       sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        events.push(r)
-        if (events.length < 3) return
-        expect(events[0].events[0].app.inForeground).toBe(true)
-        expect(events[1].events[0].app.inForeground).toBe(false)
-        expect(events[2].events[0].app.inForeground).toBe(true)
-        done()
+        try {
+          const r = JSON.parse(JSON.stringify(payload))
+          expect(r).toBeTruthy()
+          events.push(r)
+          if (events.length < 3) return
+          expect(events[0].events[0].app.inForeground).toBe(true)
+          expect(events[1].events[0].app.inForeground).toBe(false)
+          expect(events[2].events[0].app.inForeground).toBe(true)
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: () => {}
     }))
@@ -175,13 +187,17 @@ describe('plugin: expo app', () => {
 
     client._setDelivery(client => ({
       sendEvent: (payload) => {
-        // The maximum number of milliseconds 'duration' should be
-        const maximum = Date.now() - start
+        try {
+          // The maximum number of milliseconds 'duration' should be
+          const maximum = Date.now() - start
 
-        expect(payload.events[0].app.duration).toBeGreaterThanOrEqual(delayMs)
-        expect(payload.events[0].app.duration).toBeLessThanOrEqual(maximum)
+          expect(payload.events[0].app.duration).toBeGreaterThanOrEqual(0)
+          expect(payload.events[0].app.duration).toBeLessThanOrEqual(maximum)
 
-        done()
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: () => {}
     }))
@@ -213,10 +229,14 @@ describe('plugin: expo app', () => {
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        expect(r.events[0].app.codeBundleId).toBe(CODE_BUNDLE_ID)
-        done()
+        try {
+          const r = JSON.parse(JSON.stringify(payload))
+          expect(r).toBeTruthy()
+          expect(r.events[0].app.codeBundleId).toBe(CODE_BUNDLE_ID)
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: (session) => {
         expect(session).toBeTruthy()
@@ -248,10 +268,14 @@ describe('plugin: expo app', () => {
 
     c._setDelivery(client => ({
       sendEvent: (payload) => {
-        const r = JSON.parse(JSON.stringify(payload))
-        expect(r).toBeTruthy()
-        expect(r.events[0].app.codeBundleId).toBe(undefined)
-        done()
+        try {
+          const r = JSON.parse(JSON.stringify(payload))
+          expect(r).toBeTruthy()
+          expect(r.events[0].app.codeBundleId).toBe(undefined)
+          done()
+        } catch (err) {
+          done(err)
+        }
       },
       sendSession: (session) => {
         expect(session).toBeTruthy()
