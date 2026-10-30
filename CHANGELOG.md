@@ -1,5 +1,14 @@
 # Changelog
 
+## [58.0.0] - 2026-11-02
+
+This release adds support for Expo 58 and 57
+Required versions:
+Expo SDK: 58
+Xcode: 26.4+
+iOS: 16.0+ (minimum deployment target) [#295](https://github.com/bugsnag/bugsnag-expo/pull/295)
+
+
 ## [57.1.0] - 2026-09-23
 
 ### Fixed
