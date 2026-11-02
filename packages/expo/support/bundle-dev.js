@@ -8,18 +8,13 @@
 // output:
 //   bugsnag-expo-maj.min.patch.tar.gz in the cwd
 
-const { execSync } = require('child_process')
-const { readFileSync, writeFileSync } = require('fs')
+const { execFileSync } = require('child_process')
+const { copyFileSync, readFileSync, unlinkSync, writeFileSync } = require('fs')
 
 const PKG_PATH = `${__dirname}/../package.json`
 
-const $ = cmd => {
-  console.log(`> ${cmd}`)
-  execSync(cmd)
-}
-
 // make a backup of the package.json cuz we're gonna mutate it
-$(`cp ${PKG_PATH} ${PKG_PATH}.bak`)
+copyFileSync(PKG_PATH, `${PKG_PATH}.bak`)
 
 // read in the current package.json and copy over any of the dependencies that
 // start with @bugsnag/ into the bundleDependencies property
@@ -34,8 +29,9 @@ writeFileSync(PKG_PATH, JSON.stringify(pkg, null, 2))
 
 // package up the module including the bundleDependencies (this lands in the cwd)
 // of wherever this script is run from
-$(`npm pack ${__dirname}/..`)
+console.log('> npm pack')
+execFileSync('npm', ['pack', `${__dirname}/..`], { stdio: 'inherit' })
 
 // restore the original package.json and remove the backup
-$(`cp ${PKG_PATH}.bak ${PKG_PATH}`)
-$(`rm ${PKG_PATH}.bak`)
+copyFileSync(`${PKG_PATH}.bak`, PKG_PATH)
+unlinkSync(`${PKG_PATH}.bak`)
