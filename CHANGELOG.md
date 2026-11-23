@@ -1,5 +1,11 @@
 # Changelog
 
+## [58.0.1] - 2026-11-12
+
+### Fixed
+
+- (plugin-expo-app) Widen the `expo-application` peer dependency range to `^58.0.0` so that newer Expo 58 minor versions are accepted [#300](https://github.com/bugsnag/bugsnag-expo/pull/300)
+
 ## [58.0.0] - 2026-11-02
 
 This release adds support for Expo 58 and 57
